@@ -2,7 +2,6 @@
 
 //let cantNotas = Number(prompt("Ingrese la cantidad de notas a promediar"))
 //cantidad de input
-let total = 10
 
 /*
 for(let i = 1; i <= cantNotas; i++){
@@ -17,10 +16,10 @@ console.log(`El total de sus notas es ${total} y el promnedio es ${promedio} `)
 */
 
 
-const pedirNota = function() {
-     let nota1 = Number(prompt("Ingrese la nota a promediar")) 
+ function pedirCantidadNotas() {
+     let cantNotas = Number(prompt("Ingrese cant la nota a promediar")) 
      console.log(nota1)
-     return nota1
+     return cantNotas
 }
 
 function sumatoria12(){
