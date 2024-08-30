@@ -32,16 +32,27 @@ console.log(cant)
 
 
 function solicitarNombre() {
-    let nombre = prompt("Por favor, ingrese el nombre del pasante a dar de alta:")
-    return nombre
-    } 
+    let nombre 
+    do {
+ 
+    let entrada = prompt("Por favor, ingrese el nombre del pasante a dar de alta:")
+      nombre = entrada
+    
+    if (nombre === "") {
+        alert("Por favor, ingrese su nombre.");
+         }
+      } while (nombre === "")
+   
+     return nombre
+     }
+    
 
 //let nombre = solicitarNombre()
 //console.log(`el nombre a dar de alta es ${nombre}`)
 
 
 function solicitarHoras() {
-    let horas;
+    let horas
     do {
         let entrada = parseInt(prompt("Por favor, cantidad de horas del pasantes a dar de alta:"));
         numero = entrada
@@ -52,7 +63,7 @@ function solicitarHoras() {
         }
     } while (isNaN(numero) || numero <= 0 || numero > 48) // Repite mientras no se ingrese un número válido
     
-    return numero;
+    return numero
 }
 
 /*
