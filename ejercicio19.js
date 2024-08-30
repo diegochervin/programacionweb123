@@ -40,3 +40,4 @@ if (numeroIngresado % 2 === 0) {
     console.log("El " + numeroIngresado + " es un numero Primo")
     numeroIngresado++
 }
+
