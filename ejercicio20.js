@@ -14,14 +14,32 @@ function solicitarNumero() {
 }
 
 let numeroIngresado = solicitarNumero();
+
+
+//con 2 espacios de memoria
+/*
 let a = 0
 let b = 1
-let temporal = 0
 
-for (let i = 2; i < numeroIngresado; i++) {
+
+console.log(b)
+
+for (let i = 1; i < numeroIngresado; i++) {
 let temporal = a + b
 console.log(temporal)
 a = b
 b = temporal
-}
+}*/
 
+//con 2 espacios de memoria
+let anterior = 2
+let actual = 1
+
+
+console.log(actual)
+
+for (let i = 1; i < numeroIngresado; i++) {
+console.log(actual)
+anterior = actual
+actual = anterior + actual
+}

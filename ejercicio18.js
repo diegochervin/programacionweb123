@@ -22,3 +22,5 @@ if (numeroIngresado % 2 === 0) {
 } else {
     console.log("El " + numeroIngresado + " es un numero Primo")
 }
+
+
