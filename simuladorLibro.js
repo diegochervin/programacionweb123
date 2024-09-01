@@ -46,22 +46,25 @@ function solicitarLibro() {
          }
 
 
-         
-         function sumarIVA() {
-          numero = numero * 1.21
-
-         }
+function sumarIVA(precio) {
+            return precio * 1.21
+                 
+              }        
+       
 
          let libro1 = { 
             precio: solicitarPrecio(),
             autor: solicitarAutor(),
             titulo: solicitarLibro()
          }
-         
+    
+    console.log(libro1)
 
 
-console.log(libro1)
-libro1.precio.sumarIVA()
+
+
+
+libro1.precio = sumarIVA(libro1.precio)
 console.log(libro1)
 
 
