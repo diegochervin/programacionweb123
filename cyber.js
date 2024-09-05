@@ -1,3 +1,5 @@
+let estanteria = []
+
 function solicitarPrecio() {
     let numero;
     do {
@@ -99,6 +101,7 @@ function solicitarPresupuesto() {
 
     if (opcion === '1') {
         opcion = "presupuestar"
+        solicitarPrecio()
         // Llama a la función de presupuestar aquí
     } else if (opcion === '2') {
        opcion = "hacer"
@@ -107,21 +110,63 @@ function solicitarPresupuesto() {
 }
 
 
+function menu(){
+    //finalizarMenu datoBandera
+    let finalizarMenu = false
+    while(finalizarMenu ==false){
+    
+        let opcion = prompt(`Ingrese la opción que desea:
+                            1 - Cargar equipo
+                            2 - Mostrar info
+                            3 - Opcion 3
+                            0 - Salir del menú`)
+        switch(opcion){
+            case "1":
+                cargarEquipo()
+            break
+            case "2":
+                console.log(estanteria)
+            break
+            case "3":
+                console.log("opc 3")
+            break
+            case "0":
+                console.log("Gracias por utilizar nuestra app")
+                finalizarMenu = true
+            break
+            default:
+                console.log(`La opción seleccionada ${opcion} no existe`)
+            break
+        }
+    }
+}
+
+
+function mostrarInfoDetallada(array){
+    
+    for (let i = 0; i < array.lenght; i++ ){
+        array[i].mostrarInfoDetallada
+    } 
+
+}
 
 
 
-
+menu()
+function cargarEquipo() {
 let equipo = {
+   
+   
     nombre: solicitarPersona(),
     telefono: solicitarTelefono(),
     modelo: solicitarEquipo(),
     numero_serie: solicitarNumeroSerie(),
     falla: solicitarFalla(),
     accesorios: solicitarAccesorio(),
-    precio: solicitarPrecio(),
     presupuesto: solicitarPresupuesto()
+    
+}
+estanteria.push(equipo)
 }
 
 
-
-console.log(equipo)
