@@ -88,10 +88,8 @@ function solicitarAccesorio() {
 
 function solicitarPresupuesto() {
     let opcion 
-
-    // Bucle que continúa hasta que el usuario elija 1 o 2
     while (opcion !== '1' && opcion !== '2') {
-        opcion = prompt("Elige una opción:1. Presupuestar  2. Hacer directamente");
+        opcion = prompt("Elige una opción: \n1. Presupuestar  \n2. Hacer directamente");
 
         if (opcion !== '1' && opcion !== '2') {
             alert("Opción no válida. Por favor, elige 1 o 2.");
@@ -99,12 +97,11 @@ function solicitarPresupuesto() {
     }
 
 
-    if (opcion === '1') {
-        opcion = "presupuestar"
+    if (opcion = "1") {
+        return false
         solicitarPrecio()
-        // Llama a la función de presupuestar aquí
-    } else if (opcion === '2') {
-       opcion = "hacer"
+        } else if (opcion = "2") {
+       return true
     }
     return opcion
 }
