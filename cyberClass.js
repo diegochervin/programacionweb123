@@ -18,7 +18,10 @@ mostrarInfoEquipo(){
      this.precio = this.precio * 1.21
  }
 
-  
+ 
+ exponerCatalogo(){
+    console.log(this.id, this.duenio, this.modelo, this.precio)
+ }
 }
 
 
@@ -180,9 +183,12 @@ if (buscarDuenioFilter.length == 0) {
 
 
 
-let buscarFilterPrecio = estanteria.filter((b)=>b.precio < 100)
+let buscarFilterPrecio = estanteria.filter((b)=>b.precio < 3000)
 if (buscarFilterPrecio.length == 0) {
     console.log("no hay equipos con ese precio")
 } else {
-    console.log(buscarFilterPrecio)    
+    buscarFilterPrecio.forEach((equipo)=> equipo.exponerCatalogo())  
 }
+
+//mostrar toda la estanteria
+estanteria.forEach((equipo)=> equipo.exponerCatalogo())  
