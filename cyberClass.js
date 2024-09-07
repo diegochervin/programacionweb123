@@ -24,7 +24,7 @@ mostrarInfoEquipo(){
 
 //Instanciación de objetos: 
 
-const imp1 = new Equipo(1,"Jorge Luis Borges", "HP 3050", 800)
+const imp1 = new Equipo(1,"Jorge Luis Borges", "3050", 800)
  const imp2 = new Equipo(2,"Gabriel García Marquez", "Epson L395", 4500)
  const imp3 = new Equipo(3,"Isabel Allende", "Epson L810", 2500)
  const imp4 = new Equipo(4,"Jorge Luis Borges","HP 4250", 1400)
@@ -138,4 +138,51 @@ function menu(){
 }
 
 
-menu()
+//menu()
+
+//metodos de busqueda: find y filter
+//FIND devuelve el elemnto completo si hay coincidencia (y deja de buscar)
+//si no hay coincidencia devuelve undefined
+//retorno la comparacion que deseo
+// este find busca por modelo 
+
+let busqueda = estanteria.find((imp)=>{
+    return imp.modelo.toUpperCase() == "HP 4250"
+})
+console.log(busqueda)
+//function arrow ()=> tiene return implicito
+// ()=> return debo hacerlo explicito (tengo que escribir la palabra retorno)
+
+let busqueda2 = estanteria.find((imp)=> imp.precio > 1000 && imp.precio < 5000)
+console.log(busqueda2)
+
+
+function buscarModelo(array){   
+    let modeloBuscado = prompt("Ingrese el modelo del equipo")
+    let buscarModelo = array.find((impresora)=> impresora.modelo.toLowerCase() == modeloBuscado.toLowerCase())
+    if (buscarModelo == undefined) {
+        console.log(`el modelo ${modeloBuscado} no se encuentra`)
+    } else {
+        
+       buscarModelo.mostrarInfoEquipo()    
+    }
+}
+//buscarModelo(estanteria)
+
+//filter devuelve todo lo que coincida con la busqueda/comparacion en un array sino hay ninguna coincidencia devuelve el array vacio
+
+let buscarDuenioFilter = estanteria.filter((equipo)=> equipo.duenio.toLowerCase() == "jorge luis borges" )
+if (buscarDuenioFilter.length == 0) {
+    console.log("no se encontro nada")
+} else {
+    console.log(buscarDuenioFilter)
+}
+
+
+
+let buscarFilterPrecio = estanteria.filter((b)=>b.precio < 100)
+if (buscarFilterPrecio.length == 0) {
+    console.log("no hay equipos con ese precio")
+} else {
+    console.log(buscarFilterPrecio)    
+}
