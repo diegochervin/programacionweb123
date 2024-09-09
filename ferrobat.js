@@ -27,12 +27,12 @@ mostrarInfoEquipo(){
 
 //Instanciación de objetos: 
 
-const bat1 = new Bateria(1,"Ferrobat", "12x60", 80000)
-const bat2 = new Bateria(2,"Moura", "M20GD", 107000)
-const bat3 = new Bateria(3,"Willard", "UB620", 115000)
-const bat4 = new Bateria(4,"Ferrobat","12x75", 140000)
-const bat5 = new Bateria(5,"Ferrobat", "12x80", 220000)
-const bat6 = new Bateria(6,"Moura", "M22GD", 128000)
+const bat1 = new Bateria(1,"Ferrobat", "12X65", 85000)
+const bat2 = new Bateria(2,"Moura", "M20GD", 145000)
+const bat3 = new Bateria(3,"Willard", "UB620", 155000)
+const bat4 = new Bateria(4,"Ferrobat","12x70", 100000)
+const bat5 = new Bateria(5,"Ferrobat", "12x80", 110000)
+const bat6 = new Bateria(6,"Moura", "M22GD", 165000)
 
 let local  = []
 local.push(bat1,bat2,bat3,bat4,bat5,bat6)
@@ -181,7 +181,7 @@ if (buscarMarcaFilter.length == 0) {
 
 
 
-let buscarFilterPrecio = local.filter((b)=>b.precio < 130000)
+let buscarFilterPrecio = local.filter((b)=>b.precio < 190000)
 if (buscarFilterPrecio.length == 0) {
     console.log("no hay equipos con ese precio")
 } else {
