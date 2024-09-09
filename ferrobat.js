@@ -1,10 +1,10 @@
 //class constructora
 
 class Bateria{
-    constructor(id, duenio, modelo, precio){
+    constructor(id, marca, modelo, precio){
         //atributos-propiedades
        this.id = id,
-       this.duenio = duenio,
+       this.marca = marca,
        this.modelo = modelo,
        this.precio = precio
     }
@@ -12,7 +12,7 @@ class Bateria{
 
 //métodos en class se declaran por fuera del constructor
 mostrarInfoEquipo(){
-    console.log(`La recepcion N° ${this.id} es de ${this.duenio} ,es un ${this.modelo} y su precio es $${this.precio}`)
+    console.log(` ${this.id} es de ${this.marca} ,es un ${this.modelo} y su precio es $${this.precio}`)
  }
  calcularIva(){
      this.precio = this.precio * 1.21
@@ -20,29 +20,31 @@ mostrarInfoEquipo(){
 
  
  exponerCatalogo(){
-    console.log(this.id, this.duenio, this.modelo, this.precio)
+    console.log(this.id, this.marca, this.modelo, this.precio)
  }
 }
 
 
 //Instanciación de objetos: 
 
-const imp1 = new Bateria(1,"Jorge Luis Borges", "3050", 800)
- const imp2 = new Bateria(2,"Gabriel García Marquez", "Epson L395", 4500)
- const imp3 = new Bateria(3,"Isabel Allende", "Epson L810", 2500)
- const imp4 = new Bateria(4,"Jorge Luis Borges","HP 4250", 1400)
- const imp5 = new Bateria(5,"Mario Benedetti", "Epson L3250", 2200)
- const imp6 = new Bateria(6,"Mario Vargas Llosa", "Epson L3250", 2800)
+const bat1 = new Bateria(1,"Ferrobat", "12x60", 80000)
+const bat2 = new Bateria(2,"Moura", "M20GD", 107000)
+const bat3 = new Bateria(3,"Willard", "UB620", 115000)
+const bat4 = new Bateria(4,"Ferrobat","12x75", 140000)
+const bat5 = new Bateria(5,"Ferrobat", "12x80", 220000)
+const bat6 = new Bateria(6,"Moura", "M22GD", 128000)
 
-let local = []
-local.push(imp1,imp2,imp3,imp4,imp5,imp6)
+let local  = []
+local.push(bat1,bat2,bat3,bat4,bat5,bat6)
 console.log(local)
 
-local.forEach(function(impresora){
-    impresora.calcularIva()
-    console.log(`EL precio con el IVA agrgado es ${impresora.precio}`)
-})
 
+/*
+local.forEach(function(bateria){
+    bateria.calcularIva()
+    console.log(`EL precio con el IVA agrgado es ${bateria.precio}`)
+})
+*/
 
 
 
@@ -59,7 +61,7 @@ function mostrarInfoDetallada(array){
 function solicitarPrecio() {
     let precio;
     do {
-        let entrada = parseInt(prompt("Ingrese el precio de la reparacion"));
+        let entrada = parseInt(prompt("Ingrese el precio de la bateria"));
         precio = entrada
 
         // Verifica si la entrada no es un número válido
@@ -70,21 +72,21 @@ function solicitarPrecio() {
     return precio
  }
 
-function solicitarPersona() {
-  let duenio
+function solicitarMarca() {
+  let marca
     do {
 
         let entrada = prompt("Ingrese el nombre y Apellido")
-        duenio = entrada
+        marca = entrada
 
-        if (duenio === "") {
+        if (marca === "") {
             alert("Por favor, ingrese el nombre y apelldo.");
         }
-    } while (duenio === "")
-        return duenio
+    } while (marca === "")
+        return marca
 }
 
- function solicitarEquipo() {
+ function solicitarModelo() {
     let modelo
     do {
 
@@ -100,12 +102,12 @@ function solicitarPersona() {
     
 
 
-function cargarEquipo() {
-    let nombreIng = solicitarPersona()
-    let modeloIng = solicitarEquipo()
+function cargarBateria() {
+    let nombreIng = solicitarMarca()
+    let modeloIng = solicitarModelo()
     let precioIng = solicitarPrecio()
-    let equipoNuevo = new Bateria(local.length+1, nombreIng, modeloIng, precioIng)
-    local.push(equipoNuevo)
+    let bateriaNueva = new Bateria(local.length+1, nombreIng, modeloIng, precioIng)
+    local.push(bateriaNueva)
 }
 
 
@@ -115,7 +117,7 @@ function menu(){
     while(finalizarMenu ==false){
     
         let opcion = prompt(`Ingrese la opción que desea:
-                            1 - Cargar equipo
+                            1 - Ingresar Nueva Bateria
                             2 - Mostrar info
                             3 - Opcion 3
                             0 - Salir del menú`)
@@ -141,28 +143,24 @@ function menu(){
 }
 
 
-//menu()
 
-//metodos de busqueda: find y filter
-//FIND devuelve el elemnto completo si hay coincidencia (y deja de buscar)
-//si no hay coincidencia devuelve undefined
-//retorno la comparacion que deseo
-// este find busca por modelo 
 
-let busqueda = local.find((imp)=>{
-    return imp.modelo.toUpperCase() == "HP 4250"
+let busqueda = local.find((bat)=>{
+    return bat.modelo.toUpperCase() == "M20GD"
 })
 console.log(busqueda)
+
+
 //function arrow ()=> tiene return implicito
 // ()=> return debo hacerlo explicito (tengo que escribir la palabra retorno)
 
-let busqueda2 = local.find((imp)=> imp.precio > 1000 && imp.precio < 5000)
+let busqueda2 = local.find((bat)=> bat.precio > 1000 && bat.precio < 5000)
 console.log(busqueda2)
 
 
 function buscarModelo(array){   
-    let modeloBuscado = prompt("Ingrese el modelo del equipo")
-    let buscarModelo = array.find((impresora)=> impresora.modelo.toLowerCase() == modeloBuscado.toLowerCase())
+    let modeloBuscado = prompt("Ingrese el modelo a buscar")
+    let buscarModelo = array.find((bateria)=> bateria.modelo.toUpperCase() == modeloBuscado.toUpperCase())
     if (buscarModelo == undefined) {
         console.log(`el modelo ${modeloBuscado} no se encuentra`)
     } else {
@@ -174,21 +172,22 @@ function buscarModelo(array){
 
 //filter devuelve todo lo que coincida con la busqueda/comparacion en un array sino hay ninguna coincidencia devuelve el array vacio
 
-let buscarDuenioFilter = local.filter((equipo)=> equipo.duenio.toLowerCase() == "jorge luis borges" )
-if (buscarDuenioFilter.length == 0) {
+let buscarMarcaFilter = local.filter((bateria)=> bateria.marca.toLowerCase() == "moura" )
+if (buscarMarcaFilter.length == 0) {
     console.log("no se encontro nada")
 } else {
-    console.log(buscarDuenioFilter)
+    console.log(buscarMarcaFilter)
 }
 
 
 
-let buscarFilterPrecio = local.filter((b)=>b.precio < 3000)
+let buscarFilterPrecio = local.filter((b)=>b.precio < 130000)
 if (buscarFilterPrecio.length == 0) {
     console.log("no hay equipos con ese precio")
 } else {
     buscarFilterPrecio.forEach((equipo)=> equipo.exponerCatalogo())  
 }
 
+
 //mostrar toda la estanteria
-local.forEach((equipo)=> equipo.exponerCatalogo())  
+//local.forEach((bateria)=> bateria.exponerCatalogo())  
