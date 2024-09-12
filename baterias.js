@@ -106,6 +106,7 @@ function calcular3cuotas(){
                               9 - Buscar Modelo
                               10 - Buscar Marca
                               11 - Filtrar por precio menor 
+                              12 -Filtrar Marca
                               0 - Salir del menú`);
       switch (opcion) {
         case "1":
@@ -144,6 +145,9 @@ function calcular3cuotas(){
           break;
         case "11":
           filtrarPorPrecio(local);
+          break; 
+        case "12":
+          filtrarMarca(local);
           break; 
         default:
           console.log(`La opción seleccionada ${opcion} no existe`);
@@ -233,12 +237,12 @@ function filtrarPorPrecio(array) {
     let opcion 
     while (opcion !== '1' && opcion !== '2') {
         opcion = prompt(`Estas seguro que queres borrar el ID #${idAborrar}
-            \nElige una opción: \n1. No  \n2. Si`)
+           Elige una opción: \n1. si  \n2. no`)
                  if (opcion !== '1' && opcion !== '2') {
             alert("Opción no válida. Por favor, elige 1 o 2.");
         }
     }
-    if (opcion ==="1") {
+    if (opcion ==="2") {
          alert("Cancelado")
          menu()
          return null
@@ -262,3 +266,30 @@ function filtrarPorPrecio(array) {
     } 
     console.log(array)    
 }
+
+
+function filtrarMarca(array) {
+  let filtroBuscado = Number(prompt("Ingrese la marca a buscar Elige una opción: \n1. Ferrobat  \n2. Willard \n3. Moura"));
+   let marcaSeleccionada
+   if (filtroBuscado === 1) { 
+     marcaSeleccionada = "Ferrobat"
+    //alert("Has seleccionado la marca: Ferrobat");
+} else if (filtroBuscado === 2) {
+     marcaSeleccionada = "Willard"
+    //alert("Has seleccionado la marca: Willard");
+} else if (filtroBuscado === 3) {
+     marcaSeleccionada = "Moura"
+    //alert("Has seleccionado la marca: Moura");
+} else {
+    alert("Selección no válida. Por favor, ingresa un número entre 1 y 3.");
+}
+  let buscarFilterMarca = array.filter((bateria) => bateria.marca === marcaSeleccionada );
+  if (buscarFilterMarca.length == 0) {
+    console.log("no hay baterias con esa marca");
+  } else {
+    buscarFilterMarca.forEach((bateria) => console.log(`#${bateria.id} es una bateria de Marca ${bateria.marca} , es un ${bateria.modelo} y su precio es de $${bateria.precio}`));
+  }
+}
+
+
+
