@@ -30,8 +30,9 @@ class Bateria {
   const bat6 = new Bateria(6, "Moura", "M22GD", 165000);
   
   let local = [];
+  let carrito = [];
   local.push(bat1, bat2, bat3, bat4, bat5, bat6);
-  console.log(local);
+
   
 function calcular3cuotas(){
   local.forEach(function(bateria){
@@ -107,6 +108,8 @@ function calcular3cuotas(){
                               10 - Buscar Marca
                               11 - Filtrar por precio menor 
                               12 -Filtrar Marca
+                              13 - agregar al carrito
+                              14 - ver total
                               0 - Salir del menú`);
       switch (opcion) {
         case "1":
@@ -148,6 +151,12 @@ function calcular3cuotas(){
           break; 
         case "12":
           filtrarMarca(local);
+          break; 
+          case "13":
+          agregarAlCarrito(local, carrito);
+          break; 
+          case "14":
+          sumaTotal(carrito);
           break; 
         default:
           console.log(`La opción seleccionada ${opcion} no existe`);
@@ -292,4 +301,43 @@ function filtrarMarca(array) {
 }
 
 
+function mostrarCatalogo(array){
+  array.forEach((e)=>e.exponerCatalogo() )
+}
+
+
+
+function agregarAlCarrito(arrayStock, arrayCarrito){
+  //mostrar Catalogo para que usuario sepa la oferta
+  mostrarCatalogo(arrayStock)
+  //preguntar id del libro deseado
+  let idBateriaComprado = Number(prompt(`Mire el catalogo en consola y selecione la ide del libro que desea agregar`))
+  //buscar en el array stock el libro elegido
+  let bateriaComprado = arrayStock.find((libro)=>libro.id == idBateriaComprado)
+  //evaluar si el libroComrado existe, en caso de que si pushearlo sino NO 
+  //planteo no puedo volver a sumar el mismo libro al carrito
+  if(bateriaComprado == undefined){
+      console.log(`El id ${idBateriaComprado} no existe en nuestro catalogo`)
+  }else{
+      //planteo no puedo volver a sumar el mismo libro al carrito
+      let bateriaEnCarrito = arrayCarrito.find((book)=> book.id == bateriaComprado.id)
+      if(bateriaEnCarrito == undefined){
+          //pushear al array del carrito
+          arrayCarrito.push(bateriaComprado)
+      }else{
+          console.log(`Este libro ya existe en el carrito`)
+          bateriaComprado.exponerCatalogo()
+      }
+  }
+  //chequear el carrito
+  console.log(arrayCarrito)
+}
+
+
+  function sumaTotal(carrito) {
+   let totalSumado = 0;    
+   carrito.forEach((bat)=> totalSumado += bat.precio)
+  console.log(totalSumado)
+  }
+  
 

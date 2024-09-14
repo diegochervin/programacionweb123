@@ -307,3 +307,32 @@ function borrarBateria(array) {
     mostrarInfoDetallada(local)
   });
 }
+
+
+//13 de septiembre
+
+function buscarData(array){
+//filter que nos permita buscar en titulo y autor
+let infoBuscar = prompt(`Ingrse la marca o modelo que desea buscar `)
+let busqueda = array.filter((bateria)=> bateria.modelo.toLowerCase().includes(infoBuscar.toLowerCase()) || bateria.marca.toLowerCase().includes(infoBuscar.toLowerCase()))
+
+if(busqueda.length == 0){
+  console.log(`No se encontraron coincidencias`)
+}
+else {
+  mostrarInfoEquipo(busqueda) 
+}
+}
+
+let carrito =[]
+
+function agregarAlCarrito(arrayStock, arrayCarrito){
+ mostrarInfoDetallada(arrayStock)
+ let idbBateriaComprado = Number(prompt(`mire el catalogo y agregue el id que desea`))
+let bateriaComprada = arrayStock.find((bateria)=>bateria.id == idbBateriaComprado)
+
+arrayCarrito.push(bateriaComprada)
+console.log(arrayCarrito)
+}
+
+agregarAlCarrito(local, carrito)

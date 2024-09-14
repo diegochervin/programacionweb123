@@ -11,11 +11,11 @@ console.log(vacioArray)
 
 //que puedo guardar un array? Cualquier cosa en JS
 
-let arrayNumbers = [7,18,34,35,101,43]
-console.log(arrayNumbers)
+let arrayCarrito = [7,18,34,35,101,43]
+console.log(arrayCarrito)
 
 //elementos de un array ACCEDO por indice o posicion (en los objetos accedo por el nombre de la propiedad)
-console.log(arrayNumbers[3])
+console.log(arrayCarrito[3])
 
 const arrayBoolean = [true, false, false]
 console.log(arrayBoolean)
@@ -23,7 +23,7 @@ console.log(arrayBoolean)
 let arrayString = ["mate", "Pelota", "numero", "termo"]
 console.log(arrayString)
 
-let arrayVarios = ["llave", 54, true, NaN, objeto, arrayNumbers, 43, undefined]
+let arrayVarios = ["llave", 54, true, NaN, objeto, arrayCarrito, 43, undefined]
 console.log(arrayVarios)
 console.log(arrayVarios[4])
 
@@ -33,16 +33,16 @@ console.log(arrayVarios[4])
 // agregar elementos
 //PUSH agrega al final
 //sumar de a uno
-arrayNumbers.push(19)
-console.log(arrayNumbers)
+arrayCarrito.push(19)
+console.log(arrayCarrito)
 
 //sumar de a varios
-arrayNumbers.push(10, 16)
-console.log(arrayNumbers)
+arrayCarrito.push(10, 16)
+console.log(arrayCarrito)
 
 //agregar al principio
-arrayNumbers.unshift(1)
-console.log(arrayNumbers)
+arrayCarrito.unshift(1)
+console.log(arrayCarrito)
 
 //eliminar elementos
 arrayVarios.pop()
@@ -53,33 +53,33 @@ arrayVarios.shift()
 console.log(arrayVarios)
 
 // splice(donde arranca a trabajar, cuantos elimina, elementps a agregar)
-console.log(arrayNumbers)
+console.log(arrayCarrito)
 //eliminar 18 34 35 y agregar el 8
-arrayNumbers.splice(2,3,8)
-console.log(arrayNumbers)
+arrayCarrito.splice(2,3,8)
+console.log(arrayCarrito)
 
 //tambien puedo pasarle 2 parametros
-arrayNumbers.splice(0,2)
-console.log(arrayNumbers)
+arrayCarrito.splice(0,2)
+console.log(arrayCarrito)
 
 //reverse invierte el array
-arrayNumbers.reverse()
-console.log(arrayNumbers)
+arrayCarrito.reverse()
+console.log(arrayCarrito)
 
-arrayNumbers.push(24)
+arrayCarrito.push(24)
 //mostrarlos como string unidos por X
-console.log(arrayNumbers.join(" - "))
-console.log(arrayNumbers.join("/"))
+console.log(arrayCarrito.join(" - "))
+console.log(arrayCarrito.join("/"))
 
 //recorrer un array: 
 for(let i = 0; i < 6; i++){
-console.log(arrayNumbers[i])
+console.log(arrayCarrito[i])
 }
 
 //recorre en forma dinamica todo el array no importa la cantidad
 //utilizamos prop length para recorrerlo siempre de pubta a punta
-for(let i = 0; i < arrayNumbers.length; i++){
-    console.log(arrayNumbers[i])
+for(let i = 0; i < arrayCarrito.length; i++){
+    console.log(arrayCarrito[i])
     }
     
 /* si empiezo el i en 1 hay que modificar el = y el -1
