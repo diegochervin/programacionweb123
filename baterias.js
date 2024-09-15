@@ -111,6 +111,7 @@ function calcular3cuotas(){
                               13 - agregar al carrito
                               14 - ver total
                               15 - sacar carrito
+                              16 - sumar al carrito muchos
                               0 - Salir del menú`);
       switch (opcion) {
         case "1":
@@ -160,8 +161,11 @@ function calcular3cuotas(){
           sumaTotal(carrito);
           break; 
           case "15":
-            sacarCarrito(carrito);
-            break; 
+          sacarCarrito(carrito);
+          break; 
+          case "16":
+          agregarAlCarritoMuchos(local, carrito);
+          break; 
         default:
           console.log(`La opción seleccionada ${opcion} no existe`);
           break;
@@ -340,7 +344,7 @@ function agregarAlCarrito(arrayStock, arrayCarrito){
   function sumaTotal(carrito) {
    let totalSumado = 0;    
    carrito.forEach((bat)=> totalSumado += bat.precio)
-  console.log(totalSumado)
+  console.log(`El total de su compra es de $${totalSumado}`)
   }
   
 
@@ -357,3 +361,24 @@ function sacarCarrito(carrito) {
     console.log(`Batería con id ${bateriaSacar.id} eliminada del carrito`);
   }
 }}
+
+function agregarAlCarritoMuchos(arrayStock, arrayCarrito){
+  mostrarCatalogo(arrayStock)
+  let idBateriaComprado = Number(prompt(`Mire el catalogo en consola y selecione la id de la bateria que desea agregar`))
+  let cantidad = Number(prompt(`que cantidad ${idBateriaComprado} desea agregar`))
+  let bateriaComprado = arrayStock.find((bate)=>bate.id == idBateriaComprado)
+     if(bateriaComprado == undefined){
+      console.log(`El id ${idBateriaComprado} no existe en nuestro catalogo`)
+    }
+    else{
+    for (let i = 0; i < cantidad; i++)
+       arrayCarrito.push(bateriaComprado)
+    }
+    console.log(arrayCarrito)
+  }
+  
+
+  
+  
+
+
