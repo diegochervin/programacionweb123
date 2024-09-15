@@ -110,6 +110,7 @@ function calcular3cuotas(){
                               12 -Filtrar Marca
                               13 - agregar al carrito
                               14 - ver total
+                              15 - sacar carrito
                               0 - Salir del menú`);
       switch (opcion) {
         case "1":
@@ -158,6 +159,9 @@ function calcular3cuotas(){
           case "14":
           sumaTotal(carrito);
           break; 
+          case "15":
+            sacarCarrito(carrito);
+            break; 
         default:
           console.log(`La opción seleccionada ${opcion} no existe`);
           break;
@@ -310,22 +314,21 @@ function mostrarCatalogo(array){
 function agregarAlCarrito(arrayStock, arrayCarrito){
   //mostrar Catalogo para que usuario sepa la oferta
   mostrarCatalogo(arrayStock)
-  //preguntar id del libro deseado
-  let idBateriaComprado = Number(prompt(`Mire el catalogo en consola y selecione la ide del libro que desea agregar`))
-  //buscar en el array stock el libro elegido
-  let bateriaComprado = arrayStock.find((libro)=>libro.id == idBateriaComprado)
-  //evaluar si el libroComrado existe, en caso de que si pushearlo sino NO 
-  //planteo no puedo volver a sumar el mismo libro al carrito
+  //preguntar id del bateria deseado
+  let idBateriaComprado = Number(prompt(`Mire el catalogo en consola y selecione la id de la bateria que desea agregar`))
+  //buscar en el array stock el bateria elegido
+  let bateriaComprado = arrayStock.find((bate)=>bate.id == idBateriaComprado)
+  //evaluar si el bateriaComrado existe, en caso de que si pushearlo sino NO 
+  //planteo no puedo volver a sumar el mismo bateria al carrito
   if(bateriaComprado == undefined){
       console.log(`El id ${idBateriaComprado} no existe en nuestro catalogo`)
   }else{
-      //planteo no puedo volver a sumar el mismo libro al carrito
-      let bateriaEnCarrito = arrayCarrito.find((book)=> book.id == bateriaComprado.id)
+      let bateriaEnCarrito = arrayCarrito.find((bat)=> bat.id == bateriaComprado.id)
       if(bateriaEnCarrito == undefined){
           //pushear al array del carrito
           arrayCarrito.push(bateriaComprado)
       }else{
-          console.log(`Este libro ya existe en el carrito`)
+          console.log(`Esta Bateria ya existe en el carrito`)
           bateriaComprado.exponerCatalogo()
       }
   }
@@ -341,3 +344,16 @@ function agregarAlCarrito(arrayStock, arrayCarrito){
   }
   
 
+function sacarCarrito(carrito) {
+  mostrarCatalogo(carrito)
+  let idBateriaSacar = Number(prompt(`Mire el catalogo en consola y selecione la id de la bateria que desea quitar del carrito`))
+  let bateriaSacar =carrito.find((bat)=>bat.id == idBateriaSacar)
+  if(bateriaSacar == undefined) {
+  console.log(`El id ${idBateriaSacar} no existe en nuestro carrito`)
+  } else {
+  let index = carrito.indexOf(bateriaSacar)
+    if (index > -1 ) {
+    carrito.splice(index, 1);
+    console.log(`Batería con id ${bateriaSacar.id} eliminada del carrito`);
+  }
+}}
