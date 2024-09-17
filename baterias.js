@@ -1,11 +1,13 @@
 //class constructora
 
 class Bateria {
-    constructor(id, marca, modelo, precio) {
+    constructor(id, marca, modelo, precio, ) {
         (this.id = id),
         (this.marca = marca),
         (this.modelo = modelo),
         (this.precio = precio);
+        this.cantidad = 0,
+        this.stock = 10
       }
   
     mostrarInfoEquipo() {
@@ -17,8 +19,17 @@ class Bateria {
      }
   
     exponerCatalogo() {
-      console.log(this.id, this.marca, this.modelo, this.precio); }
-  }
+      console.log(this.id, this.marca, this.modelo, this.precio, this.cantidad, this.stock); }
+    
+      sumarUnidades(cant){ 
+        this.cantidad +=cant
+      } 
+
+      restarUnidad(){ 
+        this.cantidad = this.cantidad - 1
+      } 
+    }
+    
   
   //Instanciación de objetos:
   
@@ -29,11 +40,23 @@ class Bateria {
   const bat5 = new Bateria(5, "Ferrobat", "12x80", 110000);
   const bat6 = new Bateria(6, "Moura", "M22GD", 165000);
   
-  let local = [];
-  let carrito = [];
-  local.push(bat1, bat2, bat3, bat4, bat5, bat6);
-
+  //crear storage para stock
   
+  let local = [];
+  
+  if(localStorage.getItem("local")){
+    local = JSON.parse(localStorage.getItem("local"))
+    console.log(local)
+  
+  }else{
+    console.log(`cargamos el local por primera vez`)
+   local = [bat1, bat2, bat3, bat4, bat5, bat6]
+   localStorage.setItem("local", JSON.stringify(local))
+  }
+  
+  let carrito = [];
+  
+
 function calcular3cuotas(){
   local.forEach(function(bateria){
       bateria.calcularPrecioTarjeta3cuotas()
@@ -112,6 +135,7 @@ function calcular3cuotas(){
                               14 - ver total
                               15 - sacar carrito
                               16 - sumar al carrito muchos
+                              17 - MOSTRAR CARRITO
                               0 - Salir del menú`);
       switch (opcion) {
         case "1":
@@ -166,6 +190,9 @@ function calcular3cuotas(){
           case "16":
           agregarAlCarritoMuchos(local, carrito);
           break; 
+          case "17":
+          mostrarCarrito(carrito);
+          break;
         default:
           console.log(`La opción seleccionada ${opcion} no existe`);
           break;
@@ -320,20 +347,23 @@ function agregarAlCarrito(arrayStock, arrayCarrito){
   mostrarCatalogo(arrayStock)
   //preguntar id del bateria deseado
   let idBateriaComprado = Number(prompt(`Mire el catalogo en consola y selecione la id de la bateria que desea agregar`))
+  let cantidad = Number(prompt(`que cantidad ${idBateriaComprado} desea agregar`))
   //buscar en el array stock el bateria elegido
   let bateriaComprado = arrayStock.find((bate)=>bate.id == idBateriaComprado)
   //evaluar si el bateriaComrado existe, en caso de que si pushearlo sino NO 
   //planteo no puedo volver a sumar el mismo bateria al carrito
   if(bateriaComprado == undefined){
       console.log(`El id ${idBateriaComprado} no existe en nuestro catalogo`)
-  }else{
+  }else{//planteo incluir cantidad
       let bateriaEnCarrito = arrayCarrito.find((bat)=> bat.id == bateriaComprado.id)
       if(bateriaEnCarrito == undefined){
           //pushear al array del carrito
+          bateriaComprado.sumarUnidades(cantidad)
           arrayCarrito.push(bateriaComprado)
+          console.log(arrayCarrito)
       }else{
-          console.log(`Esta Bateria ya existe en el carrito`)
-          bateriaComprado.exponerCatalogo()
+          //quiero agregarle uno de cantidad, pusheamos a bateriaencarrito ya qeu lo encontre
+          bateriaEnCarrito.cantidad += cantidad
       }
   }
   //chequear el carrito
@@ -341,9 +371,10 @@ function agregarAlCarrito(arrayStock, arrayCarrito){
 }
 
 
+
   function sumaTotal(carrito) {
    let totalSumado = 0;    
-   carrito.forEach((bat)=> totalSumado += bat.precio)
+   carrito.forEach((bat)=> totalSumado += (bat.precio * bat.cantidad))
   console.log(`El total de su compra es de $${totalSumado}`)
   }
   
@@ -362,23 +393,8 @@ function sacarCarrito(carrito) {
   }
 }}
 
-function agregarAlCarritoMuchos(arrayStock, arrayCarrito){
-  mostrarCatalogo(arrayStock)
-  let idBateriaComprado = Number(prompt(`Mire el catalogo en consola y selecione la id de la bateria que desea agregar`))
-  let cantidad = Number(prompt(`que cantidad ${idBateriaComprado} desea agregar`))
-  let bateriaComprado = arrayStock.find((bate)=>bate.id == idBateriaComprado)
-     if(bateriaComprado == undefined){
-      console.log(`El id ${idBateriaComprado} no existe en nuestro catalogo`)
-    }
-    else{
-    for (let i = 0; i < cantidad; i++)
-       arrayCarrito.push(bateriaComprado)
-    }
+  
+function mostrarCarrito(arrayCarrito) {
     console.log(arrayCarrito)
   }
-  
-
-  
-  
-
 
