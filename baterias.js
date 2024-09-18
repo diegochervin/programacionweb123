@@ -43,7 +43,9 @@ class Bateria {
   //crear storage para stock
   
   let local = [];
-  
+  local.push(bat1, bat2, bat3, bat4, bat5, bat6)
+
+/*
   if(localStorage.getItem("local")){
     local = JSON.parse(localStorage.getItem("local"))
     console.log(local)
@@ -53,7 +55,7 @@ class Bateria {
    local = [bat1, bat2, bat3, bat4, bat5, bat6]
    localStorage.setItem("local", JSON.stringify(local))
   }
-  
+  */
   let carrito = [];
   
 
@@ -134,8 +136,7 @@ function calcular3cuotas(){
                               13 - agregar al carrito
                               14 - ver total
                               15 - sacar carrito
-                              16 - sumar al carrito muchos
-                              17 - MOSTRAR CARRITO
+                              16 - MOSTRAR CARRITO
                               0 - Salir del menú`);
       switch (opcion) {
         case "1":
@@ -188,9 +189,6 @@ function calcular3cuotas(){
           sacarCarrito(carrito);
           break; 
           case "16":
-          agregarAlCarritoMuchos(local, carrito);
-          break; 
-          case "17":
           mostrarCarrito(carrito);
           break;
         default:
