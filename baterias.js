@@ -43,21 +43,37 @@ class Bateria {
   //crear storage para stock
   
   let local = [];
-  local.push(bat1, bat2, bat3, bat4, bat5, bat6)
-
-/*
+  //local.push(bat1, bat2, bat3, bat4, bat5, bat6)
   if(localStorage.getItem("local")){
-    local = JSON.parse(localStorage.getItem("local"))
-    console.log(local)
-  
+   let storelocalLPM = JSON.parse(localStorage.getItem("local"))
+// ciclo for para recorrer, el array localStore es para traerme la info que capturamos del browser
+  storelocalLPM.forEach((bat)=>
+  //batstorage el objeto que capture del storage
+  {
+    let batConClass = new Bateria(bat.id, bat.marca, bat.modelo, bat.precio, bat.cantidad, bat.stock )
+    local.push(batConClass)
+})
+console.log(local)
+
   }else{
     console.log(`cargamos el local por primera vez`)
    local = [bat1, bat2, bat3, bat4, bat5, bat6]
    localStorage.setItem("local", JSON.stringify(local))
   }
-  */
-  let carrito = [];
   
+  let carrito = [];
+  if(localStorage.getItem("carrito")){
+    let carritoStore = JSON.parse(localStorage.getItem("carrito"))
+ // ciclo for para recorrer, el array localStore es para traerme la info que capturamos del browser
+   carritoStore.forEach((bat)=>
+   //batstorage el objeto que capture del storage
+   {
+     
+     let carritoClass = new Bateria(bat.id, bat.marca, bat.modelo, bat.precio)
+
+    carritoClass.cantidad =  bat.cantidad
+     carrito.push(carritoClass)
+ })}
 
 function calcular3cuotas(){
   local.forEach(function(bateria){
@@ -115,6 +131,7 @@ function calcular3cuotas(){
     let precioIng = solicitarPrecio();
     let bateriaNueva = new Bateria(local.length + 1,nombreIng, modeloIng,precioIng);
     local.push(bateriaNueva);
+    localStorage.setItem("local", JSON.stringify(local))
   }
   
   function menu() {
@@ -365,7 +382,7 @@ function agregarAlCarrito(arrayStock, arrayCarrito){
       }
   }
   //chequear el carrito
-  console.log(arrayCarrito)
+  localStorage.setItem("carrito", JSON.stringify(carrito))
 }
 
 
