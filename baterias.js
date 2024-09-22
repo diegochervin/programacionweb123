@@ -80,6 +80,9 @@
           case "17":
           restarUnidades(carrito);
           break;
+          case "18":
+          mostrarCarritoConFormato(carrito);
+          break;
         default:
           console.log(`La opción seleccionada ${opcion} no existe`);
           break;

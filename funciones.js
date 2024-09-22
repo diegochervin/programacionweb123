@@ -83,6 +83,13 @@ function calcular3cuotas(){
           buscarModelo.mostrarInfoEquipo();
         }
       }
+
+
+      function mostrarCarritoConFormato(arrayCarrito) {
+        arrayCarrito.forEach(bateria => {
+            console.log(`#${bateria.id} es una bateria de Marca ${bateria.marca}, es un ${bateria.modelo} y su precio es de $${bateria.precio}, tienes ${bateria.cantidad} en el carrito, y el stock disponible es de ${bateria.stock}`);
+        });
+    }
      
       function buscarMarca(array){
         let marcaBuscada = prompt("Ingrese la marca a buscar").toLowerCase();
@@ -279,13 +286,12 @@ function agregarAlCarrito(arrayStock, arrayCarrito){
     }
 }
   
-
-  
-    function sumaTotal(carrito) {
-     let totalSumado = 0;    
-     carrito.forEach((bat)=> totalSumado += (bat.precio * bat.cantidad))
-    console.log(`El total de su compra es de $${totalSumado}`)
-    }
+function sumaTotal(carrito) {
+    let totalSumado = 0;    
+    carrito.forEach(bat => totalSumado += (bat.precio * bat.cantidad));
+    console.log(`El total de su compra es de $${totalSumado}`);
+    mostrarCarritoConFormato(carrito); // Llamada a la función para mostrar el carrito
+}
     
   
   function sacarCarrito(carrito) {
