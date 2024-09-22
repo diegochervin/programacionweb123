@@ -218,37 +218,53 @@ function calcular3cuotas(){
     }
 
     
+  
+  function agregarAlCarrito(arrayStock, arrayCarrito) {
+    // Mostrar catálogo para que el usuario sepa la oferta
+    mostrarCatalogo(arrayStock);
 
-function agregarAlCarrito(arrayStock, arrayCarrito){
-    //mostrar Catalogo para que usuario sepa la oferta
-    mostrarCatalogo(arrayStock)
-    //preguntar id del bateria deseado
-    let idBateriaComprado = Number(prompt(`Mire el catalogo en consola y selecione la id de la bateria que desea agregar`))
-    let cantidad = Number(prompt(`que cantidad ${idBateriaComprado} desea agregar`))
-    //buscar en el array stock el bateria elegido
-    let bateriaComprado = arrayStock.find((bate)=>bate.id == idBateriaComprado)
-    //evaluar si el bateriaComrado existe, en caso de que si pushearlo sino NO 
-    //planteo no puedo volver a sumar el mismo bateria al carrito
-    if(bateriaComprado == undefined){
-        console.log(`El id ${idBateriaComprado} no existe en nuestro catalogo`)
-    }else{//planteo incluir cantidad
-        let bateriaEnCarrito = arrayCarrito.find((bat)=> bat.id == bateriaComprado.id)
-        if(bateriaEnCarrito == undefined){
-            //pushear al array del carrito
-            bateriaComprado.sumarUnidades(cantidad)
-            arrayCarrito.push(bateriaComprado)
-            console.log(arrayCarrito)
-        }else{
-            //quiero agregarle uno de cantidad, pusheamos a bateria en carrito ya que lo encontre
-            bateriaEnCarrito.cantidad += cantidad
+    // Preguntar ID de la batería deseada
+    let idBateriaComprado = Number(prompt(`Mire el catálogo en consola y seleccione la ID de la batería que desea agregar`))
+    let cantidadIngresada = Number(prompt(`¿Qué cantidad de la batería con ID ${idBateriaComprado} desea agregar?`))
+
+    // Buscar en el array stock la batería elegida
+    let bateriaComprado = arrayStock.find((bate) => bate.id == idBateriaComprado);
+
+    // Evaluar si la batería existe
+    if (bateriaComprado === undefined) {
+        console.log(`El ID ${idBateriaComprado} no existe en nuestro catálogo.`);
+    } else {
+        // Verificar que la cantidad ingresada no exceda el stock disponible
+        if (cantidadIngresada > bateriaComprado.stock) {
+            console.log(`No es posible agregar ${cantidadIngresada} unidades. Solo tenemos ${bateriaComprado.stock} en stock.`)
+        } else {
+            // Buscar si la batería ya está en el carrito
+            let bateriaEnCarrito = arrayCarrito.find((bat) => bat.id == bateriaComprado.id)
+
+            if (bateriaEnCarrito == undefined) {
+                // Si no está en el carrito, agregar la batería con la cantidad especificada
+                bateriaComprado.sumarUnidades(cantidadIngresada);
+                arrayCarrito.push(bateriaComprado)
+
+                // Actualizar el carrito en localStorage
+                localStorage.setItem("carrito", JSON.stringify(carrito)); // Aquí usas `carrito`, lo cual es correcto si es tu array de carrito
+                console.log(`Se han agregado ${cantidadIngresada} unidades de la batería con ID ${idBateriaComprado}.`)
+            } else {
+                // Si ya está en el carrito, verificar si la cantidad sumada supera el stock disponible
+                if ((cantidadIngresada + bateriaComprado.cantidad) > bateriaComprado.stock) {
+                    console.log(`No es posible agregar ${cantidadIngresada} unidades. Ya tienes ${bateriaComprado.cantidad} en el carrito y solo tenemos ${bateriaComprado.stock} en stock.`)
+                } else {
+                    // Si no supera el stock, agregar la cantidad al carrito
+                    bateriaEnCarrito.cantidad += cantidadIngresada
+
+                    // Actualizar el carrito en localStorage
+                    localStorage.setItem("carrito", JSON.stringify(carrito)) // Sigue siendo correcto si `carrito` es el array principal
+                    console.log(`Se han agregado ${cantidadIngresada} unidades de la batería con ID ${idBateriaComprado}.`)
+                }
+            }
         }
     }
-    //actualiza carrito localstorage
-    localStorage.setItem("carrito", JSON.stringify(carrito))
-    console.log(`Se han agregado ${cantidad} unidades de la batería con id ${idBateriaComprado}.`);
-  }
-  
-  
+}
 
 
   function restarUnidades(arrayCarrito){

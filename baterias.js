@@ -23,6 +23,7 @@
                               15 - Sacar del carrito un modelo
                               16 - Mostrar carrito
                               17 - Restar del carrito
+                              18 - Mostrar carrito con Formato
                               0 - Salir del menú`);
       switch (opcion) {
         case "0":
