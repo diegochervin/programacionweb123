@@ -94,7 +94,7 @@ function calcular3cuotas(){
       function buscarMarca(array){
         let marcaBuscada = prompt("Ingrese la marca a buscar").toLowerCase();
         let buscarMarcaFilter = array.filter(
-        (array) => array.marca.toLowerCase() == marcaBuscada
+        (bat) => bat.marca.toLowerCase().includes(marcaBuscada) 
       );
       if (buscarMarcaFilter.length == 0) {
         console.log("no se encontro la marca solicitada");
@@ -105,7 +105,8 @@ function calcular3cuotas(){
     
     function filtrarPorPrecio(array) {
       let precioBuscado = Number(prompt("Ingrese precio maximo"));
-      let buscarFilterPrecio = array.filter((bateria) => bateria.precio < precioBuscado );
+      let precioBuscamin = Number(prompt("Ingrese precio minimo"));
+      let buscarFilterPrecio = array.filter((bateria) => bateria.precio <= precioBuscado && bateria.precio >= precioBuscamin);
       if (buscarFilterPrecio.length == 0) {
         console.log("no hay baterias con ese precio");
       } else {
@@ -128,10 +129,10 @@ function calcular3cuotas(){
       function ordenarModeloAZ(array) {
         let arrayModeloMenorMayor = [].concat(array);
         arrayModeloMenorMayor.sort((a, b) => {
-          if (a.modelo < b.modelo) {
+          if (a.modelo.toLowerCase() < b.modelo.toLowerCase()) {
             return -1;
           }
-          if (a.modelo > b.modelo) {
+          if (a.modelo.toLowerCase() > b.modelo.toLowerCase()) {
             return 1;
           }
           return 0;
@@ -180,8 +181,9 @@ function calcular3cuotas(){
                 if (bat.id == idAborrar) {
                   let indice = array.indexOf(bat);
                   array.splice(indice, 1);
+                  console.log (`La bateria con el id ${idAborrar} fue eliminado.`)
+                  localStorage.setItem("local", JSON.stringify(array))
                 }
-                console.log (`La bateria con el id ${idAborrar} fue eliminado.`)
                 
                      });
         } 
@@ -280,23 +282,17 @@ function calcular3cuotas(){
         if(bateriaCarrito.cantidad >= cantidad ) {
             //resta cantidad deseada
             bateriaCarrito.cantidad -= cantidad
-
             // Si la cantidad es 0 o menor, eliminar el producto del carrito
             if (bateriaCarrito.cantidad <= 0) {
                 // Eliminar la batería del carrito
                 arrayCarrito = arrayCarrito.filter(bate => bate.id !== idBateriaCarrito);
             }
-
-
          // Guardar el carrito actualizado en localStorage
          localStorage.setItem("carrito", JSON.stringify(arrayCarrito));
          console.log(`Se han quitado ${cantidad} unidades de la batería con id ${idBateriaCarrito}.`);
-
-
      } else {
          console.log(`No puedes quitar más unidades de las que hay en el carrito. Solo tienes ${bateriaCarrito.cantidad} unidades.`);
      }
- 
     } else {
         console.log(`El id ${idBateriaCarrito} no existe en el carrito.`);
     }
