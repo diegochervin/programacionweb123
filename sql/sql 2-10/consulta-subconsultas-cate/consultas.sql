@@ -3,7 +3,9 @@
 
 
 --2
---SELECT * FROM `mascotas` INNER JOIN serviciossolicitados on mascotas.mascota_id = serviciossolicitados.mascota_id WHERE MOD(servicio_id, 2) = 0;
+--SELECT mascotas.* FROM `mascotas` INNER JOIN serviciossolicitados on mascotas.mascota_id = serviciossolicitados.mascota_id WHERE MOD(servicio_id, 2) = 0 GROUP BY mascotas.mascota_id;
+-- select * from mascotas where mascotas_id IN (select mascota_id from serviciossolicitados where mod(servicio_id, 2) = 0)
+
 
 --3
 --SELECT * FROM `clientes` INNER JOIN mascotas on mascotas.cliente_id = clientes.cliente_id WHERE (especie = "gato" OR especie = "hamster");
@@ -28,3 +30,25 @@
 
 --10
 -- SELECT *, COUNT(serviciossolicitados.mascota_id) AS CANTIDAD FROM mascotas INNER JOIN serviciossolicitados ON mascotas.mascota_id = serviciossolicitados.mascota_id GROUP BY mascotas.nombre ORDER BY CANTIDAD DESC;
+
+--subconsulta G
+-- g (primera) SELECT * FROM clientes INNER JOIN compras on clientes.cliente_id = compras.cliente_id where producto_id = 8;
+
+
+-- a 
+-- SELECT clientes.nombre, telefono FROM `clientes` INNER JOIN compras on clientes.cliente_id = compras.cliente_id INNER JOIN productos on compras.producto_id = productos.producto_id WHERE precio >= 1000;
+
+--b
+--SELECT mascotas.nombre, mascotas.raza FROM mascotas INNER JOIN clientes ON mascotas.cliente_id = clientes.cliente_id WHERE direccion LIKE 'Av.%';
+
+--c
+--SELECT direccion, clientes.nombre FROM `clientes` INNER JOIN mascotas on clientes.cliente_id = mascotas.cliente_id WHERE MOD(clientes.cliente_id, 2) = 0 AND (especie = "gato" OR especie = "perro");
+
+--d
+--SELECT mascotas.mascota_id, COUNT(mascotas.mascota_id) as Cantidad_servicio FROM `mascotas` INNER join serviciossolicitados on mascotas.mascota_id = serviciossolicitados.mascota_id WHERE (especie = "perro") GROUP BY mascotas.mascota_id HAVING Cantidad_servicio >= 2;
+
+--e
+-- SELECT clientes.nombre, clientes.telefono FROM `clientes` INNER JOIN mascotas on clientes.cliente_id = mascotas.cliente_id INNER JOIN compras on clientes.cliente_id = compras.cliente_id INNER JOIN productos on compras.producto_id = productos.producto_id WHERE (especie = "perro") AND productos.nombre like "Croqueta%"
+
+--f
+--SELECT clientes.nombre, clientes.telefono FROM `clientes` INNER JOIN mascotas on clientes.cliente_id = mascotas.cliente_id INNER JOIN compras on clientes.cliente_id = compras.cliente_id WHERE (especie = "gato" OR especie = "hamster") AND MOD(clientes.cliente_id, 2) = 0 AND compras.fecha_compra BETWEEN '2023-07-01' and '2023-12-31';
