@@ -327,14 +327,19 @@ function sumaTotal(carrito) {
   
 
     let containerBaterias = document.getElementById("containerBaterias")
-
-    let cardFerro = document.createElement("div")
-    cardFerro.innerHTML = ``
-
-    containerBaterias.append(cardFerro)
-
+   
     for(let bateria of local){
-      let bateriaNuevaDiv = document.createElement("div")
-      bateriaNuevaDiv.innerHTML = ``
-      containerBaterias.append(bateriaNuevaDiv)
-    }
+      let bateriaNuevoDiv = document.createElement("div")
+      bateriaNuevoDiv.className = "col-12, col-md-6 col-lg-4"
+      bateriaNuevoDiv.innerHTML = `<div id="${bateria.id}" class="card" style="width: 18rem;">
+      <img class="card-img-top img-fluid" style="height: 200px;"src="static/img/${bateria.imagen}" alt=${bateria.modelo}>
+      <div class="card-body">
+          <h4 class="card-title">${bateria.modelo}</h4>
+          <p>Marca: ${bateria.marca}</p>
+          <p class="">Precio: ${bateria.precio}</p>
+          <p class="">Stock: ${bateria.stock}</p>
+      <button id="" class="btn btn-outline-success">Agregar al carrito</button>
+      </div>
+      </div>`
+      containerBaterias.append(bateriaNuevoDiv)
+  }
