@@ -325,3 +325,16 @@ function sumaTotal(carrito) {
       console.log(arrayCarrito)
     }
   
+
+    let containerBaterias = document.getElementById("containerBaterias")
+
+    let cardFerro = document.createElement("div")
+    cardFerro.innerHTML = ``
+
+    containerBaterias.append(cardFerro)
+
+    for(let bateria of local){
+      let bateriaNuevaDiv = document.createElement("div")
+      bateriaNuevaDiv.innerHTML = ``
+      containerBaterias.append(bateriaNuevaDiv)
+    }

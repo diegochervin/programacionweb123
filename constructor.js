@@ -1,12 +1,13 @@
 //class constructora
 
 class Bateria {
-    constructor(id, marca, modelo, precio, stock) {
+    constructor(id, marca, modelo, precio, stock, imagen) {
         (this.id = id),
         (this.marca = marca),
         (this.modelo = modelo),
-        (this.precio = precio);
-        this.stock = stock;
+        (this.precio = precio),
+        this.imagen = imagen,
+        this.stock = stock,
         this.cantidad = 0
        
       }
@@ -34,12 +35,12 @@ class Bateria {
   
   //Instanciación de objetos:
   
-  const bat1 = new Bateria(1, "Ferrobat", "12X65", 85000, 10);
-  const bat2 = new Bateria(2, "Moura", "M20GD", 145000, 10);
-  const bat3 = new Bateria(3, "Willard", "UB620", 155000, 10);
-  const bat4 = new Bateria(4, "Ferrobat", "12x70", 100000, 10);
-  const bat5 = new Bateria(5, "Ferrobat", "12x80", 110000, 10);
-  const bat6 = new Bateria(6, "Moura", "M22GD", 165000, 10);
+  const bat1 = new Bateria(1, "Ferrobat", "12X65", 85000, 10, "12x65.jpg");
+  const bat2 = new Bateria(2, "Moura", "M20GD", 145000, 10, "m20gd.jpg");
+  const bat3 = new Bateria(3, "Willard", "UB620", 155000, 10, "ub620.jpg");
+  const bat4 = new Bateria(4, "Ferrobat", "12x70", 100000, 10, "12x70.jpg");
+  const bat5 = new Bateria(5, "Ferrobat", "12x80", 110000, 10, "12x80.jpg");
+  const bat6 = new Bateria(6, "Moura", "M22GD", 165000, 10, "m22gd.jpg");
   
   //crear storage para stock
   
