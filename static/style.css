@@ -1,15 +1,15 @@
 /* Style the header with a grey background and some padding */
 .header {
     overflow: hidden;
-    background-color: #f1f1f1;
+    background-color: #1558f3;
     padding: 20px 10px;
-    margin-bottom: 20px;
+    
   }
   
   /* Style the header links */
   .header a {
     float: left;
-    color: black;
+    color: rgb(9, 244, 228);
     text-align: center;
     padding: 12px;
     text-decoration: none;
@@ -113,3 +113,16 @@
     text-align: left;
   }
   
+
+
+.filtro {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  background-image: linear-gradient(to bottom, #1558f3, #1558f3); /* Fondo azul para la barra */
+}
+
+#filtro {
+  width: 300px;
+  border-radius: 10px;
+}

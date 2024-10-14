@@ -338,8 +338,34 @@ function sumaTotal(carrito) {
           <p>Marca: ${bateria.marca}</p>
           <p class="">Precio: ${bateria.precio}</p>
           <p class="">Stock: ${bateria.stock}</p>
+           <div class="col-md-3 pull-left mt-2 pl-0 mb-3 cantidad_div">
+<label class="control-label cantidad mt-0">Cantidad</label>
+<span class="bmd-form-group is-filled"><input class="form-control pl-2 cantidad_comprar **" type="number" id="cantidad" name="cantidad" value="1"></span>
+</div>
       <button id="" class="btn btn-outline-success">Agregar al carrito</button>
+
       </div>
       </div>`
       containerBaterias.append(bateriaNuevoDiv)
+  }
+
+
+  function filterProductsBySelect() {
+    // Obtener el valor seleccionado en el dropdown
+    const selectedBrand = document.getElementById('brand-select').value;
+    
+    // Obtener todas las tarjetas de producto
+    const products = document.querySelectorAll('.product-card');
+    
+    products.forEach(product => {
+      // Obtener la marca del atributo data-brand
+      const productBrand = product.getAttribute('data-brand');
+      
+      // Mostrar u ocultar según la marca seleccionada
+      if (selectedBrand === '' || productBrand === selectedBrand) {
+        product.style.display = 'block'; // Mostrar si coincide o si no hay filtro
+      } else {
+        product.style.display = 'none'; // Ocultar si no coincide
+      }
+    });
   }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Baterias Ferrobat</title>
 </head>
 
@@ -25,6 +26,15 @@
 
 </header>
 <body>
+
+  <div class="filtro">
+    <select id="filtro">
+      <option value="">Mostrar todos</option>
+      <option value="ferrobat">Ferrobat</option>
+      <option value="willard">Willard</option>
+      <option value="moura">Moura</option>
+    </select>
+  </div>
     
   <div class="container">
     <div id="containerBaterias" class="row">
@@ -55,14 +65,18 @@
         
         <div class="informacion">
           <a href="tel:206067449"  style="text-decoration: none;">Teléfono:  2060-6749</a><br>
-          <a href="https://wa.me/987654321"  style="text-decoration: none;">Whatsapp: XXXXX</a><br>
+          <a href="https://wa.me/987654321"><i class="fa-brands fa-whatsapp"></i> Whatsapp: XXXXX</a>
+          <a href="https://www.instagram.com/bateriasferrobat"><i class="fa-brands fa-instagram"></i> #bateriasferrobat</a> 
           <p>Av. Lope de Vega 2095, C1407 CABA</p>
         </div>
       </div>
     </div>
 
+
     </body>
      
+    
+   
     
 
 
@@ -80,7 +94,7 @@
           <a href="tel:206067449" class="text-white" style="text-decoration: none;">Teléfono:  2060-6749</a>
       </div>
       <div class="col-sm-4 p-3 bg-primary text-white text-center">
-          <a href="https://wa.me/987654321" class="text-white" style="text-decoration: none;">Whatsapp: XXXXX</a>
+          <a href="https://wa.me/987654321" class="text-white" style="text-decoration: none;"><i class="fa-brands fa-whatsapp"></i> Whatsapp: XXXXX</a>
       </div>
       </div>
     </div>

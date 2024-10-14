@@ -52,7 +52,7 @@ class Bateria {
   storelocalLPM.forEach((bat)=>
   //batstorage el objeto que capture del storage
   {
-    let batConClass = new Bateria(bat.id, bat.marca, bat.modelo, bat.precio, bat.stock);
+    let batConClass = new Bateria(bat.id, bat.marca, bat.modelo, bat.precio, bat.stock, bat.imagen);
     local.push(batConClass)
 })
 console.log(local)
@@ -73,7 +73,7 @@ console.log(local)
    //batstorage el objeto que capture del storage
    {
      
-     let carritoClass = new Bateria(bat.id, bat.marca, bat.modelo, bat.precio, bat.stock)
+     let carritoClass = new Bateria(bat.id, bat.marca, bat.modelo, bat.precio,bat.imagen, bat.stock)
 
     carritoClass.cantidad =  bat.cantidad
      carrito.push(carritoClass)
