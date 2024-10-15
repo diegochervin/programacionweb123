@@ -324,48 +324,53 @@ function sumaTotal(carrito) {
   function mostrarCarrito(arrayCarrito) {
       console.log(arrayCarrito)
     }
-  
+    let containerBaterias = document.getElementById("containerBaterias");
 
-    let containerBaterias = document.getElementById("containerBaterias")
-   
-    for(let bateria of local){
-      let bateriaNuevoDiv = document.createElement("div")
-      bateriaNuevoDiv.className = "col-12, col-md-6 col-lg-4"
-      bateriaNuevoDiv.innerHTML = `<div id="${bateria.id}" class="card" style="width: 18rem;">
-      <img class="card-img-top img-fluid" style="height: 200px;"src="static/img/${bateria.imagen}" alt=${bateria.modelo}>
-      <div class="card-body">
-          <h4 class="card-title">${bateria.modelo}</h4>
-          <p>Marca: ${bateria.marca}</p>
-          <p class="">Precio: ${bateria.precio}</p>
-          <p class="">Stock: ${bateria.stock}</p>
-           <div class="col-md-3 pull-left mt-2 pl-0 mb-3 cantidad_div">
-<label class="control-label cantidad mt-0">Cantidad</label>
-<span class="bmd-form-group is-filled"><input class="form-control pl-2 cantidad_comprar **" type="number" id="cantidad" name="cantidad" value="1"></span>
-</div>
-      <button id="" class="btn btn-outline-success">Agregar al carrito</button>
-
-      </div>
-      </div>`
-      containerBaterias.append(bateriaNuevoDiv)
-  }
-
-
-  function filterProductsBySelect() {
-    // Obtener el valor seleccionado en el dropdown
-    const selectedBrand = document.getElementById('brand-select').value;
+    function renderBaterias(local) {
+      // Limpia el container antes de volver a agregar productos
+      containerBaterias.innerHTML = '';
     
-    // Obtener todas las tarjetas de producto
-    const products = document.querySelectorAll('.product-card');
-    
-    products.forEach(product => {
-      // Obtener la marca del atributo data-brand
-      const productBrand = product.getAttribute('data-brand');
-      
-      // Mostrar u ocultar según la marca seleccionada
-      if (selectedBrand === '' || productBrand === selectedBrand) {
-        product.style.display = 'block'; // Mostrar si coincide o si no hay filtro
-      } else {
-        product.style.display = 'none'; // Ocultar si no coincide
+      // Recorre cada batería y genera la tarjeta
+      for (let bateria of local) {
+        let bateriaNuevoDiv = document.createElement("div");
+        bateriaNuevoDiv.className = "col-12 col-md-6 col-lg-4";
+        bateriaNuevoDiv.innerHTML = `
+          <div id="${bateria.id}" class="card product-card" data-marca="${bateria.marca}" style="width: 18rem;">
+            <img class="card-img-top img-fluid" style="height: 200px;" src="static/img/${bateria.imagen}" alt="${bateria.modelo}">
+            <div class="card-body">
+              <h4 class="card-title">${bateria.modelo}</h4>
+              <p>Marca: ${bateria.marca}</p>
+              <p class="">Precio: ${bateria.precio}</p>
+              <p class="">Stock: ${bateria.stock}</p>
+              <div class="col-md-3 pull-left mt-2 pl-0 mb-3 cantidad_div">
+                <label class="control-label cantidad mt-0">Cantidad</label>
+                <span class="bmd-form-group is-filled">
+                  <input class="form-control pl-2 cantidad_comprar" type="number" id="cantidad" name="cantidad" value="1">
+                </span>
+              </div>
+              <button id="agregar-carrito" class="btn btn-outline-success">Agregar al carrito</button>
+            </div>
+          </div>`;
+        containerBaterias.append(bateriaNuevoDiv);
       }
-    });
-  }
+    }
+    
+    // Función para filtrar por marca
+    function filtrarPorMarca() {
+      const marcaSeleccionada = document.getElementById('filtro-marca').value.toLowerCase();
+    
+      // Filtrar el array local en función de la marca seleccionada
+      const bateriasFiltradas = local.filter(bateria => {
+        const productBrand = bateria.marca.toLowerCase();
+        return marcaSeleccionada === '' || productBrand === marcaSeleccionada;
+      });
+    
+      // Volver a renderizar solo las baterías filtradas
+      renderBaterias(bateriasFiltradas);
+    }
+    
+    // Inicialmente renderiza todas las baterías
+    renderBaterias(local);
+    
+    // Agregar el evento onchange al select para filtrar las tarjetas por marca
+    document.getElementById('filtro-marca').addEventListener('change', filtrarPorMarca);
