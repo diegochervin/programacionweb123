@@ -126,33 +126,7 @@ function calcular3cuotas(){
         console.log(arrayPrecioMayorMenor);
       }
       
-      function ordenarModeloAZ(array) {
-        let arrayModeloMenorMayor = [].concat(array);
-        arrayModeloMenorMayor.sort((a, b) => {
-          if (a.modelo.toLowerCase() < b.modelo.toLowerCase()) {
-            return -1;
-          }
-          if (a.modelo.toLowerCase() > b.modelo.toLowerCase()) {
-            return 1;
-          }
-          return 0;
-        });
-        console.log(arrayModeloMenorMayor);
-      }
-      
-      function ordenarModeloZA(array) {
-        let arrayModeloMayorAMenor = [].concat(array);
-        arrayModeloMayorAMenor.sort((a, b) => {
-          if (b.modelo < a.modelo) {
-            return -1;
-          }
-          if (b.modelo > a.modelo) {
-            return 1;
-          }
-          return 0;
-        });
-        console.log(arrayModeloMayorAMenor);
-      }
+    
       
       function opcionBorrar(){
         let idAborrar = Number(prompt("Ingrese el ID de la bateria a borrar"));
@@ -324,6 +298,10 @@ function sumaTotal(carrito) {
   function mostrarCarrito(arrayCarrito) {
       console.log(arrayCarrito)
     }
+   
+   
+   
+   
     let containerBaterias = document.getElementById("containerBaterias");
 
     function renderBaterias(local) {
@@ -361,8 +339,8 @@ function sumaTotal(carrito) {
     
       // Filtrar el array local en función de la marca seleccionada
       const bateriasFiltradas = local.filter(bateria => {
-        const productBrand = bateria.marca.toLowerCase();
-        return marcaSeleccionada === '' || productBrand === marcaSeleccionada;
+        const productoMarca = bateria.marca.toLowerCase();
+        return marcaSeleccionada === '' || productoMarca === marcaSeleccionada;
       });
     
       // Volver a renderizar solo las baterías filtradas
@@ -374,3 +352,55 @@ function sumaTotal(carrito) {
     
     // Agregar el evento onchange al select para filtrar las tarjetas por marca
     document.getElementById('filtro-marca').addEventListener('change', filtrarPorMarca);
+
+
+
+
+
+
+
+
+    function ordenarModeloAZ(array) {
+      let arrayModeloMenorMayor = [].concat(array);
+      arrayModeloMenorMayor.sort((a, b) => {
+        if (a.modelo.toLowerCase() < b.modelo.toLowerCase()) {
+          return -1;
+        }
+        if (a.modelo.toLowerCase() > b.modelo.toLowerCase()) {
+          return 1;
+        }
+        return 0;
+      });
+      return arrayModeloMenorMayor;
+    }
+    
+    function ordenarModeloZA(array) {
+      let arrayModeloMayorAMenor = [].concat(array);
+      arrayModeloMayorAMenor.sort((a, b) => {
+        if (b.modelo < a.modelo) {
+          return -1;
+        }
+        if (b.modelo > a.modelo) {
+          return 1;
+        }
+        return 0;
+      });
+      return arrayModeloMayorAMenor;
+    }
+
+
+    document.getElementById('ordenarModelos').addEventListener('change', function() {
+      const selectedOption = this.value; // Valor seleccionado del select
+      let bateriasOrdenadas; // Array para almacenar las baterías ordenadas
+     
+      if (selectedOption === 'alfabetoAZ') {
+        bateriasOrdenadas = ordenarModeloAZ(baterias); // Ordenar de A-Z
+      } else if (selectedOption === 'alfabetoZA') {
+        bateriasOrdenadas = ordenarModeloZA(baterias); // Ordenar de Z-A
+      } else {
+        bateriasOrdenadas = baterias; // Si no selecciona nada, muestra el array original
+      }
+    
+      renderBaterias(bateriasOrdenadas); // Vuelve a renderizar las baterías con el array ordenado
+    });
+    

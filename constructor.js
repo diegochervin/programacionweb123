@@ -63,7 +63,6 @@ console.log(local)
    localStorage.setItem("local", JSON.stringify(local))
   }
   
-
   
   let carrito = [];
   if(localStorage.getItem("carrito")){
@@ -72,7 +71,7 @@ console.log(local)
    carritoStore.forEach((bat)=>
    //batstorage el objeto que capture del storage
    {
-     
+   
      let carritoClass = new Bateria(bat.id, bat.marca, bat.modelo, bat.precio,bat.imagen, bat.stock)
 
     carritoClass.cantidad =  bat.cantidad

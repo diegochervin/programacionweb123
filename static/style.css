@@ -112,17 +112,50 @@
     align-items: center; /* Centra horizontalmente el texto */
     text-align: left;
   }
-  
+ 
+/*.barra {
+justify-content: space-around;
 
+}
 
 .filtro {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
-  background-image: linear-gradient(to bottom, #1558f3, #1558f3); /* Fondo azul para la barra */
+  background-image: linear-gradient(to bottom, #1558f3, #1558f3); /* Fondo azul para la barra 
 }
 
 #filtro {
   width: 300px;
   border-radius: 10px;
+}*/
+
+.barra {
+  display: flex;
+  gap: 20px; /* Espaciado entre los elementos */
+  flex-wrap: wrap; /* Para que sea responsive */
+  align-items: center; /* Alinear verticalmente los elementos */
+  justify-content: center; /* Centrar horizontalmente */
+}
+
+.barra form {
+  display: flex;
+  gap: 20px; /* Espaciado entre los elementos dentro del formulario */
+  flex-wrap: wrap; /* Permite que el contenido del formulario sea responsive */
+}
+
+.form-control {
+  width: 250px; /* Puedes ajustar el ancho para que sea responsive */
+}
+
+select, .btn {
+  flex: 1; /* Ajusta el ancho de los selectores y botón automáticamente */
+  min-width: 150px; /* Define un ancho mínimo */
+}
+
+@media (max-width: 768px) {
+  .barra {
+    flex-direction: column; /* Para pantallas pequeñas, apilar los elementos verticalmente */
+    gap: 10px; /* Reducir el espacio en pantallas más pequeñas */
+  }
 }
