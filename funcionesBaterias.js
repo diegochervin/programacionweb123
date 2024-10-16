@@ -1,6 +1,7 @@
 let containerBaterias = document.getElementById("containerBaterias");
 
-function renderBaterias(local) {
+// Función que renderiza las baterías
+function renderBaterias(local, arrayStock, arrayCarrito) {
   // Limpia el container antes de volver a agregar productos
   containerBaterias.innerHTML = '';
 
@@ -25,15 +26,20 @@ function renderBaterias(local) {
           <button id="agregar-carrito-${bateria.id}" class="btn btn-outline-success">Agregar al carrito</button>
         </div>
       </div>`;
+    
     containerBaterias.append(bateriaNuevoDiv);
+
+    // Agregamos el event listener al botón
+    let botonAgregar = document.getElementById(`agregar-carrito-${bateria.id}`);
+    botonAgregar.addEventListener('click', () => agregarAlCarrito(bateria.id, arrayStock, arrayCarrito));
   }
 }
 
-// Función que combina el filtro y el ordenamiento
+// Función para manejar los filtros y el ordenamiento
 function aplicarFiltrosYOrdenamiento() {
   let marcaSeleccionada = document.getElementById('filtro-marca').value.toLowerCase();
   let ordenSeleccionada = document.getElementById('ordenarModelos').value.toLowerCase();
-  
+
   // Filtrar por marca
   let bateriasFiltradas = local.filter(bateria => {
     let productoMarca = bateria.marca.toLowerCase();
@@ -42,69 +48,83 @@ function aplicarFiltrosYOrdenamiento() {
 
   // Ordenar el array filtrado
   if (ordenSeleccionada === 'alfabetoaz') {
-    bateriasFiltradas.sort((a, b) => a.modelo.localeCompare(b.modelo)); // Ordena alfabéticamente de A a Z
+    bateriasFiltradas.sort((a, b) => a.modelo.localeCompare(b.modelo));
   } else if (ordenSeleccionada === 'alfabetoza') {
-    bateriasFiltradas.sort((a, b) => b.modelo.localeCompare(a.modelo)); // Ordena alfabéticamente de Z a A
+    bateriasFiltradas.sort((a, b) => b.modelo.localeCompare(a.modelo));
   } else if (ordenSeleccionada === 'preciomenor') {
-    bateriasFiltradas.sort((a, b) => a.precio - b.precio); // Ordena por precio de menor a mayor
+    bateriasFiltradas.sort((a, b) => a.precio - b.precio);
   } else if (ordenSeleccionada === 'preciomayor') {
-    bateriasFiltradas.sort((a, b) => b.precio - a.precio); // Ordena por precio de mayor a menor
+    bateriasFiltradas.sort((a, b) => b.precio - a.precio);
   }
 
   // Renderizar los productos filtrados y ordenados
-  renderBaterias(bateriasFiltradas);
+  renderBaterias(bateriasFiltradas, local, carrito);
 }
 
 // Inicialmente renderiza todas las baterías
-renderBaterias(local);
+renderBaterias(local, local, carrito);
 
 // Agregar los eventos onchange para aplicar filtros y ordenamiento
 document.getElementById('filtro-marca').addEventListener('change', aplicarFiltrosYOrdenamiento);
 document.getElementById('ordenarModelos').addEventListener('change', aplicarFiltrosYOrdenamiento);
-document.getElementById(`agregar-carrito-${bateria.id}`).addEventListener('click', function() {
-  agregarAlCarrito(bateria);})
 
+// Función para agregar productos al carrito
+function agregarAlCarrito(bateriaId, arrayStock, arrayCarrito) {
+  // Buscar en el array stock la batería elegida
+  let bateriaComprado = arrayStock.find(bateria => bateria.id == bateriaId);
 
-  let botonAgregar = document.getElementById(`agregar-carrito-${bateria.id}`);
-  botonAgregar.addEventListener('click', () => {
-    agregarAlCarrito(bateria.id, local, carrito); // Llamar a la función con el ID de la batería
-  })
+  if (bateriaComprado) {
+    // Obtener la cantidad ingresada
+    let cantidadIngresada = Number(document.getElementById(`cantidad-${bateriaId}`).value);
 
-  function agregarAlCarrito(bateriaId, arrayStock, arrayCarrito) {
-    // Buscar en el array stock la batería elegida
-    let bateriaComprado = arrayStock.find(bateria => bateria.id == bateriaId);
-  
-    if (bateriaComprado) {
-      // Obtener la cantidad ingresada
-      let cantidadIngresada = Number(document.getElementById(`cantidad-${bateriaId}`).value);
-  
-      // Verificar que la cantidad ingresada no exceda el stock disponible
-      if (cantidadIngresada > bateriaComprado.stock) {
-        console.log(`No es posible agregar ${cantidadIngresada} unidades. Solo tenemos ${bateriaComprado.stock} en stock.`);
-      } else {
-        // Buscar si la batería ya está en el carrito
-        let bateriaEnCarrito = arrayCarrito.find(bat => bat.id == bateriaComprado.id);
-  
-        if (!bateriaEnCarrito) {
-          // Si no está en el carrito, agregar la batería con la cantidad ingresada
-          bateriaComprado.cantidad = cantidadIngresada;
-          arrayCarrito.push(bateriaComprado);
-          console.log(`Se han agregado ${cantidadIngresada} unidades de la batería con ID ${bateriaId}.`);
-        } else {
-          // Si ya está en el carrito, verificar si la cantidad sumada supera el stock disponible
-          if ((cantidadIngresada + bateriaEnCarrito.cantidad) > bateriaComprado.stock) {
-            console.log(`No es posible agregar ${cantidadIngresada} unidades. Ya tienes ${bateriaEnCarrito.cantidad} en el carrito y solo tenemos ${bateriaComprado.stock} en stock.`);
-          } else {
-            // Si no supera el stock, agregar la cantidad al carrito
-            bateriaEnCarrito.cantidad += cantidadIngresada;
-            console.log(`Se han agregado ${cantidadIngresada} unidades adicionales de la batería con ID ${bateriaId}.`);
-          }
-        }
-  
-        // Actualizar el carrito en localStorage
-        localStorage.setItem("carrito", JSON.stringify(arrayCarrito));
-      }
+    // Verificar que la cantidad ingresada no exceda el stock disponible
+    if (cantidadIngresada > bateriaComprado.stock) {
+      alert(`No es posible agregar ${cantidadIngresada} unidades. Solo tenemos ${bateriaComprado.stock} en stock.`);
     } else {
-      console.log(`Batería con ID ${bateriaId} no encontrada.`);
+      // Buscar si la batería ya está en el carrito
+      let bateriaEnCarrito = arrayCarrito.find(bat => bat.id == bateriaComprado.id);
+
+      if (!bateriaEnCarrito) {
+        // Si no está en el carrito, agregar la batería con la cantidad ingresada
+        bateriaComprado.cantidad = cantidadIngresada;
+        arrayCarrito.push(bateriaComprado);
+        alert(`Se han agregado ${cantidadIngresada} unidades de la batería ${bateriaComprado.modelo}.`);
+      } else {
+        // Si ya está en el carrito, verificar si la cantidad sumada supera el stock disponible
+        if ((cantidadIngresada + bateriaEnCarrito.cantidad) > bateriaComprado.stock) {
+          alert(`No es posible agregar ${cantidadIngresada} unidades. Ya tienes ${bateriaEnCarrito.cantidad} en el carrito y solo tenemos ${bateriaComprado.stock} en stock.`);
+        } else {
+          // Si no supera el stock, agregar la cantidad al carrito
+          bateriaEnCarrito.cantidad += cantidadIngresada;
+          alert(`Se han agregado ${cantidadIngresada} unidades adicionales de la batería ${bateriaComprado.modelo}. Ahora tienes ${bateriaEnCarrito.cantidad} en total.`);
+        }
+      }
+
+      // Actualizar el carrito en localStorage
+      localStorage.setItem("carrito", JSON.stringify(arrayCarrito));
     }
+  } 
+}
+
+document.getElementById('carrito').addEventListener('click', (event) => {
+  // Prevenir que el enlace recargue la página
+  event.preventDefault();
+  // Recuperar el carrito del localStorage
+  let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  mostrarCarritoConFormato(carrito);
+});
+
+function mostrarCarritoConFormato(arrayCarrito) {
+  if (arrayCarrito.length === 0) {
+    alert("El carrito está vacío.");
+  } else {
+    // Construir una cadena de texto para mostrar en el alert
+    let mensaje = "Carrito de compras:\n";
+    arrayCarrito.forEach(bateria => {
+      mensaje += `\n Bateria ID #${bateria.id} - Marca: ${bateria.marca}, Modelo: ${bateria.modelo}, Precio: $ ${bateria.precio}, Cantidad en carrito: ${bateria.cantidad}, Total $ ${(bateria.cantidad*bateria.precio)}`;
+    });
+
+    // Mostrar toda la información en un solo alert
+    alert(mensaje);
   }
+}
