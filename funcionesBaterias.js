@@ -164,3 +164,21 @@ function buscarData(array, valor) {
 
   return busqueda; // Devuelve el array de baterías encontradas
 }
+
+
+let radio1 = document.getElementById('flexRadioDefault1');
+let radio2 = document.getElementById('flexRadioDefault2');
+
+// Evento para el primer radio button
+radio1.addEventListener("change", () => {
+  if (radio1.checked) {
+    console.log("solo stock");
+  }
+});
+
+// Evento para el segundo radio button
+radio2.addEventListener("change", () => {
+  if (radio2.checked) {
+    console.log("mostrar todos");
+  }
+});
