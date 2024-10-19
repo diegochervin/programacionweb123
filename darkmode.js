@@ -1,4 +1,7 @@
-let btnToggle = document.getElementById("btnToggle")
+document.addEventListener("DOMContentLoaded", () => {
+    let btnToggle = document.getElementById("btnToggle");
+
+
 
 if(localStorage.getItem("modoOscuro")){
     if(JSON.parse(localStorage.getItem("modoOscuro")) == true){
@@ -23,4 +26,4 @@ btnToggle.addEventListener("click", ()=>{
         localStorage.setItem("modoOscuro", false)
         btnToggle.innerText = "Dark"
     }
-})
+})});
