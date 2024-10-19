@@ -15,7 +15,11 @@ btnToggle.addEventListener("click", ()=>{
     console.log("click btn")
     //aparezca y desaparezca la clase darkMode de CSS
     document.body.classList.toggle("darkMode")
-
+    // if(btnToggle.innerText == "Dark"){
+    //     btnToggle.innerText = "Light"
+    // }else{
+    //     btnToggle.innerText = "Dark"
+    // }
     if(JSON.parse(localStorage.getItem("modoOscuro")) == false){
         localStorage.setItem("modoOscuro", true)
         btnToggle.innerText = "Light"
