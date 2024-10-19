@@ -35,40 +35,6 @@ function renderBaterias(local, arrayStock, arrayCarrito) {
   }
 }
 
-// Función para manejar los filtros y el ordenamiento
-function aplicarFiltrosYOrdenamiento() {
-  let marcaSeleccionada = document.getElementById('filtro-marca').value.toLowerCase();
-  
-  let ordenSeleccionada = document.getElementById('ordenarModelos').value.toLowerCase();
-
-  // Filtrar por marca
-  let bateriasFiltradas = local.filter(bateria => {
-    let productoMarca = bateria.marca.toLowerCase();
-    return marcaSeleccionada === '' || productoMarca === marcaSeleccionada;
-  });
-
-  // Ordenar el array filtrado
-  if (ordenSeleccionada === 'alfabetoaz') {
-    bateriasFiltradas.sort((a, b) => a.modelo.localeCompare(b.modelo));
-  } else if (ordenSeleccionada === 'alfabetoza') {
-    bateriasFiltradas.sort((a, b) => b.modelo.localeCompare(a.modelo));
-  } else if (ordenSeleccionada === 'preciomenor') {
-    bateriasFiltradas.sort((a, b) => a.precio - b.precio);
-  } else if (ordenSeleccionada === 'preciomayor') {
-    bateriasFiltradas.sort((a, b) => b.precio - a.precio);
-  }
-
-  // Renderizar los productos filtrados y ordenados
-  renderBaterias(bateriasFiltradas, local, carrito);
-}
-
-// Inicialmente renderiza todas las baterías
-renderBaterias(local, carrito);
-
-// Agregar los eventos onchange para aplicar filtros y ordenamiento
-document.getElementById('filtro-marca').addEventListener('change', aplicarFiltrosYOrdenamiento);
-document.getElementById('ordenarModelos').addEventListener('change', aplicarFiltrosYOrdenamiento);
-
 // Función para agregar productos al carrito
 function agregarAlCarrito(bateriaId, arrayStock, arrayCarrito) {
   // Buscar en el array stock la batería elegida
@@ -130,26 +96,71 @@ function mostrarCarritoConFormato(arrayCarrito) {
   }
 }
 
+
+
 let coincidencias = document.getElementById('coincidencias');
 let buscador = document.getElementById('buscar');
-buscador.oninput = () => {
-  buscarData(local, buscador.value);
-};
 
+
+// Función para manejar los filtros y el ordenamiento
+function aplicarFiltrosYOrdenamiento() {
+  let marcaSeleccionada = document.getElementById('filtro-marca').value.toLowerCase();
+  let ordenSeleccionada = document.getElementById('ordenarModelos').value.toLowerCase();
+  let busqueda = buscador.value.toLowerCase();
+  // Filtrar por marca
+  let bateriasFiltradas = local.filter(bateria => {
+    let productoMarca = bateria.marca.toLowerCase();
+    return marcaSeleccionada === '' || productoMarca === marcaSeleccionada;
+  });
+
+  // Ordenar el array filtrado
+  if (ordenSeleccionada === 'alfabetoaz') {
+    bateriasFiltradas.sort((a, b) => a.modelo.localeCompare(b.modelo));
+  } else if (ordenSeleccionada === 'alfabetoza') {
+    bateriasFiltradas.sort((a, b) => b.modelo.localeCompare(a.modelo));
+  } else if (ordenSeleccionada === 'preciomenor') {
+    bateriasFiltradas.sort((a, b) => a.precio - b.precio);
+  } else if (ordenSeleccionada === 'preciomayor') {
+    bateriasFiltradas.sort((a, b) => b.precio - a.precio);
+  }
+ 
+  let bateriaBuscada = buscarData(bateriasFiltradas, busqueda)
+
+
+  // Renderizar los productos filtrados y ordenados
+  renderBaterias(bateriaBuscada, local, carrito);
+}
+
+// Inicialmente renderiza todas las baterías
+renderBaterias(local, carrito);
+
+// Agregar los eventos onchange para aplicar filtros y ordenamiento
+document.getElementById('filtro-marca').addEventListener('change', aplicarFiltrosYOrdenamiento);
+document.getElementById('ordenarModelos').addEventListener('change', aplicarFiltrosYOrdenamiento);
+document.getElementById(`buscar`).addEventListener('input', aplicarFiltrosYOrdenamiento)
+
+
+
+
+
+// Función para buscar en un array de baterías
 function buscarData(array, valor) {
+  // Verificar si 'array' es un array antes de aplicar 'filter'
+  if (!Array.isArray(array)) {
+    console.error("El argumento no es un array:", array);
+    return []; // Retorna un array vacío si no es un array
+  }
+
   let busqueda = array.filter(bateria => 
-    bateria.modelo.toLowerCase().includes(valor.toLowerCase()) || 
-    bateria.marca.toLowerCase().includes(valor.toLowerCase())
+    bateria.modelo.toLowerCase().includes(valor) || 
+    bateria.marca.toLowerCase().includes(valor)
   );
 
   if (busqueda.length === 0) {
     coincidencias.innerText = `No se encontraron coincidencias con "${valor}".`;
-    
   } else {
     coincidencias.innerText = "";
-    
-  }renderBaterias(busqueda)
+  }
+
+  return busqueda; // Devuelve el array de baterías encontradas
 }
-  
- 
-  
