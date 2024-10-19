@@ -355,7 +355,17 @@ function sumaTotal(carrito) {
 
 
 
-
+    function buscarData(array){
+      //filter que nos permitabuscar en titulo y autor
+      let infoBuscar = prompt(`Ingrese lo que desea buscar en título o autor`)
+      let busqueda = array.filter((libro)=> libro.titulo.toLowerCase().includes(infoBuscar.toLowerCase()) || libro.autor.toLowerCase().includes(infoBuscar.toLowerCase()))
+      //CONDICIONAL COINCIDENCIAS
+      if(busqueda.length == 0){
+          console.log(`No se encontraron coincidencias en el autor o titulo con ${infoBuscar}`)
+      }else{
+          mostrarCatalogo(busqueda)
+      }
+  }
 
 
 

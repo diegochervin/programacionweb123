@@ -159,3 +159,16 @@ select, .btn {
     gap: 10px; /* Reducir el espacio en pantallas más pequeñas */
   }
 }
+
+.darkMode {
+  background-color: black;
+  color: beige;
+}
+
+.darkMode .card {
+  color: black;
+}
+
+.darkMode .card .precio {
+  color: gold;
+}

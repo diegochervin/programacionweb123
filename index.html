@@ -14,6 +14,9 @@
   
   <div class="header">
     <a href="#default" class="logo">Baterias Ferrobat</a>
+    <button id="btnToggle" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+      Dark
+    </button>
     <div class="header-right">
       <a  href="#marcas">Marcas</a>
       <a  href="#ubicacion">Contacto</a>
@@ -32,7 +35,7 @@
 
   <div class="barra">
     <form class="d-flex">
-      <input class="form-control me-2" type="text" placeholder="Ingrese Modelo">
+      <input id="buscar" class="form-control me-2" type="text" placeholder="Ingrese Modelo">
       <button class="btn btn-primary" type="button">Buscar</button>
     <select class="filtro" id="filtro-marca">
       <option value="">Mostrar todos</option>
@@ -49,6 +52,7 @@
 
   </div>
   
+  <h3 id="coincidencias"></h3>
     
   <div class="container">
     <div id="containerBaterias" class="row">

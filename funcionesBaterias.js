@@ -15,7 +15,7 @@ function renderBaterias(local, arrayStock, arrayCarrito) {
         <div class="card-body">
           <h4 class="card-title">${bateria.modelo}</h4>
           <p>Marca: ${bateria.marca}</p>
-          <p class="">Precio: ${bateria.precio}</p>
+          <p class="precio">Precio: ${bateria.precio}</p>
           <p class="">Stock: ${bateria.stock}</p>
           <div class="col-md-3 pull-left mt-2 pl-0 mb-3 cantidad_div">
             <label class="control-label cantidad mt-0">Cantidad</label>
@@ -38,6 +38,7 @@ function renderBaterias(local, arrayStock, arrayCarrito) {
 // Función para manejar los filtros y el ordenamiento
 function aplicarFiltrosYOrdenamiento() {
   let marcaSeleccionada = document.getElementById('filtro-marca').value.toLowerCase();
+  
   let ordenSeleccionada = document.getElementById('ordenarModelos').value.toLowerCase();
 
   // Filtrar por marca
@@ -62,7 +63,7 @@ function aplicarFiltrosYOrdenamiento() {
 }
 
 // Inicialmente renderiza todas las baterías
-renderBaterias(local, local, carrito);
+renderBaterias(local, carrito);
 
 // Agregar los eventos onchange para aplicar filtros y ordenamiento
 document.getElementById('filtro-marca').addEventListener('change', aplicarFiltrosYOrdenamiento);
@@ -128,3 +129,27 @@ function mostrarCarritoConFormato(arrayCarrito) {
     alert(mensaje);
   }
 }
+
+let coincidencias = document.getElementById('coincidencias');
+let buscador = document.getElementById('buscar');
+buscador.oninput = () => {
+  buscarData(local, buscador.value);
+};
+
+function buscarData(array, valor) {
+  let busqueda = array.filter(bateria => 
+    bateria.modelo.toLowerCase().includes(valor.toLowerCase()) || 
+    bateria.marca.toLowerCase().includes(valor.toLowerCase())
+  );
+
+  if (busqueda.length === 0) {
+    coincidencias.innerText = `No se encontraron coincidencias con "${valor}".`;
+    
+  } else {
+    coincidencias.innerText = "";
+    
+  }renderBaterias(busqueda)
+}
+  
+ 
+  
