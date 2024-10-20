@@ -1,12 +1,14 @@
 let containerBaterias = document.getElementById("containerBaterias");
+renderBaterias(local, carrito);
 
 // Función que renderiza las baterías
-function renderBaterias(local, arrayStock, arrayCarrito) {
+function renderBaterias(local, carrito) {
   // Limpia el container antes de volver a agregar productos
   containerBaterias.innerHTML = '';
 
   // Recorre cada batería y genera la tarjeta
   for (let bateria of local) {
+    console.log("Generando tarjeta para:", bateria);
     let bateriaNuevoDiv = document.createElement("div");
     bateriaNuevoDiv.className = "col-12 col-md-6 col-lg-4";
     bateriaNuevoDiv.innerHTML = `
@@ -29,14 +31,18 @@ function renderBaterias(local, arrayStock, arrayCarrito) {
     
     containerBaterias.append(bateriaNuevoDiv);
 
-    // Agregamos el event listener al botón
+    // Agregamos el event listener al botón dentro del ciclo for
     let botonAgregar = document.getElementById(`agregar-carrito-${bateria.id}`);
-    botonAgregar.addEventListener('click', () => agregarAlCarrito(bateria.id, arrayStock, arrayCarrito));
+    botonAgregar.addEventListener('click', () => {
+      console.log("local: ", local);
+      console.log("carrito: ", carrito);
+      agregarAlCarrito(bateria.id, local, carrito);
+    });
   }
 }
 
 // Función para agregar productos al carrito
-function agregarAlCarrito(bateriaId, arrayStock, arrayCarrito) {
+function agregarAlCarrito(bateriaId, arrayStock, carrito) {
   // Buscar en el array stock la batería elegida
   let bateriaComprado = arrayStock.find(bateria => bateria.id == bateriaId);
 
@@ -49,12 +55,12 @@ function agregarAlCarrito(bateriaId, arrayStock, arrayCarrito) {
       alert(`No es posible agregar ${cantidadIngresada} unidades. Solo tenemos ${bateriaComprado.stock} en stock.`);
     } else {
       // Buscar si la batería ya está en el carrito
-      let bateriaEnCarrito = arrayCarrito.find(bat => bat.id == bateriaComprado.id);
+      let bateriaEnCarrito = carrito.find(bat => bat.id == bateriaComprado.id);
 
       if (!bateriaEnCarrito) {
         // Si no está en el carrito, agregar la batería con la cantidad ingresada
-        bateriaComprado.cantidad = cantidadIngresada;
-        arrayCarrito.push(bateriaComprado);
+        let bateriaClon = { ...bateriaComprado, cantidad: cantidadIngresada }; // Clonar objeto
+        carrito.push(bateriaClon);
         alert(`Se han agregado ${cantidadIngresada} unidades de la batería ${bateriaComprado.modelo}.`);
       } else {
         // Si ya está en el carrito, verificar si la cantidad sumada supera el stock disponible
@@ -68,11 +74,12 @@ function agregarAlCarrito(bateriaId, arrayStock, arrayCarrito) {
       }
 
       // Actualizar el carrito en localStorage
-      localStorage.setItem("carrito", JSON.stringify(arrayCarrito));
+      localStorage.setItem("carrito", JSON.stringify(carrito));
     }
-  } 
+  }
 }
 
+// Mover el eventListener para el carrito fuera de agregarAlCarrito
 document.getElementById('carrito').addEventListener('click', (event) => {
   // Prevenir que el enlace recargue la página
   event.preventDefault();
@@ -81,21 +88,29 @@ document.getElementById('carrito').addEventListener('click', (event) => {
   mostrarCarritoConFormato(carrito);
 });
 
+// Función para mostrar el carrito
 function mostrarCarritoConFormato(arrayCarrito) {
   if (arrayCarrito.length === 0) {
     alert("El carrito está vacío.");
   } else {
+    // Filtrar las baterías que tienen cantidad mayor a 0
+    let bateriasConCantidad = arrayCarrito.filter(bateria => bateria.cantidad > 0);
+    
+    if (bateriasConCantidad.length === 0) {
+      alert("No hay productos con cantidad en el carrito.");
+      return;
+    }
+
     // Construir una cadena de texto para mostrar en el alert
     let mensaje = "Carrito de compras:\n";
-    arrayCarrito.forEach(bateria => {
-      mensaje += `\n Bateria ID #${bateria.id} - Marca: ${bateria.marca}, Modelo: ${bateria.modelo}, Precio: $ ${bateria.precio}, Cantidad en carrito: ${bateria.cantidad}, Total $ ${(bateria.cantidad*bateria.precio)}`;
+    bateriasConCantidad.forEach(bateria => {
+      mensaje += `\n Bateria ID #${bateria.id} - Marca: ${bateria.marca}, Modelo: ${bateria.modelo}, Precio: $ ${bateria.precio}, Cantidad en carrito: ${bateria.cantidad}, Total $ ${(bateria.cantidad * bateria.precio)}`;
     });
 
     // Mostrar toda la información en un solo alert
     alert(mensaje);
   }
 }
-
 
 
 let coincidencias = document.getElementById('coincidencias');
@@ -132,7 +147,7 @@ function aplicarFiltrosYOrdenamiento() {
 }
 
 // Inicialmente renderiza todas las baterías
-renderBaterias(local, carrito);
+
 
 // Agregar los eventos onchange para aplicar filtros y ordenamiento
 document.getElementById('filtro-marca').addEventListener('change', aplicarFiltrosYOrdenamiento);

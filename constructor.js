@@ -72,8 +72,7 @@ console.log(local)
    //batstorage el objeto que capture del storage
    {
    
-     let carritoClass = new Bateria(bat.id, bat.marca, bat.modelo, bat.precio,bat.imagen, bat.stock)
-
+     let carritoClass = new Bateria(bat.id, bat.marca, bat.modelo, bat.precio, bat.stock, bat.imagen)
     carritoClass.cantidad =  bat.cantidad
      carrito.push(carritoClass)
  })}
