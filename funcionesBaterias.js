@@ -128,6 +128,10 @@ function aplicarFiltrosYOrdenamiento() {
     return marcaSeleccionada === '' || productoMarca === marcaSeleccionada;
   });
 
+  if (radio1.checked) {
+    bateriasFiltradas = bateriasFiltradas.filter(bateria => bateria.stock > 0);
+  }
+
   // Ordenar el array filtrado
   if (ordenSeleccionada === 'alfabetoaz') {
     bateriasFiltradas.sort((a, b) => a.modelo.localeCompare(b.modelo));
@@ -184,16 +188,5 @@ function buscarData(array, valor) {
 let radio1 = document.getElementById('flexRadioDefault1');
 let radio2 = document.getElementById('flexRadioDefault2');
 
-// Evento para el primer radio button
-radio1.addEventListener("change", () => {
-  if (radio1.checked) {
-    console.log("solo stock");
-  }
-});
-
-// Evento para el segundo radio button
-radio2.addEventListener("change", () => {
-  if (radio2.checked) {
-    console.log("mostrar todos");
-  }
-});
+radio1.addEventListener("change", aplicarFiltrosYOrdenamiento);
+radio2.addEventListener("change", aplicarFiltrosYOrdenamiento);
