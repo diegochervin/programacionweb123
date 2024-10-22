@@ -190,3 +190,34 @@ let radio2 = document.getElementById('flexRadioDefault2');
 
 radio1.addEventListener("change", aplicarFiltrosYOrdenamiento);
 radio2.addEventListener("change", aplicarFiltrosYOrdenamiento);
+
+//capturas input form Cargar Bateria
+let marcaInput = document.getElementById("marcaInput")
+let autorInput = document.getElementById("modeloInput")
+let precioInput = document.getElementById("precioInput")
+let stockInput = document.getElementById("stockInput")
+
+function cargarBateria(array){
+  //capturo cada input
+  //validación 
+  // if(Number(precioInput.value) < 1 ){
+
+  // }
+  let bateriaNueva = new Bateria(array.length+1, marcaInput.value, modeloInput.value, Number(precioInput.value), Number(stockInput.value), "prueba1.jpg")
+  console.log(bateriaNueva)
+  //resetear input por input
+  marcaInput.value = ""
+  precioInput.value = ""
+  modeloInput.value = ""
+  stockInput.value = ""
+  // //sumar al array
+  array.push(bateriaNueva)
+  //actualizamos biblio en storage
+  localStorage.setItem("local", JSON.stringify(array))
+  //actualizar DOM
+  renderBaterias(array)
+}
+
+guardarBateriaBtn.addEventListener("click", ()=>{
+  cargarBateria(local)
+})

@@ -17,6 +17,7 @@
     <button id="btnToggle" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
       Dark
     </button>
+    <button id="agregarBateria" data-bs-toggle="modal" data-bs-target="#modalAgregarBateria" class="btn btn-success">Agregar Bateria</button>
     <div class="header-right">
       <a  href="#marcas">Marcas</a>
       <a  href="#ubicacion">Contacto</a>
@@ -105,6 +106,85 @@
         </div>
       </div>
     </div>
+  </div>
+
+
+    <div>
+
+          <!--Modal Agregar Bateria-->
+      <div class="modal fade" id="modalAgregarBateria" tabindex="-1" aria-labelledby="modalAgregarBateria" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalAgregarBateria">Agregar Nueva Bateria</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+              <!--Formulario-->
+              <form id="formCargarBateria" class="my-4">
+                <div class="mb-3">
+                  <label for="marca" class="form-label">Marca</label>
+                  <input type="text" class="form-control" id="marcaInput" aria-describedby="marca">
+                  
+                </div>
+                <div class="mb-3">
+                  <label for="modelo" class="form-label">Modelo</label>
+                  <input type="text" class="form-control" id="modeloInput" aria-describedby="modelo">
+                  
+                </div>
+                <div class="mb-3">
+                  <label for="precio" class="form-label">Precio:</label>
+                  <input type="text" class="form-control" id="precioInput" aria-describedby="precio">
+                  
+                </div>
+                <div class="mb-3">
+                  <label for="stock" class="form-label">Stock:</label>
+                  <input type="text" class="form-control" id="stockInput" aria-describedby="stock">
+                  
+                </div>
+                <!-- <div class="mb-3">
+                  <label for="precio" class="form-label">Mail:</label>
+                  <input type="mail" class="form-control" id="precioInput" aria-describedby="precio">
+                  
+                </div> -->
+            </form>
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="text" id="guardarBateriaBtn" class="btn btn-success" data-bs-dismiss="modal">Guardar Bateria</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+   
+   
+    <!--Modal Carrito-->
+    <div class="modal fade" id="modalAgregarCarrito" tabindex="-1" aria-labelledby="modalAgregarCarrito" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalcarrito">Carrito de Compras</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="modal-bodyCarrito">
+            
+          </div>
+          <div class="row ml-ato">
+            <p id="precioTotal"></p>
+          </div>
+          <div class="modal-footer">
+            
+            
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" data-bs-dismiss="modal" class="btn btn-success" id="botonFinalizarCompra">Finalizar Compra</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
 
     </body>
