@@ -196,6 +196,34 @@ let marcaInput = document.getElementById("marcaInput")
 let autorInput = document.getElementById("modeloInput")
 let precioInput = document.getElementById("precioInput")
 let stockInput = document.getElementById("stockInput")
+// Captura de los inputs del formulario
+let usuarioInput = document.getElementById("usuarioInput");
+let passInput = document.getElementById("passInput");
+let loginBtn = document.getElementById("loginBtn");
+let modalLogin = new bootstrap.Modal(document.getElementById('modalLogin')); // Instancia del modal
+let modalAgregarBateria = new bootstrap.Modal(document.getElementById('modalAgregarBateria')); // Instancia del segundo modal
+
+// Función login
+function login() {
+  // Obtén el valor de los inputs
+  let usuario = usuarioInput.value;
+  let clave = passInput.value;
+
+  // Verifica si los datos son correctos
+  if (usuario === "admin" && clave === "admin") {
+    // Cierra el modal de login
+    modalLogin.hide();
+
+    // Muestra el modal de agregar batería
+    modalAgregarBateria.show();
+  } else {
+    alert("Usuario o contraseña incorrectos");
+  }
+}
+
+// Asigna el evento click al botón de login
+loginBtn.addEventListener("click", login);
+
 
 function cargarBateria(array){
   //capturo cada input
