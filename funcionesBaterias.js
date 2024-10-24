@@ -34,8 +34,6 @@ function renderBaterias(local, carrito) {
     // Agregamos el event listener al botón dentro del ciclo for
     let botonAgregar = document.getElementById(`agregar-carrito-${bateria.id}`);
     botonAgregar.addEventListener('click', () => {
-      console.log("local: ", local);
-      console.log("carrito: ", carrito);
       agregarAlCarrito(bateria.id, local, carrito);
     });
   }
@@ -79,38 +77,57 @@ function agregarAlCarrito(bateriaId, arrayStock, carrito) {
   }
 }
 
-// Mover el eventListener para el carrito fuera de agregarAlCarrito
-document.getElementById('carrito').addEventListener('click', (event) => {
-  // Prevenir que el enlace recargue la página
-  event.preventDefault();
-  // Recuperar el carrito del localStorage
-  let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-  mostrarCarritoConFormato(carrito);
-});
 
-// Función para mostrar el carrito
-function mostrarCarritoConFormato(arrayCarrito) {
-  if (arrayCarrito.length === 0) {
-    alert("El carrito está vacío.");
-  } else {
-    // Filtrar las baterías que tienen cantidad mayor a 0
-    let bateriasConCantidad = arrayCarrito.filter(bateria => bateria.cantidad > 0);
+
+let botonCarrito = document.getElementById("botonCarrito")
+
+botonCarrito.addEventListener("click", ()=>{
+  imprimirCarrito(carrito)
+})
+
+//imprimirCarrito
+function imprimirCarrito(carrito){
+  modalBodyCarrito.innerHTML = ""
+  carrito.forEach((productoCarrito)=>{
+      //usar nodo donde vamos a imprimir modalBodyCarrito
+      modalBodyCarrito.innerHTML += `
+      <div class="card border-primary mb-3" id ="productoCarrito${productoCarrito.id}" style="max-width: 540px;">
+               <div class="card-body">
+                      <h4 class="card-title">${productoCarrito.modelo}</h4>
+                  
+                       <p class="card-text">Precio unitario $${productoCarrito.precio}</p>
+                       <p class="card-text" id="totalUnidadesCard${productoCarrito.id}">Total de unidades ${productoCarrito.cantidad}</p> 
+                       <p class="card-text" id="subtotalCard${productoCarrito.id}">SubTotal ${productoCarrito.cantidad * productoCarrito.precio}</p>
+                      
+            
+                       
+                    
+                       <input class="form-control pl-2 cantidad_comprar" type="number" id="cantidadCarrit-${productoCarrito.id}" name="cantidad" value="${productoCarrito.cantidad}">
+                       <button class= "btn btn-danger" ><i class="fas fa-trash-alt"></i></button>
+               </div>    
+          </div>`
+  })
+  //otro ciclio para reccorer el array y pasarle eventos a los btns sumarUnidad, restarUnidad y eliminar
+  carrito.forEach((productoCarrito)=>{
+    let inputCantidad = document.getElementById(`cantidadCarrit-${productoCarrito.id}`);
     
-    if (bateriasConCantidad.length === 0) {
-      alert("No hay productos con cantidad en el carrito.");
-      return;
-    }
-
-    // Construir una cadena de texto para mostrar en el alert
-    let mensaje = "Carrito de compras:\n";
-    bateriasConCantidad.forEach(bateria => {
-      mensaje += `\n Bateria ID #${bateria.id} - Marca: ${bateria.marca}, Modelo: ${bateria.modelo}, Precio: $ ${bateria.precio}, Cantidad en carrito: ${bateria.cantidad}, Total $ ${(bateria.cantidad * bateria.precio)}`;
-    });
-
-    // Mostrar toda la información en un solo alert
-    alert(mensaje);
-  }
+    inputCantidad.addEventListener("change", () => {
+      const nuevaCantidad = parseInt(inputCantidad.value) || 0; // Asegurarse de que sea un número
+      productoCarrito.cantidad = nuevaCantidad; // Actualizar cantidad en el carrito
+      
+      // Actualizar localStorage
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      document.getElementById(`totalUnidadesCard${productoCarrito.id}`).innerText = `Total de unidades ${productoCarrito.cantidad}`;
+      document.getElementById(`subtotalCard${productoCarrito.id}`).innerText = `SubTotal $${(productoCarrito.cantidad * productoCarrito.precio)}`;
+          //elegir actualizarlo por TODO el carrito opcion 1 o por partes opción 2
+          //reemprimir todo el carrito: para pisarlo OPCION 1
+          // imprimirCarrito(arrayCarrito)
+          
+      })
+  })
 }
+
+
 
 
 let coincidencias = document.getElementById('coincidencias');
@@ -202,6 +219,9 @@ let passInput = document.getElementById("passInput");
 let loginBtn = document.getElementById("loginBtn");
 let modalLogin = new bootstrap.Modal(document.getElementById('modalLogin')); // Instancia del modal
 let modalAgregarBateria = new bootstrap.Modal(document.getElementById('modalAgregarBateria')); // Instancia del segundo modal
+
+let modalAgregarCarrito = document.getElementById("modalAgregarCarrito");
+
 
 // Función login
 function login() {
