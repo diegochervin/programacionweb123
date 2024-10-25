@@ -172,3 +172,112 @@ select, .btn {
 .darkMode .card .precio {
   color: gold;
 }
+
+/* css carrito */
+
+/* Estilos para el modal del carrito */
+#modalAgregarCarrito .modal-content {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Título del modal */
+.modal-header .modal-title {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Estilo general para cada tarjeta del producto */
+#modalBodyCarrito .card {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+/* Borde de la tarjeta */
+#modalBodyCarrito .border-primary {
+  border-color: #007bff !important;
+}
+
+/* Encabezado de la tarjeta del producto */
+#modalBodyCarrito .card-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 8px;
+}
+
+/* Textos de la tarjeta (precio, cantidad, subtotal) */
+#modalBodyCarrito .card-text {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+/* Subtotal en verde */
+#modalBodyCarrito .card-text[id^="subtotalCard"] {
+  color: #28a745;
+  font-weight: bold;
+}
+
+/* Input de cantidad */
+#modalBodyCarrito .cantidad_comprar {
+  width: 70px;
+  margin-top: 8px;
+}
+
+/* Botón de eliminar */
+#modalBodyCarrito .btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+#modalBodyCarrito .btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+/* Icono de papelera en el botón */
+#modalBodyCarrito .btn-danger i {
+  margin-right: 4px;
+}
+
+/* Total y mensaje de envío */
+#precioTotal {
+  font-size: 1.1em;
+  color: blue;
+  font-weight: bold;
+  text-align: center;
+  padding-right: 15px;
+  margin-bottom: 5px;
+}
+
+/*#envioGratis {
+  font-size: 1em;
+  color: #28a745;
+  font-weight: bold;
+  text-align: center;
+  padding-right: 15px;
+}*/
+
+
+
+.envio-gratis {
+  display: flex;
+  align-items: center;
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.envio-gratis img {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}

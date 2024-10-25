@@ -93,10 +93,22 @@ function totalSumado(){
     modalBodyCarrito.innerHTML = `<h4>No hay nada en el carrito</h4>`;
     precioTotal.innerText = ``
    }
-   envioGratis.innerText = ``
-   if (totalSumado >= 500000){
-    envioGratis.innerText = `Felicidades tenes envio gratis`
-  }
+   envioGratis.innerText = ``;
+   if (totalSumado >= 500000) {
+     let envioGratisContainer = document.createElement("span");
+     envioGratisContainer.classList.add("envio-gratis");
+   
+     let textoEnvioGratis = document.createElement("span");
+     textoEnvioGratis.innerText = "¡Felicidades, tienes envío gratis!";
+   
+     let imagenEnvioGratis = document.createElement("img");
+     imagenEnvioGratis.src = "./static/img/shipping_free.png"; 
+     imagenEnvioGratis.alt = "Icono de envío gratis";
+   
+     envioGratisContainer.appendChild(textoEnvioGratis);
+     envioGratisContainer.appendChild(imagenEnvioGratis);
+     envioGratis.appendChild(envioGratisContainer);
+   }
 }
 
 let botonCarrito = document.getElementById("botonCarrito")
