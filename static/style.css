@@ -256,16 +256,6 @@ select, .btn {
   margin-bottom: 5px;
 }
 
-/*#envioGratis {
-  font-size: 1em;
-  color: #28a745;
-  font-weight: bold;
-  text-align: center;
-  padding-right: 15px;
-}*/
-
-
-
 .envio-gratis {
   display: flex;
   align-items: center;
