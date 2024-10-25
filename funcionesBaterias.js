@@ -93,6 +93,8 @@ botonCarrito.addEventListener("click", ()=>{
   imprimirCarrito(carrito)
 })
 
+let precioTotal = document.getElementById("precioTotal")
+
 //imprimirCarrito
 function imprimirCarrito(carrito) {
   
@@ -110,9 +112,16 @@ function imprimirCarrito(carrito) {
           <input class="form-control pl-2 cantidad_comprar" type="number" id="cantidadCarrit-${productoCarrito.id}" name="cantidad" value="${productoCarrito.cantidad}">
           <button class="btn btn-danger" id="botonEliminar${productoCarrito.id}"><i class="fas fa-trash-alt"></i></button>
         </div>
+        
       </div>`;
   });
 
+
+  let totalSumado = 0;    
+  carrito.forEach(bat => totalSumado += (bat.precio * bat.cantidad));
+  console.log(`El total de su compra es de $${totalSumado}`);
+  precioTotal.innerText = `El total de su compra es de $${totalSumado}`
+  
   // Otro ciclo para recorrer el array y pasarle eventos a los inputs y botones
   carrito.forEach((productoCarrito) => {
     let inputCantidad = document.getElementById(`cantidadCarrit-${productoCarrito.id}`);
@@ -140,6 +149,9 @@ function imprimirCarrito(carrito) {
 
       // Actualizar la cantidad en el carrito
       productoCarrito.cantidad = nuevaCantidad;
+
+
+
 
       // Actualizar el localStorage
       localStorage.setItem("carrito", JSON.stringify(carrito));
