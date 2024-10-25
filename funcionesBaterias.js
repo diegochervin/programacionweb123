@@ -48,32 +48,40 @@ function agregarAlCarrito(bateriaId, arrayStock, carrito) {
     // Obtener la cantidad ingresada
     let cantidadIngresada = Number(document.getElementById(`cantidad-${bateriaId}`).value);
 
+    // Verificar que la cantidad ingresada sea mayor que 0
+    if (cantidadIngresada <= 0) {
+      alert(`No es posible agregar ${cantidadIngresada} unidades.`);
+      return; // Detener la ejecución si la cantidad no es válida
+    }
+
     // Verificar que la cantidad ingresada no exceda el stock disponible
     if (cantidadIngresada > bateriaComprado.stock) {
       alert(`No es posible agregar ${cantidadIngresada} unidades. Solo tenemos ${bateriaComprado.stock} en stock.`);
-    } else {
-      // Buscar si la batería ya está en el carrito
-      let bateriaEnCarrito = carrito.find(bat => bat.id == bateriaComprado.id);
-
-      if (!bateriaEnCarrito) {
-        // Si no está en el carrito, agregar la batería con la cantidad ingresada
-        let bateriaClon = { ...bateriaComprado, cantidad: cantidadIngresada }; // Clonar objeto
-        carrito.push(bateriaClon);
-        alert(`Se han agregado ${cantidadIngresada} unidades de la batería ${bateriaComprado.modelo}.`);
-      } else {
-        // Si ya está en el carrito, verificar si la cantidad sumada supera el stock disponible
-        if ((cantidadIngresada + bateriaEnCarrito.cantidad) > bateriaComprado.stock) {
-          alert(`No es posible agregar ${cantidadIngresada} unidades. Ya tienes ${bateriaEnCarrito.cantidad} en el carrito y solo tenemos ${bateriaComprado.stock} en stock.`);
-        } else {
-          // Si no supera el stock, agregar la cantidad al carrito
-          bateriaEnCarrito.cantidad += cantidadIngresada;
-          alert(`Se han agregado ${cantidadIngresada} unidades adicionales de la batería ${bateriaComprado.modelo}. Ahora tienes ${bateriaEnCarrito.cantidad} en total.`);
-        }
-      }
-
-      // Actualizar el carrito en localStorage
-      localStorage.setItem("carrito", JSON.stringify(carrito));
+      return; // Detener la ejecución si no hay suficiente stock
     }
+
+    // Buscar si la batería ya está en el carrito
+    let bateriaEnCarrito = carrito.find(bat => bat.id == bateriaComprado.id);
+
+    if (!bateriaEnCarrito) {
+      // Si no está en el carrito, agregar la batería con la cantidad ingresada
+      let bateriaClon = { ...bateriaComprado, cantidad: cantidadIngresada }; // Clonar objeto
+      carrito.push(bateriaClon);
+      alert(`Se han agregado ${cantidadIngresada} unidades de la batería ${bateriaComprado.modelo}.`);
+    } else {
+      // Si ya está en el carrito, verificar si la cantidad sumada supera el stock disponible
+      if ((cantidadIngresada + bateriaEnCarrito.cantidad) > bateriaComprado.stock) {
+        alert(`No es posible agregar ${cantidadIngresada} unidades. Ya tienes ${bateriaEnCarrito.cantidad} en el carrito y solo tenemos ${bateriaComprado.stock} en stock.`);
+        return; // Detener la ejecución si se supera el stock disponible
+      } else {
+        // Si no supera el stock, agregar la cantidad al carrito
+        bateriaEnCarrito.cantidad += cantidadIngresada;
+        alert(`Se han agregado ${cantidadIngresada} unidades adicionales de la batería ${bateriaComprado.modelo}. Ahora tienes ${bateriaEnCarrito.cantidad} en total.`);
+      }
+    }
+
+    // Actualizar el carrito en localStorage
+    localStorage.setItem("carrito", JSON.stringify(carrito));
   }
 }
 
@@ -86,46 +94,85 @@ botonCarrito.addEventListener("click", ()=>{
 })
 
 //imprimirCarrito
-function imprimirCarrito(carrito){
-  modalBodyCarrito.innerHTML = ""
-  carrito.forEach((productoCarrito)=>{
-      //usar nodo donde vamos a imprimir modalBodyCarrito
-      modalBodyCarrito.innerHTML += `
+function imprimirCarrito(carrito) {
+  
+  modalBodyCarrito.innerHTML = "";
+  
+  carrito.forEach((productoCarrito) => {
+    // Usar nodo donde vamos a imprimir modalBodyCarrito
+    modalBodyCarrito.innerHTML += `
       <div class="card border-primary mb-3" id ="productoCarrito${productoCarrito.id}" style="max-width: 540px;">
-               <div class="card-body">
-                      <h4 class="card-title">${productoCarrito.modelo}</h4>
-                  
-                       <p class="card-text">Precio unitario $${productoCarrito.precio}</p>
-                       <p class="card-text" id="totalUnidadesCard${productoCarrito.id}">Total de unidades ${productoCarrito.cantidad}</p> 
-                       <p class="card-text" id="subtotalCard${productoCarrito.id}">SubTotal ${productoCarrito.cantidad * productoCarrito.precio}</p>
-                      
-            
-                       
-                    
-                       <input class="form-control pl-2 cantidad_comprar" type="number" id="cantidadCarrit-${productoCarrito.id}" name="cantidad" value="${productoCarrito.cantidad}">
-                       <button class= "btn btn-danger" ><i class="fas fa-trash-alt"></i></button>
-               </div>    
-          </div>`
-  })
-  //otro ciclio para reccorer el array y pasarle eventos a los btns sumarUnidad, restarUnidad y eliminar
-  carrito.forEach((productoCarrito)=>{
+        <div class="card-body">
+          <h4 class="card-title">${productoCarrito.modelo}</h4>
+          <p class="card-text">Precio unitario $${productoCarrito.precio}</p>
+          <p class="card-text" id="totalUnidadesCard${productoCarrito.id}">Total de unidades ${productoCarrito.cantidad}</p>
+          <p class="card-text" id="subtotalCard${productoCarrito.id}">SubTotal $${productoCarrito.cantidad * productoCarrito.precio}</p>
+          <input class="form-control pl-2 cantidad_comprar" type="number" id="cantidadCarrit-${productoCarrito.id}" name="cantidad" value="${productoCarrito.cantidad}">
+          <button class="btn btn-danger" id="botonEliminar${productoCarrito.id}"><i class="fas fa-trash-alt"></i></button>
+        </div>
+      </div>`;
+  });
+
+  // Otro ciclo para recorrer el array y pasarle eventos a los inputs y botones
+  carrito.forEach((productoCarrito) => {
     let inputCantidad = document.getElementById(`cantidadCarrit-${productoCarrito.id}`);
-    
+
     inputCantidad.addEventListener("change", () => {
-      const nuevaCantidad = parseInt(inputCantidad.value) || 0; // Asegurarse de que sea un número
-      productoCarrito.cantidad = nuevaCantidad; // Actualizar cantidad en el carrito
-      
-      // Actualizar localStorage
+      let nuevaCantidad = parseInt(inputCantidad.value) || 0; // Asegurarse de que sea un número
+
+      // Buscar la batería en carrito 
+      let productoStock = carrito.find(producto => producto.id == productoCarrito.id);
+
+      // Validar que la cantidad no sea menor o igual a cero
+      if (nuevaCantidad <= 0) {
+        console.log(`No es posible ingresar ${nuevaCantidad} unidades.`);
+        alert(`No es posible ingresar ${nuevaCantidad} unidades.`);
+        inputCantidad.value = productoCarrito.cantidad; // Restaurar valor anterior
+        return;
+      }
+
+      // Validar que la cantidad no exceda el stock disponible
+      if (nuevaCantidad > productoStock.stock) {
+        alert(`No es posible ingresar ${nuevaCantidad} unidades. Solo hay ${productoStock.stock} unidades disponibles.`);
+        inputCantidad.value = productoCarrito.cantidad; // Restaurar valor anterior
+        return;
+      }
+
+      // Actualizar la cantidad en el carrito
+      productoCarrito.cantidad = nuevaCantidad;
+
+      // Actualizar el localStorage
       localStorage.setItem("carrito", JSON.stringify(carrito));
+
+      // Actualizar la visualización en el DOM
       document.getElementById(`totalUnidadesCard${productoCarrito.id}`).innerText = `Total de unidades ${productoCarrito.cantidad}`;
-      document.getElementById(`subtotalCard${productoCarrito.id}`).innerText = `SubTotal $${(productoCarrito.cantidad * productoCarrito.precio)}`;
-          //elegir actualizarlo por TODO el carrito opcion 1 o por partes opción 2
-          //reemprimir todo el carrito: para pisarlo OPCION 1
-          // imprimirCarrito(arrayCarrito)
-          
-      })
-  })
+      document.getElementById(`subtotalCard${productoCarrito.id}`).innerText = `SubTotal $${productoCarrito.cantidad * productoCarrito.precio}`;
+
+      // Opción para actualizar todo el carrito o solo por partes
+      // imprimirCarrito(arrayCarrito) // Si deseas actualizar todo el carrito
+    });
+
+    // Evento para eliminar el producto del carrito
+    document.getElementById(`botonEliminar${productoCarrito.id}`).onclick = () => {
+      // Sacarlo del array carrito
+      let indiceEliminar = carrito.indexOf(productoCarrito);
+      carrito.splice(indiceEliminar, 1);
+
+      // Actualizar el localStorage
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+
+      // Eliminar del DOM
+      let cardCarrito = document.getElementById(`productoCarrito${productoCarrito.id}`);
+      cardCarrito.remove();
+
+      // Mostrar mensaje si el carrito está vacío
+      if (carrito.length == 0) {
+        modalBodyCarrito.innerHTML = `<h4>No hay nada en el carrito</h4>`;
+      }
+    };
+  });
 }
+
 
 
 
