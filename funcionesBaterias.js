@@ -18,7 +18,7 @@ function renderBaterias(local, carrito) {
           <h4 class="card-title">${bateria.modelo}</h4>
           <p>Marca: ${bateria.marca}</p>
           <p class="precio">Precio: ${bateria.precio}</p>
-          <p  id="stock-${bateria.id}"class="">Stock: ${bateria.stock}</p>
+          <p id="stock-${bateria.stock}"class="">Stock: ${bateria.stock}</p>
           <div class="col-md-3 pull-left mt-2 pl-0 mb-3 cantidad_div">
             <label class="control-label cantidad mt-0">Cantidad</label>
             <span class="bmd-form-group is-filled">
@@ -366,11 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       modalAgregarCarrito.hide(); // Cierra el modal del carrito
       modalFinalCompra.show(); // Muestra el modal para completar datos
-
-      // Limpia el carrito y el localStorage
-      carrito = [];
-      localStorage.removeItem("carrito");
-      modalBodyCarrito.innerHTML = ""; // Limpia el contenido del carrito en el DOM
+  
     } else {
       console.log("No hay nada en el carrito; no puedes finalizar la compra.");
     }
@@ -383,45 +379,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("confirmarCompraBtn").addEventListener("click", (event) => {
     const form = document.getElementById("formFinalCompra");
-  
+
     if (!form.checkValidity()) {
       event.preventDefault();
       event.stopPropagation();
     }
-  
+
     form.classList.add("was-validated");
-  
+
     if (form.checkValidity()) {
       const nombre = document.getElementById("nombre").value;
       const apellido = document.getElementById("apellido").value;
       const email = document.getElementById("email").value;
       const telefono = document.getElementById("telefono").value;
-  
-      alert(`Compra confirmada para ${nombre} ${apellido}. Tiene 24 hs para completar el pago. Le llegará un mail con el instructivo.`);
-  
-      console.log("Carrito antes de actualizar stock:", carrito); // Verifica el carrito
-  
-      // Actualiza el stock de los productos
+
       carrito.forEach(item => {
+        console.log(item)
         // Encuentra el producto en el array local
         let producto = local.find(bateria => bateria.id === item.id);
+        console.log(producto.stock)
         if (producto) {
           producto.stock -= item.cantidad; // Resta del stock
           console.log(`Stock actualizado para ${producto.modelo}: ${producto.stock}`);
-  
-          // Actualiza el contenido en el DOM
-          const stockElement = document.getElementById(`stock-${producto.id}`);
-          if (stockElement) {
-            stockElement.innerHTML = `Stock: ${producto.stock}`; // Muestra el nuevo stock
-          }
         }
-      });
-  
+  });
+
+
+      alert(`Compra confirmada para ${nombre} ${apellido}. Tiene 24 hs para completar el pago. Le llegara un mail con el instructivo.`);
       modalFinalCompra.hide(); // Cierra el modal de finalización de compra
       modalAgregarCarrito.hide(); // Cierra el modal del carrito
-  
+      
+   
+
       carrito = [];
       localStorage.removeItem("carrito");
+      renderBaterias(local, carrito)
+      localStorage.setItem("local", JSON.stringify(array))
+
+
+
     }
-  });
-    }
+                 // Actualiza el stock de los productos
+ 
+})})
