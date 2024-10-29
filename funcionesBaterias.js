@@ -354,33 +354,55 @@ guardarBateriaBtn.addEventListener("click", ()=>{
   cargarBateria(local)
 })
 
+document.addEventListener("DOMContentLoaded", () => {
+  const modalAgregarCarrito = new bootstrap.Modal(document.getElementById('modalAgregarCarrito'));
+  const modalFinalCompra = new bootstrap.Modal(document.getElementById('modalFinalCompra'));
 
+  let botonFinalizarCompra = document.getElementById("botonFinalizarCompra");
 
-let botonFinalizarCompra = document.getElementById("botonFinalizarCompra")
-function finalizarCompra(arrayCarrito){
-  //fijarse si algo en el carrito y permitir o no
-  console.log(arrayCarrito)
+  function finalizarCompra(arrayCarrito) {
+    if (arrayCarrito.length > 0) {
+      let totalComprado = totalSumado(arrayCarrito);
 
-  if(arrayCarrito.length > 0){
-      let totalComprado = totalSumado(arrayCarrito)
-      totalSumado.innerHTML = `Gracias por su compra, debe pagarnos ${totalComprado}`
-      console.log(`Gracias por su compra, debe pagarnos ${totalComprado}`)
-      //limpiar array a nivel carrito
-      carrito = []
+      modalAgregarCarrito.hide(); // Cierra el modal del carrito
+      modalFinalCompra.show(); // Muestra el modal para completar datos
 
-      //limpiar de storage
-      localStorage.removeItem("carrito")
-      //agraderle y limpiar DOM
-      modalBodyCarrito.innerHTML = ""
-  }else{
-      console.log(`No hay nada en el carrito no podes finalizar la compra`)
+      // Limpia el carrito y el localStorage
+      carrito = [];
+      localStorage.removeItem("carrito");
+      modalBodyCarrito.innerHTML = ""; // Limpia el contenido del carrito en el DOM
+    } else {
+      console.log("No hay nada en el carrito; no puedes finalizar la compra.");
+    }
+    return carrito;
   }
-  console.log(carrito)
-  return carrito
-  
 
-}
+  botonFinalizarCompra.addEventListener("click", () => {
+    carrito = finalizarCompra(carrito);
+  });
 
-botonFinalizarCompra.addEventListener("click",()=>{
-  carrito = finalizarCompra(carrito)
-})
+  document.getElementById("confirmarCompraBtn").addEventListener("click", (event) => {
+    const form = document.getElementById("formFinalCompra");
+
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    form.classList.add("was-validated");
+
+    if (form.checkValidity()) {
+      const nombre = document.getElementById("nombre").value;
+      const apellido = document.getElementById("apellido").value;
+      const email = document.getElementById("email").value;
+      const telefono = document.getElementById("telefono").value;
+
+      alert(`Compra confirmada para ${nombre} ${apellido}. Tiene 24 hs para completar el pago. Le llegara un mail con el instructivo.`);
+      modalFinalCompra.hide(); // Cierra el modal de finalización de compra
+      modalAgregarCarrito.hide(); // Cierra el modal del carrito
+      
+      carrito = [];
+      localStorage.removeItem("carrito");
+    }
+  });
+});

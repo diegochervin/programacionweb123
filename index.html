@@ -209,6 +209,48 @@
   </div>
   
 
+  <!-- Modal Finalización de Compra -->
+  <div class="modal fade" id="modalFinalCompra" tabindex="-1" aria-labelledby="modalFinalCompraLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalFinalCompraLabel">Finalizar Compra</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formFinalCompra" class="needs-validation" novalidate>
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre" required>
+              <div class="invalid-feedback">Por favor ingrese su nombre.</div>
+            </div>
+            <div class="mb-3">
+              <label for="apellido" class="form-label">Apellido</label>
+              <input type="text" class="form-control" id="apellido" required>
+              <div class="invalid-feedback">Por favor ingrese su apellido.</div>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo</label>
+              <input type="email" class="form-control" id="email" required>
+              <div class="invalid-feedback">Por favor ingrese un correo válido.</div>
+            </div>
+            <div class="mb-3">
+              <label for="telefono" class="form-label">Teléfono</label>
+              <input type="tel" class="form-control" id="telefono" required>
+              <div class="invalid-feedback">Por favor ingrese su teléfono.</div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" id="confirmarCompraBtn">Confirmar Compra</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
 
 
     </body>
