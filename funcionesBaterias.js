@@ -109,6 +109,7 @@ function totalSumado(){
      envioGratisContainer.appendChild(imagenEnvioGratis);
      envioGratis.appendChild(envioGratisContainer);
    }
+   return totalSumado
 }
 
 let botonCarrito = document.getElementById("botonCarrito")
@@ -351,4 +352,35 @@ function cargarBateria(array){
 
 guardarBateriaBtn.addEventListener("click", ()=>{
   cargarBateria(local)
+})
+
+
+
+let botonFinalizarCompra = document.getElementById("botonFinalizarCompra")
+function finalizarCompra(arrayCarrito){
+  //fijarse si algo en el carrito y permitir o no
+  console.log(arrayCarrito)
+
+  if(arrayCarrito.length > 0){
+      let totalComprado = totalSumado(arrayCarrito)
+      totalSumado.innerHTML = `Gracias por su compra, debe pagarnos ${totalComprado}`
+      console.log(`Gracias por su compra, debe pagarnos ${totalComprado}`)
+      //limpiar array a nivel carrito
+      carrito = []
+
+      //limpiar de storage
+      localStorage.removeItem("carrito")
+      //agraderle y limpiar DOM
+      modalBodyCarrito.innerHTML = ""
+  }else{
+      console.log(`No hay nada en el carrito no podes finalizar la compra`)
+  }
+  console.log(carrito)
+  return carrito
+  
+
+}
+
+botonFinalizarCompra.addEventListener("click",()=>{
+  carrito = finalizarCompra(carrito)
 })
