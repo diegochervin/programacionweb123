@@ -414,7 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
       carrito = [];
       localStorage.removeItem("carrito");
       renderBaterias(local, carrito)
-      localStorage.setItem("local", JSON.stringify(array))
+      localStorage.setItem("local", JSON.stringify(local))
 
 
 
