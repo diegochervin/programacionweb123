@@ -54,7 +54,100 @@
 
 
       <input id="buscar" class="form-control me-2" type="text" placeholder="Ingrese Marca o Modelo">
+
+      <div class="row">
+        <!-- Sidebar Starts -->
+        <div class="col-md-3">
+          <div class="list-group categories">
+            <h3 class="side-heading bg-headers-light m-0 mt-3"><i class="fa fa-align-justify"></i> Filtrá tu búsqueda</h3>
+            
+            <!-- Filtros -->
+            <div class="list-group">
+              <!-- Filtro Por Marca -->
+              <div class="list-group-item">
+                <div class="filter-group">
+                  <h6 class="categories-title"><strong>Por Marca</strong></h6>
+                  <div class="categories-line">
+                    <input type="radio" name="filter-subcategory" value="103JY" onclick="grid.refreshPage()" checked="">
+                    <label>Joystick</label>
+                  </div>
+                  <div class="categories-line">
+                    <input type="radio" name="filter-subcategory" value="" onclick="grid.refreshPage()">
+                    <label>Todos</label>
+                  </div>            
+                </div>
+              </div>
       
+              <!-- Filtro por Marcas -->
+              <div class="list-group-item">Marcas</div>
+              <div class="list-group-item">
+                <div class="filter-group">
+                  <div class="categories-line">
+                    <input type="radio" name="filter-brand" value="052" onclick="grid.refreshPage()">
+                    <label><strong>Logitech</strong></label>
+                  </div>
+                  <div class="categories-line">
+                    <input type="radio" name="filter-brand" value="" onclick="grid.refreshPage()" checked="">
+                    <label><strong>Todas</strong></label>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- Filtro Ordenar Por -->
+              <div class="list-group-item">Ordenar Por</div>
+              <div class="list-group-item">
+                <div class="filter-group">
+                  <div class="categories-line">
+                    <input type="radio" name="order-by" value="nombre" onclick="grid.refreshPage()">
+                    <label><strong>Por Nombre A-Z</strong></label>
+                  </div>
+                  <div class="categories-line">
+                    <input type="radio" name="order-by" value="nombre" onclick="grid.refreshPage()">
+                    <label><strong>Por Nombre Z-A</strong></label>
+                  </div>
+                  <div class="categories-line">
+                    <input type="radio" name="order-by" value="menor_precio" onclick="grid.refreshPage()">
+                    <label><strong>Precio Menor a Mayor</strong></label>
+                  </div>
+                  <div class="categories-line">
+                    <input type="radio" name="order-by" value="mayor_precio" onclick="grid.refreshPage()">
+                    <label><strong>Precio Mayor a Menor</strong></label>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- Filtro de Stock -->
+              <div class="list-group-item">Situación en stock</div>
+              <div class="list-group-item">
+                <div class="filter-group">
+                  <div class="categories-line">
+                    <input type="radio" name="filter-stock" value="S" onclick="grid.refreshPage()">
+                    <label><strong>Sólo artículos en stock</strong></label>
+                  </div>
+                  <div class="categories-line">
+                    <input type="radio" name="filter-stock" value="" onclick="grid.refreshPage()" checked="">
+                    <label><strong>Todos</strong></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Shopping Options Ends -->
+          </div>
+        </div>
+        
+        <!-- Contenedor de Baterías -->
+        <div class="col-md-9">
+          <h3 id="coincidencias"></h3>
+          <div class="container">
+            <div id="containerBaterias" class="row">
+              <!-- Tarjetas de Baterías se cargarán aquí -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+   <div>
     <select class="filtro" id="filtro-marca">
       <option value="">Mostrar todos</option>
       <option value="ferrobat">Ferrobat</option>
@@ -70,14 +163,7 @@
 
   </div>
   
-  <h3 id="coincidencias"></h3>
-    
-  <div class="container">
-    <div id="containerBaterias" class="row">
-
-    </div>
-  </div>
-</div>
+ 
 
 <div id="marcas">
   <h3>Marcas</h3>
