@@ -283,11 +283,7 @@ function buscarData(array, valor) {
 }
 
 
-let radio1 = document.getElementById('flexRadioDefault1');
-let radio2 = document.getElementById('flexRadioDefault2');
 
-radio1.addEventListener("change", aplicarFiltrosYOrdenamiento);
-radio2.addEventListener("change", aplicarFiltrosYOrdenamiento);
 
 //capturas input form Cargar Bateria
 let marcaInput = document.getElementById("marcaInput")
