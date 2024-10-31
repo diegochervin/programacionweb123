@@ -220,46 +220,43 @@ let buscador = document.getElementById('buscar');
 
 // Función para manejar los filtros y el ordenamiento
 function aplicarFiltrosYOrdenamiento() {
-  let marcaSeleccionada = document.getElementById('filtro-marca').value.toLowerCase();
-  let ordenSeleccionada = document.getElementById('ordenarModelos').value.toLowerCase();
-  let busqueda = buscador.value.toLowerCase();
+  // Obtener la marca seleccionada
+  let marcaSeleccionada = document.querySelector('input[name="filter-marca"]:checked')?.value.toLowerCase();
+  
+  // Obtener la opción de ordenamiento seleccionada
+  let ordenSeleccionada = document.querySelector('input[name="order-by"]:checked')?.value.toLowerCase();
+  
+  // Obtener el valor del buscador
+  let busqueda = document.getElementById('buscar').value.toLowerCase();
+  
   // Filtrar por marca
   let bateriasFiltradas = local.filter(bateria => {
     let productoMarca = bateria.marca.toLowerCase();
     return marcaSeleccionada === '' || productoMarca === marcaSeleccionada;
   });
 
-  if (radio1.checked) {
+  // Filtrar por stock
+  if (document.getElementById('radio1').checked) {
     bateriasFiltradas = bateriasFiltradas.filter(bateria => bateria.stock > 0);
   }
 
+  // Utilizar la función buscarData para buscar y obtener el resultado
+  let bateriaBuscada = buscarData(bateriasFiltradas, busqueda);
+
   // Ordenar el array filtrado
   if (ordenSeleccionada === 'alfabetoaz') {
-    bateriasFiltradas.sort((a, b) => a.modelo.localeCompare(b.modelo));
+    bateriaBuscada.sort((a, b) => a.modelo.localeCompare(b.modelo));
   } else if (ordenSeleccionada === 'alfabetoza') {
-    bateriasFiltradas.sort((a, b) => b.modelo.localeCompare(a.modelo));
+    bateriaBuscada.sort((a, b) => b.modelo.localeCompare(a.modelo));
   } else if (ordenSeleccionada === 'preciomenor') {
-    bateriasFiltradas.sort((a, b) => a.precio - b.precio);
+    bateriaBuscada.sort((a, b) => a.precio - b.precio);
   } else if (ordenSeleccionada === 'preciomayor') {
-    bateriasFiltradas.sort((a, b) => b.precio - a.precio);
+    bateriaBuscada.sort((a, b) => b.precio - a.precio);
   }
  
-  let bateriaBuscada = buscarData(bateriasFiltradas, busqueda)
-
-
   // Renderizar los productos filtrados y ordenados
   renderBaterias(bateriaBuscada, local, carrito);
 }
-
-// Inicialmente renderiza todas las baterías
-
-
-// Agregar los eventos onchange para aplicar filtros y ordenamiento
-document.getElementById('filtro-marca').addEventListener('change', aplicarFiltrosYOrdenamiento);
-document.getElementById('ordenarModelos').addEventListener('change', aplicarFiltrosYOrdenamiento);
-document.getElementById(`buscar`).addEventListener('input', aplicarFiltrosYOrdenamiento)
-
-
 
 
 
