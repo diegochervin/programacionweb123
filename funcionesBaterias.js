@@ -324,31 +324,96 @@ document.addEventListener("DOMContentLoaded", function() {
   loginBtn.addEventListener("click", login);
 });
 
-
-function cargarBateria(array){
-  //capturo cada input
-  //validación 
-  // if(Number(precioInput.value) < 1 ){
-
-  // }
-  let bateriaNueva = new Bateria(array.length+1, marcaInput.value, modeloInput.value, Number(precioInput.value), Number(stockInput.value), "prueba1.jpg")
-  console.log(bateriaNueva)
-  //resetear input por input
-  marcaInput.value = ""
-  precioInput.value = ""
-  modeloInput.value = ""
-  stockInput.value = ""
-  // //sumar al array
-  array.push(bateriaNueva)
-  //actualizamos biblio en storage
-  localStorage.setItem("local", JSON.stringify(array))
-  //actualizar DOM
-  renderBaterias(array)
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
-guardarBateriaBtn.addEventListener("click", ()=>{
-  cargarBateria(local)
-})
+function cargarBateria(array) {
+  // Capturo cada input
+  let marca = capitalizeFirstLetter(marcaInput.value); // Formatea la marca
+  let modelo = modeloInput.value;
+  let precio = Number(precioInput.value);
+  let stock = Number(stockInput.value);
+
+  // Validación (por ejemplo, si el precio es menor que 1)
+  if (precio < 1) {
+      alert("El precio debe ser mayor que 0");
+      return; // Salir de la función si hay un error
+  }
+
+  // Crear nueva batería
+  let bateriaNueva = new Bateria(array.length + 1, marca, modelo, precio, stock, "prueba1.jpg");
+  console.log(bateriaNueva);
+
+  // Resetear input por input
+  marcaInput.value = "";
+  precioInput.value = "";
+  modeloInput.value = "";
+  stockInput.value = "";
+
+  // Sumar al array
+  array.push(bateriaNueva);
+
+  // Actualizar storage
+  localStorage.setItem("local", JSON.stringify(array));
+
+  // Agregar la nueva marca al DOM si no existe
+  agregarMarcaAlFiltro(marca);
+
+  // Actualizar marcas en localStorage
+  actualizarMarcasEnStorage();
+
+  // Renderizar las baterías
+  renderBaterias(array);
+}
+
+// Función para agregar la marca al filtro si no existe
+function agregarMarcaAlFiltro(marca) {
+  // Asegurarse de que la marca esté en el formato correcto
+  if (!marcasExistentes.includes(marca)) {
+      marcasExistentes.push(marca); // Agregar la marca al array de marcas existentes
+      const filtroGrupo = document.querySelector('.filter-group'); // Selecciona el grupo de filtros
+
+      const nuevoFiltro = document.createElement('div');
+      nuevoFiltro.innerHTML = `
+          <input type="radio" name="filter-marca" id="filtro-marca-${marca.toLowerCase()}" value="${marca}" onclick="aplicarFiltrosYOrdenamiento()">
+          <label for="filtro-marca-${marca.toLowerCase()}">${marca}</label>
+      `;
+      filtroGrupo.appendChild(nuevoFiltro); // Agregar el nuevo filtro al grupo
+  }
+}
+
+// Función para actualizar las marcas en localStorage
+function actualizarMarcasEnStorage() {
+  localStorage.setItem("marcas", JSON.stringify(marcasExistentes));
+}
+
+// Función para cargar las marcas del localStorage al iniciar la aplicación
+function cargarMarcasDesdeStorage() {
+  const storedMarcas = JSON.parse(localStorage.getItem("marcas")) || [];
+  storedMarcas.forEach(marca => {
+      agregarMarcaAlFiltro(marca);
+  });
+}
+
+// Event listener para el botón de guardar batería
+guardarBateriaBtn.addEventListener("click", () => {
+  cargarBateria(local);
+});
+
+// Al cargar la página, cargar marcas y baterías desde localStorage
+window.onload = () => {
+  // Cargar baterías
+  if (localStorage.getItem("local")) {
+      local = JSON.parse(localStorage.getItem("local"));
+  }
+
+  // Cargar marcas
+  cargarMarcasDesdeStorage();
+
+  // Renderizar las baterías
+  renderBaterias(local);
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   const modalAgregarCarrito = new bootstrap.Modal(document.getElementById('modalAgregarCarrito'));
