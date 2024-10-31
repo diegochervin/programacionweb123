@@ -297,36 +297,39 @@ let marcaInput = document.getElementById("marcaInput")
 let autorInput = document.getElementById("modeloInput")
 let precioInput = document.getElementById("precioInput")
 let stockInput = document.getElementById("stockInput")
+
 // Captura de los inputs del formulario
 let usuarioInput = document.getElementById("usuarioInput");
 let passInput = document.getElementById("passInput");
-let loginBtn = document.getElementById("loginBtn");
-let modalLogin = new bootstrap.Modal(document.getElementById('modalLogin')); // Instancia del modal
-let modalAgregarBateria = new bootstrap.Modal(document.getElementById('modalAgregarBateria')); // Instancia del segundo modal
-
 let modalAgregarCarrito = document.getElementById("modalAgregarCarrito");
 
 
-// Función login
-function login() {
-  // Obtén el valor de los inputs
-  let usuario = usuarioInput.value;
-  let clave = passInput.value;
+document.addEventListener("DOMContentLoaded", function() {
+  let loginBtn = document.getElementById("loginBtn");
+  let iniciarSesionLink = document.getElementById("iniciarSesion");
+  let modalLogin = new bootstrap.Modal(document.getElementById("modalLogin"));
+  let modalAgregarBateria = new bootstrap.Modal(document.getElementById("modalAgregarBateria"));
 
-  // Verifica si los datos son correctos
-  if (usuario === "admin" && clave === "admin") {
-    // Cierra el modal de login
-    modalLogin.hide();
+  iniciarSesionLink.addEventListener("click", function(event) {
+    event.preventDefault();
+    modalLogin.show();
+  });
 
-    // Muestra el modal de agregar batería
-    modalAgregarBateria.show();
-  } else {
-    alert("Usuario o contraseña incorrectos");
+  function login() {
+    let usuario = document.getElementById("usuarioInput").value;
+    let clave = document.getElementById("passInput").value;
+
+    if (usuario === "admin" && clave === "admin") {
+      modalLogin.hide();
+      document.getElementById("agregarBateria").style.display = "inline-block";
+      
+    } else {
+      alert("Usuario o clave incorrectos.");
+    }
   }
-}
 
-// Asigna el evento click al botón de login
-loginBtn.addEventListener("click", login);
+  loginBtn.addEventListener("click", login);
+});
 
 
 function cargarBateria(array){

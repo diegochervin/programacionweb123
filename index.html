@@ -18,11 +18,12 @@
     <button id="btnToggle" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
       Dark
     </button>
-    <button id="agregarBateria" data-bs-toggle="modal" data-bs-target="#modalLogin" class="btn btn-success">Agregar Bateria</button>
+    <button id="agregarBateria" data-bs-toggle="modal" data-bs-target="#modalAgregarBateria" class="btn btn-success" style="display: none;">Agregar Batería</button>
+
     <div class="header-right">
       <a  href="#marcas">Marcas</a>
       <a  href="#ubicacion">Contacto</a>
-      <a href="#contact">Iniciar Sesion</a>
+      <a id="iniciarSesion" href="#">Iniciar Sesión</a>
       <a id="botonCarrito" data-bs-toggle="modal" data-bs-target="#modalAgregarCarrito" class="btn btn-secondary"><i class="fas fa-shopping-cart fa-1x"></i></a>
        
     </div>
@@ -200,15 +201,15 @@
     <div>
 
 
-        <!-- Modal Login -->
-<div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLogin" aria-hidden="true">
+<!-- Modal Login -->
+<div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalLogin">Login</h5>
+        <h5 class="modal-title" id="modalLoginLabel">Login</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" id="modal-body">
+      <div class="modal-body">
         <!--Formulario-->
         <form id="formLogin" class="my-4">
           <div class="mb-3">
@@ -229,15 +230,15 @@
   </div>
 </div>
 
-<!-- Modal Agregar Bateria -->
-<div class="modal fade" id="modalAgregarBateria" tabindex="-1" aria-labelledby="modalAgregarBateria" aria-hidden="true">
+<!-- Modal Agregar Batería -->
+<div class="modal fade" id="modalAgregarBateria" tabindex="-1" aria-labelledby="modalAgregarBateriaLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalAgregarBateria">Agregar Nueva Bateria</h5>
+        <h5 class="modal-title" id="modalAgregarBateriaLabel">Agregar Nueva Batería</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" id="modal-body">
+      <div class="modal-body">
         <!--Formulario-->
         <form id="formCargarBateria" class="my-4">
           <div class="mb-3">
@@ -260,7 +261,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" id="guardarBateriaBtn" class="btn btn-success" data-bs-dismiss="modal">Guardar Bateria</button>
+        <button type="button" id="guardarBateriaBtn" class="btn btn-success" data-bs-dismiss="modal">Guardar Batería</button>
       </div>
     </div>
   </div>
