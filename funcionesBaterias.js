@@ -283,8 +283,11 @@ function buscarData(array, valor) {
 }
 
 
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 //capturas input form Cargar Bateria
 let marcaInput = document.getElementById("marcaInput")
 let autorInput = document.getElementById("modeloInput")
