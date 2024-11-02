@@ -1,5 +1,6 @@
 let containerBaterias = document.getElementById("containerBaterias");
 renderBaterias(local, carrito);
+generarFiltrosDeMarca()
 
 // Función que renderiza las baterías
 function renderBaterias(local, carrito) {
@@ -256,8 +257,32 @@ function aplicarFiltrosYOrdenamiento() {
  
   // Renderizar los productos filtrados y ordenados
   renderBaterias(bateriaBuscada, local, carrito);
+  
 }
 
+
+function generarFiltrosDeMarca() {
+  const filtroContainer = document.getElementById('filtro-marcas-dinamico');
+  filtroContainer.innerHTML = ''; // Limpia el contenedor
+
+  // Crear el filtro para "Todas"
+  const filtroTodas = document.createElement('div');
+  filtroTodas.innerHTML = `
+    <input type="radio" name="filter-marca" id="filtro-marca-todos" value="" onclick="aplicarFiltrosYOrdenamiento()" checked>
+    <label for="filtro-marca-todos">Todas</label>
+  `;
+  filtroContainer.appendChild(filtroTodas);
+
+  // Crear filtros para cada marca en el array marcasExistentes
+  marcasExistentes.forEach((marca) => {
+    const filtroMarca = document.createElement('div');
+    filtroMarca.innerHTML = `
+      <input type="radio" name="filter-marca" id="filtro-marca-${marca}" value="${marca}" onclick="aplicarFiltrosYOrdenamiento()">
+      <label for="filtro-marca-${marca}">${marca}</label>
+    `;
+    filtroContainer.appendChild(filtroMarca);
+  });
+}
 
 
 // Función para buscar en un array de baterías
@@ -324,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-function cargarBateria(array){
+function cargarBateria(array, array2){
   //capturo cada input
   //validación 
   // if(Number(precioInput.value) < 1 ){
@@ -337,16 +362,26 @@ function cargarBateria(array){
   precioInput.value = ""
   modeloInput.value = ""
   stockInput.value = ""
+
+   // Verificar si la marca ya está en el array de marcas existentes
+   if (!array2.includes(bateriaNueva.marca)) {
+    array2.push(bateriaNueva.marca); // Agregar la marca si no está
+    localStorage.setItem("marcasExistentes", JSON.stringify(array2)); // Guardar el array de marcas en el localStorage
+}
+
+
   // //sumar al array
   array.push(bateriaNueva)
   //actualizamos biblio en storage
   localStorage.setItem("local", JSON.stringify(array))
   //actualizar DOM
   renderBaterias(array)
+    generarFiltrosDeMarca()
+  console.log("Marcas actualizadas:", array2);
 }
 
 guardarBateriaBtn.addEventListener("click", ()=>{
-  cargarBateria(local)
+  cargarBateria(local, marcasExistentes)
 })
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -44,7 +44,7 @@ class Bateria {
   const bat7 = new Bateria(7, "Ferrobat", "prueba1", 150, 0, "prueba1.jpg")
   const bat8 = new Bateria(8, "Ferrobat", "prueba2", 150, 0, "prueba2.jpg")
   //crear storage para stock
-  let marcasExistentes = [];
+  
   let local = [];
   if(localStorage.getItem("local")){
    let storelocalLPM = JSON.parse(localStorage.getItem("local"))
@@ -79,3 +79,10 @@ console.log(local)
 
 
 
+ let marcasExistentes = [];
+
+ local.forEach((bateria) => {
+   if (!marcasExistentes.includes(bateria.marca)) {
+     marcasExistentes.push(bateria.marca);
+   }
+ });
