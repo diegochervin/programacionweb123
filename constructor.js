@@ -3,7 +3,7 @@
 class Bateria {
     constructor(id, marca, modelo, precio, stock, imagen) {
         (this.id = id),
-        (this.marca = marca),
+        (this.marca = marca.toUpperCase()),
         (this.modelo = modelo),
         (this.precio = precio),
         this.imagen = imagen,
@@ -82,7 +82,8 @@ console.log(local)
  let marcasExistentes = [];
 
  local.forEach((bateria) => {
-   if (!marcasExistentes.includes(bateria.marca)) {
-     marcasExistentes.push(bateria.marca);
+ let marcaMayuscula = bateria.marca.toUpperCase();
+   if (!marcasExistentes.includes(marcaMayuscula)) {
+     marcasExistentes.push(marcaMayuscula);
    }
  });

@@ -376,7 +376,7 @@ function cargarBateria(array, array2){
   localStorage.setItem("local", JSON.stringify(array))
   //actualizar DOM
   renderBaterias(array)
-    generarFiltrosDeMarca()
+  generarFiltrosDeMarca()
   console.log("Marcas actualizadas:", array2);
 }
 
