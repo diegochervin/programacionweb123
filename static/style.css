@@ -272,3 +272,38 @@ select, .btn {
   margin-left: 10px;
 }
 
+
+
+
+
+.carousel-container,
+.carousel-item,
+.carousel-item img {
+    width: 100% !important;
+    height: 30vh; /* Altura del 30% de la ventana */
+}
+.carousel-container {
+  width: 100%; /* El contenedor ocupa el 100% del ancho de la pantalla */
+  margin: 0 auto;
+  text-align: center; /* Centra el título */
+  margin-bottom: 65px !important;
+}
+
+.carousel-container h3 {
+  text-align: center;
+}
+
+.carousel-item img {
+  width: 100%; /* La imagen ocupa todo el ancho del carrusel */
+  height: 30vh; /* Ajusta la altura de las imágenes al 30% de la altura de la pantalla */
+  object-fit: fill /* Ajusta la imagen para llenar el ancho y alto, recortando si es necesario */
+}
+
+.row h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.product-card {
+  margin: 10px; /* Aplica el margen alrededor de cada tarjeta */
+}
