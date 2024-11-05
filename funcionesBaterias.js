@@ -51,13 +51,25 @@ function agregarAlCarrito(bateriaId, arrayStock, carrito) {
 
     // Verificar que la cantidad ingresada sea mayor que 0
     if (cantidadIngresada <= 0) {
-      alert(`No es posible agregar ${cantidadIngresada} unidades.`);
+
+      Swal.fire({
+        title: `No es posible agregar ${cantidadIngresada} unidades.`,
+        timer: 3500,
+        icon: "error"
+      });
+      // alert(`No es posible agregar ${cantidadIngresada} unidades.`);
       return; // Detener la ejecución si la cantidad no es válida
     }
 
     // Verificar que la cantidad ingresada no exceda el stock disponible
     if (cantidadIngresada > bateriaComprado.stock) {
-      alert(`No es posible agregar ${cantidadIngresada} unidades. Solo tenemos ${bateriaComprado.stock} en stock.`);
+      
+      Swal.fire({
+        title: `No es posible agregar ${cantidadIngresada} unidades. Solo tenemos ${bateriaComprado.stock} en stock.`,
+        timer: 3500,
+        icon: "error"
+      });
+      // alert(`No es posible agregar ${cantidadIngresada} unidades. Solo tenemos ${bateriaComprado.stock} en stock.`);
       return; // Detener la ejecución si no hay suficiente stock
     }
 
@@ -68,16 +80,60 @@ function agregarAlCarrito(bateriaId, arrayStock, carrito) {
       // Si no está en el carrito, agregar la batería con la cantidad ingresada
       let bateriaClon = { ...bateriaComprado, cantidad: cantidadIngresada }; // Clonar objeto
       carrito.push(bateriaClon);
-      alert(`Se han agregado ${cantidadIngresada} unidades de la batería ${bateriaComprado.modelo}.`);
+      
+      Toastify({
+        text: `Se han agregado ${cantidadIngresada} unidades de la batería ${bateriaComprado.modelo}.`,
+        duration: 3000,
+        newWindow: true,
+        close: true,
+        gravity: "bottom", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        },
+        onClick: function(){} // Callback after click
+      }).showToast();  
+      
+      // alert(`Se han agregado ${cantidadIngresada} unidades de la batería ${bateriaComprado.modelo}.`);
+  
+    
+    
+    
     } else {
       // Si ya está en el carrito, verificar si la cantidad sumada supera el stock disponible
       if ((cantidadIngresada + bateriaEnCarrito.cantidad) > bateriaComprado.stock) {
-        alert(`No es posible agregar ${cantidadIngresada} unidades. Ya tienes ${bateriaEnCarrito.cantidad} en el carrito y solo tenemos ${bateriaComprado.stock} en stock.`);
+        // alert(`No es posible agregar ${cantidadIngresada} unidades. Ya tienes ${bateriaEnCarrito.cantidad} en el carrito y solo tenemos ${bateriaComprado.stock} en stock.`);
+        Swal.fire({
+          title: `No es posible agregar ${cantidadIngresada} unidades. Ya tienes ${bateriaEnCarrito.cantidad} en el carrito y solo tenemos ${bateriaComprado.stock} en stock.`,
+          timer: 3500,
+          icon: "error"
+        });
+
         return; // Detener la ejecución si se supera el stock disponible
       } else {
         // Si no supera el stock, agregar la cantidad al carrito
         bateriaEnCarrito.cantidad += cantidadIngresada;
-        alert(`Se han agregado ${cantidadIngresada} unidades adicionales de la batería ${bateriaComprado.modelo}. Ahora tienes ${bateriaEnCarrito.cantidad} en total.`);
+       
+       
+       
+        Toastify({
+          text: `Se han agregado ${cantidadIngresada} unidades adicionales de la batería ${bateriaComprado.modelo}. Ahora tienes ${bateriaEnCarrito.cantidad} en total.`,
+          duration: 3000,
+          newWindow: true,
+          close: true,
+          gravity: "bottom", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+          style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+          },
+          onClick: function(){} // Callback after click
+        }).showToast();   
+        
+      
+      
+      
       }
     }
 
@@ -158,6 +214,8 @@ totalSumado(carrito)
 
       // Validar que la cantidad no sea menor o igual a cero
       if (nuevaCantidad <= 0) {
+
+        
         alert(`No es posible ingresar ${nuevaCantidad} unidades.`);
         inputCantidad.value = productoCarrito.cantidad; // Restaurar valor anterior
         return;
@@ -165,7 +223,13 @@ totalSumado(carrito)
 
       // Validar que la cantidad no exceda el stock disponible
       if (nuevaCantidad > productoStock.stock) {
-        alert(`No es posible ingresar ${nuevaCantidad} unidades. Solo hay ${productoStock.stock} unidades disponibles.`);
+
+        Swal.fire({
+          title: `No es posible ingresar ${nuevaCantidad} unidades. Solo hay ${productoStock.stock} unidades disponibles.`,
+          timer: 3500,
+          icon: "error"
+        });
+        // alert(`No es posible ingresar ${nuevaCantidad} unidades. Solo hay ${productoStock.stock} unidades disponibles.`);
         inputCantidad.value = productoCarrito.cantidad; // Restaurar valor anterior
         return;
       }
@@ -341,7 +405,14 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById("agregarBateria").style.display = "inline-block";
       
     } else {
-      alert("Usuario o clave incorrectos.");
+      
+      Swal.fire({
+        title: "Usuario o clave incorrectos.",
+        timer: 3500,
+        icon: "error"
+      });
+      
+      // alert("Usuario o clave incorrectos.");
     }
   }
 
@@ -435,7 +506,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-      alert(`Compra confirmada para ${nombre} ${apellido}. Tiene 24 hs para completar el pago. Le llegara un mail con el instructivo.`);
+  Swal.fire({
+    title: "Muchas gracias por tu compra!",
+    text: `Compra confirmada para ${nombre.toUpperCase()} ${apellido.toUpperCase()}. Tiene 24 hs para completar el pago. Le llegara un mail con el instructivo.`,
+    icon: "success",
+    timer: 5000
+  });
+
+      // alert(`Compra confirmada para ${nombre} ${apellido}. Tiene 24 hs para completar el pago. Le llegara un mail con el instructivo.`);
       modalFinalCompra.hide(); // Cierra el modal de finalización de compra
       modalAgregarCarrito.hide(); // Cierra el modal del carrito
       
