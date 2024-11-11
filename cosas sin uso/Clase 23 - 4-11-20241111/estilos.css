@@ -1,0 +1,24 @@
+.colorVerde{
+    color: green;
+    font-size:  48px;
+}
+.darkMode{
+    background-color: black;
+    color: white
+}
+.darkMode .card{
+    color:blueviolet
+}
+.darkMode .card .precio{
+    color:goldenrod
+}
+.darkMode .modal{
+    color: green
+}
+/* pasar color a todo el modal */
+/* .darkMode .modal-content{
+    background-color: black;
+} */
+.precioOferta{
+    color: goldenrod;
+}

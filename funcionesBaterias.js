@@ -1,15 +1,15 @@
 let containerBaterias = document.getElementById("containerBaterias");
-renderBaterias(local, carrito);
+
 generarFiltrosDeMarca()
 
 // Función que renderiza las baterías
-function renderBaterias(local, carrito) {
+function renderBaterias(estanteria, carrito) {
   // Limpia el container antes de volver a agregar productos
   containerBaterias.innerHTML = '';
 
   // Recorre cada batería y genera la tarjeta
-  for (let bateria of local) {
-    console.log("Generando tarjeta para:", bateria);
+  for (let bateria of estanteria) {
+   
     let bateriaNuevoDiv = document.createElement("div");
     bateriaNuevoDiv.className = "col-12 col-md-6 col-lg-4";
     bateriaNuevoDiv.innerHTML = `
@@ -35,7 +35,7 @@ function renderBaterias(local, carrito) {
     // Agregamos el event listener al botón dentro del ciclo for
     let botonAgregar = document.getElementById(`agregar-carrito-${bateria.id}`);
     botonAgregar.addEventListener('click', () => {
-      agregarAlCarrito(bateria.id, local, carrito);
+      agregarAlCarrito(bateria.id, estanteria, carrito);
     });
   }
 }
@@ -333,7 +333,7 @@ function generarFiltrosDeMarca() {
   const filtroTodas = document.createElement('div');
   filtroTodas.innerHTML = `
     <input type="radio" name="filter-marca" id="filtro-marca-todos" value="" onclick="aplicarFiltrosYOrdenamiento()" checked>
-    <label for="filtro-marca-todos">Todas</label>
+    <label for="filtro-marca-todos">TODAS</label>
   `;
   filtroContainer.appendChild(filtroTodas);
 
@@ -530,3 +530,24 @@ document.addEventListener("DOMContentLoaded", () => {
                  // Actualiza el stock de los productos
  
 })})
+
+
+let estanteria = []
+
+const cargarEstanteria = async(array)=>{
+
+  const resp = await fetch (`baterias.json`)
+  const dataBateria = await resp.json()
+  console.log(dataBateria)
+  
+  for(let bat of dataBateria){
+    let bateriaNueva = new Bateria (bat.id, bat.marca, bat.modelo, bat.precio, bat.stock, bat.imagen)
+    array.push(bateriaNueva)
+    
+  }
+  return array
+}
+
+cargarEstanteria(estanteria)
+
+setTimeout (()=> { renderBaterias(estanteria, carrito)}, 1000)
