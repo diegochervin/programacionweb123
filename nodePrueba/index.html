@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+
+    <!-- Agregar el enlace al archivo CSS de Bootstrap sin el atributo 'integrity' -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <div class="row">
+        <!-- Título centrado -->
+        <div class="col-12 text-center mb-4">
+            <h3>Nuestros Productos</h3>
+        </div>
+    
+        <!-- Sidebar (Filtros) -->
+        <div class="col-md-3">
+            <div class="list-group categories">
+                <h3 class="side-heading bg-headers-light m-0 mt-3"><i class="fa fa-align-justify"></i> Filtrá tu búsqueda</h3>
+                
+                <!-- Campo de Búsqueda -->
+                <div class="list-group-item">
+                    <input id="buscar" class="form-control me-2" type="text" placeholder="Ingrese Marca o Modelo" oninput="aplicarFiltrosYOrdenamiento()">
+                </div>
+    
+                <!-- Filtros en el Aside -->
+                <div class="list-group">
+                    <!-- Filtro por Marca -->
+                    <div class="list-group-item">
+                        <div id="filtro-marca" class="filter-group">
+                            <h6><strong>Filtrar por Marca</strong></h6>
+                            <div id="filtro-marcas-dinamico"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Select Ordenar por -->
+                    <div class="list-group-item">
+                        <h6><strong>Ordenar Por:</strong></h6>
+                        <div>
+                            <input type="radio" name="order-by" id="ordenar-alfabetoAZ" value="alfabetoAZ" onclick="aplicarFiltrosYOrdenamiento()">
+                            <label for="ordenar-alfabetoAZ">A-Z</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="order-by" id="ordenar-alfabetoZA" value="alfabetoZA" onclick="aplicarFiltrosYOrdenamiento()">
+                            <label for="ordenar-alfabetoZA">Z-A</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="order-by" id="ordenar-preciomenor" value="preciomenor" onclick="aplicarFiltrosYOrdenamiento()">
+                            <label for="ordenar-preciomenor">Precio Menor a Mayor</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="order-by" id="ordenar-preciomayor" value="preciomayor" onclick="aplicarFiltrosYOrdenamiento()">
+                            <label for="ordenar-preciomayor">Precio Mayor a Menor</label>
+                        </div>
+                    </div>
+    
+                    <!-- Filtro de Stock -->
+                    <div class="list-group-item">
+                        <h6><strong>Stock</strong></h6>
+                        <div>
+                            <input type="radio" name="filter-stock" id="radio1" value="S" onclick="aplicarFiltrosYOrdenamiento()">
+                            <label for="radio1">Solo en stock</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="filter-stock" id="radio2" value="" onclick="aplicarFiltrosYOrdenamiento()" checked>
+                            <label for="radio2">Todos</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Contenedor de productos -->
+        <div class="col-md-9">
+            <div class="container mt-4">
+                <div class="row" id="productos-container"></div> <!-- Contenedor de productos -->
+            </div>
+        </div>
+    </div>
+    
+
+<!-- Agregar el enlace al archivo JS de Bootstrap sin el atributo 'integrity' -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="funcion.js"></script>
+</body>
+</html>
