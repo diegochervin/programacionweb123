@@ -1,6 +1,6 @@
 let containerBaterias = document.getElementById("containerBaterias");
 
-generarFiltrosDeMarca()
+
 
 // Función que renderiza las baterías
 function renderBaterias(estanteria, carrito) {
@@ -295,7 +295,7 @@ function aplicarFiltrosYOrdenamiento() {
   let busqueda = document.getElementById('buscar').value.toLowerCase();
   
   // Filtrar por marca
-  let bateriasFiltradas = local.filter(bateria => {
+  let bateriasFiltradas = estanteria.filter(bateria => {
     let productoMarca = bateria.marca.toLowerCase();
     return marcaSeleccionada === '' || productoMarca === marcaSeleccionada;
   });
@@ -320,32 +320,8 @@ function aplicarFiltrosYOrdenamiento() {
   }
  
   // Renderizar los productos filtrados y ordenados
-  renderBaterias(bateriaBuscada, local, carrito);
+  renderBaterias(bateriaBuscada, estanteria, carrito);
   
-}
-
-
-function generarFiltrosDeMarca() {
-  const filtroContainer = document.getElementById('filtro-marcas-dinamico');
-  filtroContainer.innerHTML = ''; // Limpia el contenedor
-
-  // Crear el filtro para "Todas"
-  const filtroTodas = document.createElement('div');
-  filtroTodas.innerHTML = `
-    <input type="radio" name="filter-marca" id="filtro-marca-todos" value="" onclick="aplicarFiltrosYOrdenamiento()" checked>
-    <label for="filtro-marca-todos">TODAS</label>
-  `;
-  filtroContainer.appendChild(filtroTodas);
-
-  // Crear filtros para cada marca en el array marcasExistentes
-  marcasExistentes.forEach((marca) => {
-    const filtroMarca = document.createElement('div');
-    filtroMarca.innerHTML = `
-      <input type="radio" name="filter-marca" id="filtro-marca-${marca}" value="${marca}" onclick="aplicarFiltrosYOrdenamiento()">
-      <label for="filtro-marca-${marca}">${marca}</label>
-    `;
-    filtroContainer.appendChild(filtroMarca);
-  });
 }
 
 
@@ -444,7 +420,7 @@ function cargarBateria(array, array2){
   // //sumar al array
   array.push(bateriaNueva)
   //actualizamos biblio en storage
-  localStorage.setItem("local", JSON.stringify(array))
+  localStorage.setItem("estanteria", JSON.stringify(array))
   //actualizar DOM
   renderBaterias(array)
   generarFiltrosDeMarca()
@@ -452,7 +428,7 @@ function cargarBateria(array, array2){
 }
 
 guardarBateriaBtn.addEventListener("click", ()=>{
-  cargarBateria(local, marcasExistentes)
+  cargarBateria(estanteria, marcasExistentes)
 })
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -497,7 +473,7 @@ document.addEventListener("DOMContentLoaded", () => {
       carrito.forEach(item => {
         console.log(item)
         // Encuentra el producto en el array local
-        let producto = local.find(bateria => bateria.id === item.id);
+        let producto = estanteria.find(bateria => bateria.id === item.id);
         console.log(producto.stock)
         if (producto) {
           producto.stock -= item.cantidad; // Resta del stock
@@ -521,8 +497,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       carrito = [];
       localStorage.removeItem("carrito");
-      renderBaterias(local, carrito)
-      localStorage.setItem("local", JSON.stringify(local))
+      renderBaterias(estanteria, carrito)
+      localStorage.setItem("estanteria", JSON.stringify(estanteria))
 
 
 
@@ -532,22 +508,50 @@ document.addEventListener("DOMContentLoaded", () => {
 })})
 
 
-let estanteria = []
+let estanteria = [];
 
-const cargarEstanteria = async(array)=>{
-
-  const resp = await fetch (`baterias.json`)
-  const dataBateria = await resp.json()
-  console.log(dataBateria)
-  
-  for(let bat of dataBateria){
-    let bateriaNueva = new Bateria (bat.id, bat.marca, bat.modelo, bat.precio, bat.stock, bat.imagen)
-    array.push(bateriaNueva)
-    
+// Función para cargar las baterías desde el JSON
+async function cargarEstanteria() {
+  try {
+    const resp = await fetch('baterias.json');
+    const dataBateria = await resp.json();
+    // Llenamos el array estanteria con las baterías
+    estanteria = dataBateria.map(bat => new Bateria(bat.id, bat.marca, bat.modelo, bat.precio, bat.stock, bat.imagen));
+    // Una vez cargadas las baterías, generar los filtros de marcas
+    generarFiltrosDeMarca();
+    // Renderizar las baterías (puedes ajustar esta parte según tu necesidad)
+    renderBaterias(estanteria, carrito);
+  } catch (error) {
+    console.error('Error al cargar las baterías:', error);
   }
-  return array
 }
 
-cargarEstanteria(estanteria)
+// Función para generar los filtros de marca
+function generarFiltrosDeMarca() {
+  const filtroContainer = document.getElementById('filtro-marcas-dinamico');
+  filtroContainer.innerHTML = ''; // Limpiar el contenedor
 
-setTimeout (()=> { renderBaterias(estanteria, carrito)}, 1000)
+  // Crear el filtro para "TODAS"
+  const filtroTodas = document.createElement('div');
+  filtroTodas.innerHTML = `
+    <input type="radio" name="filter-marca" id="filtro-marca-todos" value="" onclick="aplicarFiltrosYOrdenamiento()" checked>
+    <label for="filtro-marca-todos">TODAS</label>
+  `;
+  filtroContainer.appendChild(filtroTodas);
+
+  // Extraer las marcas únicas del array de baterías
+  const marcasExistentes = [...new Set(estanteria.map(bateria => bateria.marca))];
+
+  // Crear filtros para cada marca en el array marcasExistentes
+  marcasExistentes.forEach((marca) => {
+    const filtroMarca = document.createElement('div');
+    filtroMarca.innerHTML = `
+      <input type="radio" name="filter-marca" id="filtro-marca-${marca}" value="${marca}" onclick="aplicarFiltrosYOrdenamiento()">
+      <label for="filtro-marca-${marca}">${marca}</label>
+    `;
+    filtroContainer.appendChild(filtroMarca);
+  });
+}
+
+// Llamar a la función para cargar las baterías
+cargarEstanteria();
