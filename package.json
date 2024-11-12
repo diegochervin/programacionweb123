@@ -1,0 +1,24 @@
+{
+  "name": "misbaterias",
+  "version": "1.0.0",
+  "description": "Proyecto para el CFP 41 2024 2c",
+  "main": "baterias.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegochervin/programacionweb123.git"
+  },
+  "author": "Diego Chervin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diegochervin/programacionweb123/issues"
+  },
+  "homepage": "https://github.com/diegochervin/programacionweb123#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "sweetalert2": "^11.14.5",
+    "toastify-js": "^1.12.0"
+  }
+}
