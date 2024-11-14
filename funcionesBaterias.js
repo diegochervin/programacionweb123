@@ -554,4 +554,5 @@ function generarFiltrosDeMarca() {
 }
 
 // Llamar a la función para cargar las baterías
+setTimeout (()=> { renderBaterias(estanteria, carrito)}, 1000)
 cargarEstanteria();
