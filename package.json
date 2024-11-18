@@ -2,7 +2,7 @@
   "name": "misbaterias",
   "version": "1.0.0",
   "description": "Proyecto para el CFP 41 2024 2c",
-  "main": "baterias.js",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,8 +18,9 @@
   "homepage": "https://github.com/diegochervin/programacionweb123#readme",
   "dependencies": {
     "bootstrap": "^5.3.3",
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
     "mysql": "^2.18.1",
-    "picocolors": "^1.1.1",
     "sweetalert2": "^11.6.13",
     "toastify-js": "^1.12.0"
   },
