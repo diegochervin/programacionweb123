@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,25 +13,10 @@
 
 <main>
 <header> 
-  
-  <div class="header">
-    <a href="#default" class="logo">Baterias Ferrobat</a>
-    <button id="btnToggle" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-      Dark
-    </button>
-    <button id="agregarBateria" data-bs-toggle="modal" data-bs-target="#modalAgregarBateria" class="btn btn-success" style="display: none;">Agregar Batería</button>
 
-    <div class="header-right">
-      <a  href="#marcas">Marcas</a>
-      <a  href="./registro.ejs">registro</a>
-      <a id="iniciarSesion" href="#">Iniciar Sesión</a>
-      <a id="botonCarrito" data-bs-toggle="modal" data-bs-target="#modalAgregarCarrito" class="btn btn-secondary"><i class="fas fa-shopping-cart fa-1x"></i></a>
-       
-    </div>
-  </div>
+  <%- include("./template/nav.ejs");%>
   
   
-
 </header>
 <body>
 
@@ -171,7 +156,7 @@
       </div>
       <div class="modal-body">
         <!--Formulario-->
-        <form id="formLogin" class="my-4">
+        <form id="formLogin" class="my-4" method="post">
           <div class="mb-3">
             <label for="usuario" class="form-label">Usuario</label>
             <input type="text" class="form-control" id="usuarioInput" aria-describedby="Usuario">

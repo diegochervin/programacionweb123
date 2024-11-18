@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <title>Baterias Ferrobat</title>
+</head>
+
+<main>
+<header> 
+
+  <%- include("./template/nav.ejs");%>
+  
+  
+</header>
+<body>
+
+
+  <div class="carousel-container">
+    <h3>Marcas</h3>
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="./static/img/ferrobat.jpg" class="d-block w-100" alt="Imagen 1">
+        </div>
+        <div class="carousel-item">
+          <img src="./static/img/willard.jpg" class="d-block w-100" alt="Imagen 2">
+        </div>
+        <div class="carousel-item">
+          <img src="./static/img/moura.png" class="d-block w-100" alt="Imagen 3">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+  
+
+ 
+  
+  
+ 
+  <div class="row">
+    <h3>Nuestros Productos</h3>
+    <!-- Sidebar Starts -->
+    <div class="col-md-3">
+      <div class="list-group categories">
+        <h3 class="side-heading bg-headers-light m-0 mt-3"><i class="fa fa-align-justify"></i> Filtrá tu búsqueda</h3>
+        
+          <!-- Campo de Búsqueda -->
+    <div class="list-group-item">
+      <input id="buscar" class="form-control me-2" type="text" placeholder="Ingrese Marca o Modelo" oninput="aplicarFiltrosYOrdenamiento()">
+
+    </div>
+
+        <!-- Filtros en el Aside -->
+        <div class="list-group">
+         
+          <!-- Filtro por Marca -->
+<div class="list-group-item">
+  <div id="filtro-marca" class="filter-group">
+    <h6><strong>Filtrar por Marca</strong></h6>
+    <div id="filtro-marcas-dinamico"></div>
+  </div>
+</div>
+
+          <!-- Select Ordenar por -->
+          <div class="list-group-item">
+            <h6><strong>Ordenar Por:</strong></h6>
+            <div>
+              <input type="radio" name="order-by" id="ordenar-alfabetoAZ" value="alfabetoAZ" onclick="aplicarFiltrosYOrdenamiento()">
+              <label for="ordenar-alfabetoAZ">A-Z</label>
+            </div>
+            <div>
+              <input type="radio" name="order-by" id="ordenar-alfabetoZA" value="alfabetoZA" onclick="aplicarFiltrosYOrdenamiento()">
+              <label for="ordenar-alfabetoZA">Z-A</label>
+            </div>
+            <div>
+              <input type="radio" name="order-by" id="ordenar-preciomenor" value="preciomenor" onclick="aplicarFiltrosYOrdenamiento()">
+              <label for="ordenar-preciomenor">Precio Menor a Mayor</label>
+            </div>
+            <div>
+              <input type="radio" name="order-by" id="ordenar-preciomayor" value="preciomayor" onclick="aplicarFiltrosYOrdenamiento()">
+              <label for="ordenar-preciomayor">Precio Mayor a Menor</label>
+            </div>
+          </div>
+  
+          <!-- Filtro de Stock -->
+          <div class="list-group-item">
+            <h6><strong>Stock</strong></h6>
+            <div>
+              <input type="radio" name="filter-stock" id="radio1" value="S" onclick="aplicarFiltrosYOrdenamiento()">
+              <label for="radio1">Solo en stock</label>
+            </div>
+            <div>
+              <input type="radio" name="filter-stock" id="radio2" value="" onclick="aplicarFiltrosYOrdenamiento()" checked>
+              <label for="radio2">Todos</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Contenedor de Baterías -->
+    <div class="col-md-9">
+      <h3 id="coincidencias"></h3>
+      <div class="container">
+        <div id="containerBaterias" class="row">
+          <!-- Tarjetas de Baterías se cargarán aquí -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+   
+
+    <div id="ubicacion">
+      <h3>Contacto</h3>
+      <div class="contenido">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.3353334801536!2d-58.517918043679785!3d-34.620965268703245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcc8294aafe861%3A0xa8a78d7f93fb683!2sBater%C3%ADas%20Ferrobat!5e0!3m2!1ses!2sar!4v1728590637319!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        
+        <div class="informacion">
+          <a href="tel:206067449"  style="text-decoration: none;">Teléfono:  2060-6749</a><br>
+          <a href="https://wa.me/987654321"><i class="fa-brands fa-whatsapp"></i> Whatsapp: XXXXX</a><br>
+          <a href="https://www.instagram.com/bateriasferrobat"><i class="fa-brands fa-instagram"></i> bateriasferrobat</a> <br>
+          <p>Horarios de atención  Lunes a Viernes 09:00 a 12:00 y 14:00 a 18:00 </p>
+            <p>Sabados de 09:00 a 13:00</p>
+          <p>Av. Lope de Vega 2095, C1407 CABA</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <div>
+
+
+<!-- Modal Login -->
+<div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLoginLabel">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!--Formulario-->
+        <form id="formLogin" class="my-4" method="post">
+          <div class="mb-3">
+            <label for="usuario" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="usuarioInput" aria-describedby="Usuario">
+          </div>
+          <div class="mb-3">
+            <label for="clave" class="form-label">Clave</label>
+            <input type="password" class="form-control" id="passInput" aria-describedby="pass">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" id="loginBtn" class="btn btn-success">Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Agregar Batería -->
+<div class="modal fade" id="modalAgregarBateria" tabindex="-1" aria-labelledby="modalAgregarBateriaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalAgregarBateriaLabel">Agregar Nueva Batería</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!--Formulario-->
+        <form id="formCargarBateria" class="my-4">
+          <div class="mb-3">
+            <label for="marca" class="form-label">Marca</label>
+            <input type="text" class="form-control" id="marcaInput" aria-describedby="marca">
+          </div>
+          <div class="mb-3">
+            <label for="modelo" class="form-label">Modelo</label>
+            <input type="text" class="form-control" id="modeloInput" aria-describedby="modelo">
+          </div>
+          <div class="mb-3">
+            <label for="precio" class="form-label">Precio:</label>
+            <input type="text" class="form-control" id="precioInput" aria-describedby="precio">
+          </div>
+          <div class="mb-3">
+            <label for="stock" class="form-label">Stock:</label>
+            <input type="text" class="form-control" id="stockInput" aria-describedby="stock">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" id="guardarBateriaBtn" class="btn btn-success" data-bs-dismiss="modal">Guardar Batería</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+   <!--Modal Carrito-->
+   <div class="modal fade" id="modalAgregarCarrito" tabindex="-1" aria-labelledby="modalAgregarCarrito" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Carrito de Compras</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modalBodyCarrito">
+          
+        </div>
+        <div class="row ml-ato">
+          <p id="precioTotal">Total</p>
+          <p id="envioGratis">Envio Gratis</p>
+        
+        </div>
+        <div class="modal-footer">
+          
+          
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" data-bs-dismiss="modal" class="btn btn-success" id="botonFinalizarCompra">Finalizar Compra</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Modal Finalización de Compra -->
+  <div class="modal fade" id="modalFinalCompra" tabindex="-1" aria-labelledby="modalFinalCompraLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalFinalCompraLabel">Finalizar Compra</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formFinalCompra" class="needs-validation" novalidate>
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre" required>
+              <div class="invalid-feedback">Por favor ingrese su nombre.</div>
+            </div>
+            <div class="mb-3">
+              <label for="apellido" class="form-label">Apellido</label>
+              <input type="text" class="form-control" id="apellido" required>
+              <div class="invalid-feedback">Por favor ingrese su apellido.</div>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo</label>
+              <input type="email" class="form-control" id="email" required>
+              <div class="invalid-feedback">Por favor ingrese un correo válido.</div>
+            </div>
+            <div class="mb-3">
+              <label for="telefono" class="form-label">Teléfono</label>
+              <input type="tel" class="form-control" id="telefono" required>
+              <div class="invalid-feedback">Por favor ingrese su teléfono.</div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" id="confirmarCompraBtn">Confirmar Compra</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+
+    </body>
+     
+    
+   
+    
+
+
+  <footer> 
+
+    <div class="container-fluid mt-3">
+      
+      <div class="row">
+        <div class="col-sm-4 p-3 bg-primary text-white text-center">
+          <a href="https://www.google.com/maps?q=Av.+Lope+de+Vega+2095,+C1407+CABA" target="_blank" class="text-white" style="text-decoration: none;">
+              Av. Lope de Vega 2095, C1407 CABA
+          </a>
+      </div>
+        <div class="col-sm-4 p-3 bg-primary text-white text-center">
+          <a href="tel:206067449" class="text-white" style="text-decoration: none;">Teléfono:  2060-6749</a>
+      </div>
+      <div class="col-sm-4 p-3 bg-primary text-white text-center">
+          <a href="https://wa.me/987654321" class="text-white" style="text-decoration: none;"><i class="fa-brands fa-whatsapp"></i> Whatsapp: XXXXX</a>
+      </div>
+      </div>
+    </div>
+   
+  </footer>  
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="constructor.js"></script>
+    <script src="funcionesBaterias.js"></script>
+    <script src="baterias.js"></script>
+    <script src="darkmode.js"></script>
+    
+
+
+
+</main>
+</html>

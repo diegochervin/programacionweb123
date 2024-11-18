@@ -1,0 +1,13 @@
+[
+    { "marca": "Ferrobat", "modelo": "12X65", "precio": 85000, "stock": 10, "imagen": "12x65.jpg" },
+    { "marca": "Moura", "modelo": "M20GD", "precio": 145000, "stock": 10, "imagen": "m20gd.jpg" },
+    { "marca": "Willard", "modelo": "UB620", "precio": 155000, "stock": 10, "imagen": "ub620.jpg" },
+    { "marca": "Ferrobat", "modelo": "12x70", "precio": 100000, "stock": 10, "imagen": "12x70.jpg" },
+    { "marca": "Ferrobat", "modelo": "12x80", "precio": 110000, "stock": 10, "imagen": "12x80.jpg" },
+    { "marca": "Moura", "modelo": "M22GD", "precio": 165000, "stock": 10, "imagen": "m22gd.jpg" },
+    { "marca": "Ferrobat", "modelo": "prueba1", "precio": 150, "stock": 0, "imagen": "prueba1.jpg" },
+    { "marca": "Ferrobat", "modelo": "prueba2", "precio": 150, "stock": 0, "imagen": "prueba2.jpg" }
+  ]
+  
+
+  

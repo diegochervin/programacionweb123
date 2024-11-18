@@ -361,39 +361,39 @@ let passInput = document.getElementById("passInput");
 let modalAgregarCarrito = document.getElementById("modalAgregarCarrito");
 
 
-// document.addEventListener("DOMContentLoaded", function() {
-//   let loginBtn = document.getElementById("loginBtn");
-//   let iniciarSesionLink = document.getElementById("iniciarSesion");
-//   // let modalLogin = new bootstrap.Modal(document.getElementById("modalLogin"));
-//   let modalAgregarBateria = new bootstrap.Modal(document.getElementById("modalAgregarBateria"));
+document.addEventListener("DOMContentLoaded", function() {
+  let loginBtn = document.getElementById("loginBtn");
+  let iniciarSesionLink = document.getElementById("iniciarSesion");
+  let modalLogin = new bootstrap.Modal(document.getElementById("modalLogin"));
+  let modalAgregarBateria = new bootstrap.Modal(document.getElementById("modalAgregarBateria"));
 
-//   iniciarSesionLink.addEventListener("click", function(event) {
-//     event.preventDefault();
-//     modalLogin.show();
-//   });
+  iniciarSesionLink.addEventListener("click", function(event) {
+    event.preventDefault();
+    modalLogin.show();
+  });
 
-//   function login() {
-//     let usuario = document.getElementById("usuarioInput").value;
-//     let clave = document.getElementById("passInput").value;
+  function login() {
+    let usuario = document.getElementById("usuarioInput").value;
+    let clave = document.getElementById("passInput").value;
 
-//     if (usuario === "admin" && clave === "admin") {
-//       modalLogin.hide();
-//       document.getElementById("agregarBateria").style.display = "inline-block";
+    if (usuario === "admin" && clave === "admin") {
+      modalLogin.hide();
+      document.getElementById("agregarBateria").style.display = "inline-block";
       
-//     } else {
+    } else {
       
-//       Swal.fire({
-//         title: "Usuario o clave incorrectos.",
-//         timer: 3500,
-//         icon: "error"
-//       });
+      Swal.fire({
+        title: "Usuario o clave incorrectos.",
+        timer: 3500,
+        icon: "error"
+      });
       
-//       // alert("Usuario o clave incorrectos.");
-//     }
-//   }
+      // alert("Usuario o clave incorrectos.");
+    }
+  }
 
-//   loginBtn.addEventListener("click", login);
-// });
+  loginBtn.addEventListener("click", login);
+});
 
 
 function cargarBateria(array, array2){
