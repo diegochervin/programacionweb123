@@ -2,7 +2,6 @@ const express = require("express");
 const session = require("express-session");
 const mysql = require("mysql");
 const loginRoutes = require("./rutas/codLogin"); // Rutas específicas de login/registro
-
 const app = express();
 
 // Configuración de conexión MySQL
@@ -12,6 +11,7 @@ let conexion = mysql.createConnection({
     user: "root",
     password: ""
 });
+
 
 // Configuraciones generales
 app.set("view engine", "ejs");

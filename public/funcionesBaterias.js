@@ -1,4 +1,4 @@
-let containerBaterias = document.getElementById("containerBaterias");
+// let containerBaterias = document.getElementById("containerBaterias");
 
 
 
@@ -427,9 +427,9 @@ function cargarBateria(array, array2){
   console.log("Marcas actualizadas:", array2);
 }
 
-guardarBateriaBtn.addEventListener("click", ()=>{
-  cargarBateria(estanteria, marcasExistentes)
-})
+// guardarBateriaBtn.addEventListener("click", ()=>{
+//   cargarBateria(estanteria, marcasExistentes)
+// })
 
 document.addEventListener("DOMContentLoaded", () => {
   const modalAgregarCarrito = new bootstrap.Modal(document.getElementById('modalAgregarCarrito'));
@@ -508,23 +508,6 @@ document.addEventListener("DOMContentLoaded", () => {
 })})
 
 
-let estanteria = [];
-
-// Función para cargar las baterías desde el JSON
-async function cargarEstanteria() {
-  try {
-    const resp = await fetch('baterias.json');
-    const dataBateria = await resp.json();
-    // Llenamos el array estanteria con las baterías
-    estanteria = dataBateria.map(bat => new Bateria(bat.id, bat.marca, bat.modelo, bat.precio, bat.stock, bat.imagen));
-    // Una vez cargadas las baterías, generar los filtros de marcas
-    generarFiltrosDeMarca();
-    // Renderizar las baterías (puedes ajustar esta parte según tu necesidad)
-    renderBaterias(estanteria, carrito);
-  } catch (error) {
-    console.error('Error al cargar las baterías:', error);
-  }
-}
 
 // Función para generar los filtros de marca
 function generarFiltrosDeMarca() {
@@ -555,4 +538,4 @@ function generarFiltrosDeMarca() {
 
 // Llamar a la función para cargar las baterías
 setTimeout (()=> { renderBaterias(estanteria, carrito)}, 1000)
-cargarEstanteria();
+

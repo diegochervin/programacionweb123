@@ -20,7 +20,9 @@ VALUES
     ('Ferrobat', '12x80', 110000, 10, '12x80.jpg'),
     ('Moura', 'M22GD', 165000, 10, 'm22gd.jpg'),
     ('Ferrobat', 'prueba1', 150, 0, 'prueba1.jpg'),
-    ('Ferrobat', 'prueba2', 150, 0, 'prueba2.jpg');
+    ('Ferrobat', 'prueba2', 150, 0, 'prueba2.jpg'),
+     ('Ferrobat', '12X650', 123, 10, 'prueba1.jpg'),
+    ('Moura', 'M2000GD', 321, 10, 'prueba1.jpg');
 
 
 -- crear tabla usuarios

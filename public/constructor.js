@@ -41,6 +41,26 @@ class Bateria {
   }
 }
 
+let estanteria = [];
+
+// Función para cargar las baterías desde el JSON
+  async function cargarEstanteria() {
+    try {
+      const resp = await fetch('baterias.json');
+      const dataBateria = await resp.json();
+      // Llenamos el array estanteria con las baterías
+      estanteria = dataBateria.map(bat => new Bateria(bat.id, bat.marca, bat.modelo, bat.precio, bat.stock, bat.imagen));
+      // Una vez cargadas las baterías, generar los filtros de marcas
+      generarFiltrosDeMarca();
+      // Renderizar las baterías (puedes ajustar esta parte según tu necesidad)
+      renderBaterias(estanteria, carrito);
+    } catch (error) {
+      console.error('Error al cargar las baterías:', error);
+    }
+  }
+  cargarEstanteria();
+
+
 const carrito = [];
 if (localStorage.getItem("carrito")) {
   const carritoStore = JSON.parse(localStorage.getItem("carrito"));
@@ -70,3 +90,4 @@ marcasExistentes.forEach((bateria) => {
     marcasExistentes.push(marcaMayuscula);
   }
 });
+
