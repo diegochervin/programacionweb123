@@ -1,4 +1,4 @@
-// let containerBaterias = document.getElementById("containerBaterias");
+
 
 
 
@@ -44,7 +44,6 @@ function renderBaterias(estanteria, carrito) {
 function agregarAlCarrito(bateriaId, arrayStock, carrito) {
   // Buscar en el array stock la batería elegida
   let bateriaComprado = arrayStock.find(bateria => bateria.id == bateriaId);
-
   if (bateriaComprado) {
     // Obtener la cantidad ingresada
     let cantidadIngresada = Number(document.getElementById(`cantidad-${bateriaId}`).value);
@@ -75,7 +74,6 @@ function agregarAlCarrito(bateriaId, arrayStock, carrito) {
 
     // Buscar si la batería ya está en el carrito
     let bateriaEnCarrito = carrito.find(bat => bat.id == bateriaComprado.id);
-
     if (!bateriaEnCarrito) {
       // Si no está en el carrito, agregar la batería con la cantidad ingresada
       let bateriaClon = { ...bateriaComprado, cantidad: cantidadIngresada }; // Clonar objeto
@@ -96,8 +94,6 @@ function agregarAlCarrito(bateriaId, arrayStock, carrito) {
       }).showToast();  
       
       // alert(`Se han agregado ${cantidadIngresada} unidades de la batería ${bateriaComprado.modelo}.`);
-  
-    
     
     
     } else {
@@ -175,7 +171,6 @@ botonCarrito.addEventListener("click", ()=>{
   imprimirCarrito(carrito)
 })
 
-let precioTotal = document.getElementById("precioTotal")
 
 //imprimirCarrito
 function imprimirCarrito(carrito) {
@@ -277,12 +272,6 @@ totalSumado(carrito)
 
 
 
-
-
-let coincidencias = document.getElementById('coincidencias');
-let buscador = document.getElementById('buscar');
-
-
 // Función para manejar los filtros y el ordenamiento
 function aplicarFiltrosYOrdenamiento() {
   // Obtener la marca seleccionada
@@ -349,16 +338,7 @@ function buscarData(array, valor) {
 
 
 
-//capturas input form Cargar Bateria
-let marcaInput = document.getElementById("marcaInput")
-let autorInput = document.getElementById("modeloInput")
-let precioInput = document.getElementById("precioInput")
-let stockInput = document.getElementById("stockInput")
 
-// Captura de los inputs del formulario
-let usuarioInput = document.getElementById("usuarioInput");
-let passInput = document.getElementById("passInput");
-let modalAgregarCarrito = document.getElementById("modalAgregarCarrito");
 
 
 // document.addEventListener("DOMContentLoaded", function() {
@@ -539,3 +519,24 @@ function generarFiltrosDeMarca() {
 // Llamar a la función para cargar las baterías
 setTimeout (()=> { renderBaterias(estanteria, carrito)}, 1000)
 
+setTimeout(()=>{ getID()},1500 )
+function getID(){
+let containerBaterias = document.getElementById("containerBaterias");
+let coincidencias = document.getElementById('coincidencias');
+let buscador = document.getElementById('buscar');
+
+//capturas input form Cargar Bateria
+
+
+
+}
+
+// Captura de los inputs del formulario
+let usuarioInput = document.getElementById("usuarioInput");
+let passInput = document.getElementById("passInput");
+let precioTotal = document.getElementById("precioTotal")
+let marcaInput = document.getElementById("marcaInput")
+let autorInput = document.getElementById("modeloInput")
+let precioInput = document.getElementById("precioInput")
+let stockInput = document.getElementById("stockInput")
+let modalAgregarCarrito = document.getElementById("modalAgregarCarrito");
