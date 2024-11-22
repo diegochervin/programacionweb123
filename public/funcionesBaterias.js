@@ -521,17 +521,19 @@ setTimeout (()=> { renderBaterias(estanteria, carrito)}, 1000)
 
 setTimeout(()=>{ getID()},1500 )
 function getID(){
-let containerBaterias = document.getElementById("containerBaterias");
-let coincidencias = document.getElementById('coincidencias');
-let buscador = document.getElementById('buscar');
-
+  let containerBaterias = document.getElementById("containerBaterias");
+  let coincidencias = document.getElementById('coincidencias');
+  let buscador = document.getElementById('buscar');
 //capturas input form Cargar Bateria
-
 
 
 }
 
 // Captura de los inputs del formulario
+
+
+
+let modalAgregarCarrito = document.getElementById("modalAgregarCarrito");
 let usuarioInput = document.getElementById("usuarioInput");
 let passInput = document.getElementById("passInput");
 let precioTotal = document.getElementById("precioTotal")
@@ -539,4 +541,3 @@ let marcaInput = document.getElementById("marcaInput")
 let autorInput = document.getElementById("modeloInput")
 let precioInput = document.getElementById("precioInput")
 let stockInput = document.getElementById("stockInput")
-let modalAgregarCarrito = document.getElementById("modalAgregarCarrito");
