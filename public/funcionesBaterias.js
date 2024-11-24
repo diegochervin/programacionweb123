@@ -525,14 +525,6 @@ function getID(){
   let coincidencias = document.getElementById('coincidencias');
   let buscador = document.getElementById('buscar');
 //capturas input form Cargar Bateria
-
-
-}
-
-// Captura de los inputs del formulario
-
-
-
 let modalAgregarCarrito = document.getElementById("modalAgregarCarrito");
 let usuarioInput = document.getElementById("usuarioInput");
 let passInput = document.getElementById("passInput");
@@ -541,3 +533,10 @@ let marcaInput = document.getElementById("marcaInput")
 let autorInput = document.getElementById("modeloInput")
 let precioInput = document.getElementById("precioInput")
 let stockInput = document.getElementById("stockInput")
+
+}
+
+// Captura de los inputs del formulario
+
+
+
