@@ -61,7 +61,7 @@ let estanteria = [];
   cargarEstanteria();
 
 
-const carrito = [];
+let carrito = [];
 if (localStorage.getItem("carrito")) {
   const carritoStore = JSON.parse(localStorage.getItem("carrito"));
   // ciclo for para recorrer, el array localStore es para traerme la info que capturamos del browser

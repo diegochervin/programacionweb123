@@ -270,6 +270,33 @@ totalSumado(carrito)
   });
 }
 
+// Función para generar los filtros de marca
+function generarFiltrosDeMarca() {
+  const filtroContainer = document.getElementById('filtro-marcas-dinamico');
+  filtroContainer.innerHTML = ''; // Limpiar el contenedor
+
+  // Crear el filtro para "TODAS"
+  const filtroTodas = document.createElement('div');
+  filtroTodas.innerHTML = `
+    <input type="radio" name="filter-marca" id="filtro-marca-todos" value="" onclick="aplicarFiltrosYOrdenamiento()" checked>
+    <label for="filtro-marca-todos">TODAS</label>
+  `;
+  filtroContainer.appendChild(filtroTodas);
+
+  // Extraer las marcas únicas del array de baterías
+  const marcasExistentes = [...new Set(estanteria.map(bateria => bateria.marca))];
+
+  // Crear filtros para cada marca en el array marcasExistentes
+  marcasExistentes.forEach((marca) => {
+    const filtroMarca = document.createElement('div');
+    filtroMarca.innerHTML = `
+      <input type="radio" name="filter-marca" id="filtro-marca-${marca}" value="${marca}" onclick="aplicarFiltrosYOrdenamiento()">
+      <label for="filtro-marca-${marca}">${marca}</label>
+    `;
+    filtroContainer.appendChild(filtroMarca);
+  });
+}
+
 
 
 // Función para manejar los filtros y el ordenamiento
@@ -417,109 +444,110 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let botonFinalizarCompra = document.getElementById("botonFinalizarCompra");
 
+  async function actualizarStockBaseDeDatos(carrito) {
+    try {
+      const response = await fetch("http://localhost:3000/actualizar-stocks", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(carrito), // Enviamos el carrito como un array de objetos { id, cantidadComprada }
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error al actualizar el stock: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      console.log("Stock actualizado en la base de datos:", data.message);
+    } catch (error) {
+      console.error("Error al actualizar el stock en la base de datos:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema actualizando el stock. Inténtalo de nuevo más tarde.",
+        icon: "error",
+      });
+    }
+  }
+  
   function finalizarCompra(arrayCarrito) {
     if (arrayCarrito.length > 0) {
       let totalComprado = totalSumado(arrayCarrito);
-
+  
       modalAgregarCarrito.hide(); // Cierra el modal del carrito
       modalFinalCompra.show(); // Muestra el modal para completar datos
-  
     } else {
       console.log("No hay nada en el carrito; no puedes finalizar la compra.");
     }
     return carrito;
   }
-
+  
   botonFinalizarCompra.addEventListener("click", () => {
     carrito = finalizarCompra(carrito);
   });
-
-  document.getElementById("confirmarCompraBtn").addEventListener("click", (event) => {
+  
+  document.getElementById("confirmarCompraBtn").addEventListener("click", async (event) => {
     const form = document.getElementById("formFinalCompra");
-
+  
     if (!form.checkValidity()) {
       event.preventDefault();
       event.stopPropagation();
     }
-
+  
     form.classList.add("was-validated");
-
+  
     if (form.checkValidity()) {
       const nombre = document.getElementById("nombre").value;
       const apellido = document.getElementById("apellido").value;
       const email = document.getElementById("email").value;
       const telefono = document.getElementById("telefono").value;
-
-      carrito.forEach(item => {
-        console.log(item)
+  
+      carrito.forEach((item) => {
         // Encuentra el producto en el array local
-        let producto = estanteria.find(bateria => bateria.id === item.id);
-        console.log(producto.stock)
+        let producto = estanteria.find((bateria) => bateria.id === item.id);
         if (producto) {
-          producto.stock -= item.cantidad; // Resta del stock
+          producto.stock -= item.cantidad; // Resta del stock local
           console.log(`Stock actualizado para ${producto.modelo}: ${producto.stock}`);
         }
-  });
-
-
-  Swal.fire({
-    title: "Muchas gracias por tu compra!",
-    text: `Compra confirmada para ${nombre.toUpperCase()} ${apellido.toUpperCase()}. Tiene 24 hs para completar el pago. Le llegara un mail con el instructivo.`,
-    icon: "success",
-    timer: 5000
-  });
-
-      // alert(`Compra confirmada para ${nombre} ${apellido}. Tiene 24 hs para completar el pago. Le llegara un mail con el instructivo.`);
-      modalFinalCompra.hide(); // Cierra el modal de finalización de compra
-      modalAgregarCarrito.hide(); // Cierra el modal del carrito
-      
-   
-
-      carrito = [];
-      localStorage.removeItem("carrito");
-      renderBaterias(estanteria, carrito)
-      localStorage.setItem("estanteria", JSON.stringify(estanteria))
-
-
-
+      });
+  
+      try {
+        // Actualiza el stock en la base de datos
+        await actualizarStockBaseDeDatos(
+          carrito.map((item) => ({
+            id: item.id,
+            cantidadComprada: item.cantidad,
+          }))
+        );
+  
+        // Mostrar mensaje de éxito al usuario
+        Swal.fire({
+          title: "Muchas gracias por tu compra!",
+          text: `Compra confirmada para ${nombre.toUpperCase()} ${apellido.toUpperCase()}. Tiene 24 hs para completar el pago. Le llegara un mail con el instructivo.`,
+          icon: "success",
+          timer: 5000,
+        });
+  
+        modalFinalCompra.hide(); // Cierra el modal de finalización de compra
+        modalAgregarCarrito.hide(); // Cierra el modal del carrito
+  
+        carrito = [];
+        localStorage.removeItem("carrito");
+        renderBaterias(estanteria, carrito);
+        localStorage.setItem("estanteria", JSON.stringify(estanteria));
+      } catch (error) {
+        console.error("Error en la confirmación de compra:", error);
+      }
     }
-                 // Actualiza el stock de los productos
- 
-})})
-
-
-
-// Función para generar los filtros de marca
-function generarFiltrosDeMarca() {
-  const filtroContainer = document.getElementById('filtro-marcas-dinamico');
-  filtroContainer.innerHTML = ''; // Limpiar el contenedor
-
-  // Crear el filtro para "TODAS"
-  const filtroTodas = document.createElement('div');
-  filtroTodas.innerHTML = `
-    <input type="radio" name="filter-marca" id="filtro-marca-todos" value="" onclick="aplicarFiltrosYOrdenamiento()" checked>
-    <label for="filtro-marca-todos">TODAS</label>
-  `;
-  filtroContainer.appendChild(filtroTodas);
-
-  // Extraer las marcas únicas del array de baterías
-  const marcasExistentes = [...new Set(estanteria.map(bateria => bateria.marca))];
-
-  // Crear filtros para cada marca en el array marcasExistentes
-  marcasExistentes.forEach((marca) => {
-    const filtroMarca = document.createElement('div');
-    filtroMarca.innerHTML = `
-      <input type="radio" name="filter-marca" id="filtro-marca-${marca}" value="${marca}" onclick="aplicarFiltrosYOrdenamiento()">
-      <label for="filtro-marca-${marca}">${marca}</label>
-    `;
-    filtroContainer.appendChild(filtroMarca);
   });
-}
+  
+
+
 
 // Llamar a la función para cargar las baterías
-setTimeout (()=> { renderBaterias(estanteria, carrito)}, 1000)
+setTimeout (()=> { renderBaterias(estanteria, carrito)}, 2000)
 
-setTimeout(()=>{ getID()},1500 )
+setTimeout(()=>{ getID()},3500 )
 function getID(){
   let containerBaterias = document.getElementById("containerBaterias");
   let coincidencias = document.getElementById('coincidencias');
@@ -535,6 +563,7 @@ let precioInput = document.getElementById("precioInput")
 let stockInput = document.getElementById("stockInput")
 
 }
+})
 
 // Captura de los inputs del formulario
 
