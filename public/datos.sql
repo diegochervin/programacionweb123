@@ -34,3 +34,16 @@ CREATE TABLE usuario (
     email VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL
   );
+
+ /* [
+    { "id":1 ,"marca": "Ferrobat", "modelo": "12X65", "precio": 85000, "stock": 10, "imagen": "12x65.jpg" },
+    { "id":2 ,"marca": "Moura", "modelo": "M20GD", "precio": 145000, "stock": 10, "imagen": "m20gd.jpg" },
+    { "id":3 ,"marca": "Willard", "modelo": "UB620", "precio": 155000, "stock": 10, "imagen": "ub620.jpg" },
+    { "id":4 ,"marca": "Ferrobat", "modelo": "12x70", "precio": 100000, "stock": 10, "imagen": "12x70.jpg" },
+    { "id":5 ,"marca": "Ferrobat", "modelo": "12x80", "precio": 110000, "stock": 10, "imagen": "12x80.jpg" },
+    { "id":6 ,"marca": "Moura", "modelo": "M22GD", "precio": 165000, "stock": 10, "imagen": "m22gd.jpg" },
+    { "id":7 ,"marca": "Ferrobat", "modelo": "prueba1", "precio": 150, "stock": 0, "imagen": "prueba1.jpg" },
+    { "id":8 ,"marca": "Ferrobat", "modelo": "prueba2", "precio": 150, "stock": 0, "imagen": "prueba2.jpg" },
+    { "id":9 ,"marca": "Pepo", "modelo": "prueba2", "precio": 150, "stock": 0, "imagen": "prueba2.jpg" }
+  ]
+  */

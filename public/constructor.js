@@ -46,7 +46,7 @@ let estanteria = [];
 // Función para cargar las baterías desde el JSON
   async function cargarEstanteria() {
     try {
-      const resp = await fetch('baterias.json');
+      const resp = await fetch("http://localhost:3000/baterias");
       const dataBateria = await resp.json();
       // Llenamos el array estanteria con las baterías
       estanteria = dataBateria.map(bat => new Bateria(bat.id, bat.marca, bat.modelo, bat.precio, bat.stock, bat.imagen));
