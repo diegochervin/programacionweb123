@@ -5,6 +5,8 @@ const loginRoutes = require("./rutas/codLogin"); // Rutas específicas de login/
 const app = express();
 const database = require("./views/database");
 const cors = require("cors")
+const { actualizarStock } = require('./public/funcionesdb');
+
 
 // Configuraciones generales
 app.set("view engine", "ejs");
@@ -62,3 +64,14 @@ app.listen(3000, () => {
     console.log("Servidor iniciado en http://localhost:3000");
 });
  
+app.post("/actualizar-stock", async (req, res) => {
+    const { id, nuevoStock } = req.body;
+    try {
+        // Aquí llamas a la función para actualizar el stock en la base de datos
+        await actualizarStock(id, nuevoStock);
+        res.json({ success: true, message: "Stock actualizado" });
+    } catch (error) {
+        console.error("Error al actualizar el stock:", error);
+        res.status(500).json({ success: false, message: "Error al actualizar el stock" });
+    }
+});

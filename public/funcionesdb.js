@@ -1,6 +1,5 @@
 const mysql = require("mysql");
 
-
 // Conexión a la base de datos
 let conexion = mysql.createConnection({
     host: "localhost",
@@ -9,24 +8,20 @@ let conexion = mysql.createConnection({
     password: ""
 });
 
-conexion.connect((error)=>{
-    if(error){
-        throw error
-        
-    }else {
-        console.log(`conexion exitosa a la BD`)
+conexion.connect((error) => {
+    if (error) {
+        throw error;
+    } else {
+        console.log(`Conexión exitosa a la BD`);
     }
-})
-
-
+});
 
 function consulta(instruccion) {
     conexion.query(instruccion, (error, data) => {
         if (error) {
             throw error;
         } else {
-            console.log(`Esta es la instrucción ejecutada: ${instruccion}`);
-            // Iterar sobre los resultados y mostrarlos
+            console.log(`Instrucción ejecutada: ${instruccion}`);
             for (let objeto of data) {
                 console.log(objeto.marca, objeto.modelo, objeto.precio, objeto.stock);
             }
@@ -35,22 +30,36 @@ function consulta(instruccion) {
 }
 
 function insertarBateria(marca, modelo, precio, stock) {
-    // Crear la instrucción de inserción
     const insert = `INSERT INTO baterias (marca, modelo, precio, stock) 
                     VALUES ("${marca}", "${modelo}", ${precio}, ${stock})`;
 
-    // Ejecutar la consulta de inserción
-    conexion.query(insert, function(err, resultado) {
+    conexion.query(insert, (err, resultado) => {
         if (err) {
-            throw err; // Lanzar error si ocurre algún problema
+            throw err;
         } else {
-            console.log('Batería insertada correctamente');
+            console.log("Batería insertada correctamente");
             console.log(resultado);
-
-            // Después de insertar, hacer una consulta para obtener todas las baterías
-            let consultaGeneral = `SELECT * FROM baterias`;
-            consulta(consultaGeneral); // Llamar a la función consulta para mostrar los resultados
         }
     });
 }
 
+function actualizarStock(id, nuevoStock) {
+    const update = `UPDATE baterias 
+                    SET stock = ${nuevoStock} 
+                    WHERE id = ${id}`;
+
+    conexion.query(update, (err, resultado) => {
+        if (err) {
+            console.error("Error al actualizar el stock:", err);
+        } else {
+            console.log(`Stock actualizado correctamente para ID ${id}.`);
+            console.log(`Filas afectadas: ${resultado.affectedRows}`);
+        }
+    });
+}
+
+module.exports = {
+    consulta,
+    insertarBateria,
+    actualizarStock,
+};

@@ -1,7 +1,6 @@
 
 
 
-
 // Función que renderiza las baterías
 function renderBaterias(estanteria, carrito) {
   // Limpia el container antes de volver a agregar productos
@@ -438,109 +437,98 @@ function cargarBateria(array, array2){
 //   cargarBateria(estanteria, marcasExistentes)
 // })
 
-document.addEventListener("DOMContentLoaded", () => {
-  const modalAgregarCarrito = new bootstrap.Modal(document.getElementById('modalAgregarCarrito'));
-  const modalFinalCompra = new bootstrap.Modal(document.getElementById('modalFinalCompra'));
 
-  let botonFinalizarCompra = document.getElementById("botonFinalizarCompra");
-
-  async function actualizarStockBaseDeDatos(carrito) {
-    try {
-      const response = await fetch("http://localhost:3000/actualizar-stocks", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(carrito), // Enviamos el carrito como un array de objetos { id, cantidadComprada }
-      });
   
-      if (!response.ok) {
-        throw new Error(`Error al actualizar el stock: ${response.statusText}`);
-      }
+  document.addEventListener("DOMContentLoaded", () => {
+    const modalAgregarCarrito = new bootstrap.Modal(document.getElementById('modalAgregarCarrito'));
+    const modalFinalCompra = new bootstrap.Modal(document.getElementById('modalFinalCompra'));
   
-      const data = await response.json();
-      console.log("Stock actualizado en la base de datos:", data.message);
-    } catch (error) {
-      console.error("Error al actualizar el stock en la base de datos:", error);
-      Swal.fire({
-        title: "Error",
-        text: "Hubo un problema actualizando el stock. Inténtalo de nuevo más tarde.",
-        icon: "error",
-      });
-    }
-  }
+    let botonFinalizarCompra = document.getElementById("botonFinalizarCompra");
   
-  function finalizarCompra(arrayCarrito) {
-    if (arrayCarrito.length > 0) {
-      let totalComprado = totalSumado(arrayCarrito);
-  
-      modalAgregarCarrito.hide(); // Cierra el modal del carrito
-      modalFinalCompra.show(); // Muestra el modal para completar datos
-    } else {
-      console.log("No hay nada en el carrito; no puedes finalizar la compra.");
-    }
-    return carrito;
-  }
-  
-  botonFinalizarCompra.addEventListener("click", () => {
-    carrito = finalizarCompra(carrito);
-  });
-  
-  document.getElementById("confirmarCompraBtn").addEventListener("click", async (event) => {
-    const form = document.getElementById("formFinalCompra");
-  
-    if (!form.checkValidity()) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  
-    form.classList.add("was-validated");
-  
-    if (form.checkValidity()) {
-      const nombre = document.getElementById("nombre").value;
-      const apellido = document.getElementById("apellido").value;
-      const email = document.getElementById("email").value;
-      const telefono = document.getElementById("telefono").value;
-  
-      carrito.forEach((item) => {
-        // Encuentra el producto en el array local
-        let producto = estanteria.find((bateria) => bateria.id === item.id);
-        if (producto) {
-          producto.stock -= item.cantidad; // Resta del stock local
-          console.log(`Stock actualizado para ${producto.modelo}: ${producto.stock}`);
-        }
-      });
-  
-      try {
-        // Actualiza el stock en la base de datos
-        await actualizarStockBaseDeDatos(
-          carrito.map((item) => ({
-            id: item.id,
-            cantidadComprada: item.cantidad,
-          }))
-        );
-  
-        // Mostrar mensaje de éxito al usuario
-        Swal.fire({
-          title: "Muchas gracias por tu compra!",
-          text: `Compra confirmada para ${nombre.toUpperCase()} ${apellido.toUpperCase()}. Tiene 24 hs para completar el pago. Le llegara un mail con el instructivo.`,
-          icon: "success",
-          timer: 5000,
-        });
-  
-        modalFinalCompra.hide(); // Cierra el modal de finalización de compra
+    function finalizarCompra(arrayCarrito) {
+      if (arrayCarrito.length > 0) {
+        let totalComprado = totalSumado(arrayCarrito);
+    
         modalAgregarCarrito.hide(); // Cierra el modal del carrito
-  
-        carrito = [];
-        localStorage.removeItem("carrito");
-        renderBaterias(estanteria, carrito);
-        localStorage.setItem("estanteria", JSON.stringify(estanteria));
-      } catch (error) {
-        console.error("Error en la confirmación de compra:", error);
+        modalFinalCompra.show(); // Muestra el modal para completar datos
+      } else {
+        console.log("No hay nada en el carrito; no puedes finalizar la compra.");
       }
+      return carrito;
     }
+    
+    botonFinalizarCompra.addEventListener("click", () => {
+      carrito = finalizarCompra(carrito);
+    });
+    
+    document.getElementById("confirmarCompraBtn").addEventListener("click", async (event) => {
+      const form = document.getElementById("formFinalCompra");
+  
+      if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+      }
+  
+      form.classList.add("was-validated");
+  
+      if (form.checkValidity()) {
+          const nombre = document.getElementById("nombre").value;
+          const apellido = document.getElementById("apellido").value;
+          const email = document.getElementById("email").value;
+          const telefono = document.getElementById("telefono").value;
+  
+          // Para cada producto en el carrito, actualiza el stock en la base de datos
+          for (let item of carrito) {
+              let producto = estanteria.find((bateria) => bateria.id === item.id);
+              if (producto) {
+                  producto.stock -= item.cantidad; // Resta del stock local
+                  console.log(`Stock actualizado para ${producto.modelo}: ${producto.stock}`);
+  
+                  // Actualizar stock en la base de datos con fetch
+                  try {
+                      const response = await fetch('/actualizar-stock', {
+                          method: 'POST',
+                          headers: {
+                              'Content-Type': 'application/json'
+                          },
+                          body: JSON.stringify({
+                              id: producto.id,
+                              nuevoStock: producto.stock
+                          })
+                      });
+  
+                      const data = await response.json();
+                      if (data.success) {
+                          console.log(`Stock de ${producto.modelo} actualizado correctamente en la base de datos.`);
+                      } else {
+                          console.error(`Error al actualizar el stock de ${producto.modelo}`);
+                      }
+                  } catch (error) {
+                      console.error("Error al actualizar el stock:", error);
+                  }
+              }
+          }
+  
+          // Mostrar mensaje de éxito al usuario
+          Swal.fire({
+              title: "Muchas gracias por tu compra!",
+              text: `Compra confirmada para ${nombre.toUpperCase()} ${apellido.toUpperCase()}. Tiene 24 hs para completar el pago. Le llegará un mail con el instructivo.`,
+              icon: "success",
+              timer: 5000,
+          });
+  
+          modalFinalCompra.hide(); // Cerrar el modal de finalización de compra
+          modalAgregarCarrito.hide(); // Cerrar el modal del carrito
+  
+          carrito = [];
+          localStorage.removeItem("carrito");
+  
+          renderBaterias(estanteria, carrito);
+          localStorage.setItem("estanteria", JSON.stringify(estanteria));
+      }
   });
   
+
 
 
 
