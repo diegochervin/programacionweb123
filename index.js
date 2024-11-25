@@ -51,7 +51,7 @@ app.get("/baterias", async (req, res) => {
         console.error("Error al obtener productos:", error);
         res.status(500).send("Error interno del servidor.");
     } finally {
-        if (connection) await connection.end();
+ 
     }
 });
 

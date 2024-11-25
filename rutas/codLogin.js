@@ -46,8 +46,15 @@ router.post("/login", (req, res) => {
             }
 
             if (isMatch) {
+                // Verificar el valor de la columna "perfil"
+                if (user.perfil === null) {
+                    console.log("Usuario sin privilegios de admin.");
+                } else if (user.perfil === "admin") {
+                    console.log("Usuario con privilegios de admin.");
+                }
+
                 req.session.usuario = user;
-                res.redirect("/");
+                res.redirect("/"); // Redirige al home o página principal
             } else {
                 res.render("login", {
                     mensaje: "Contraseña incorrecta.",

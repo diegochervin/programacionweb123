@@ -47,3 +47,5 @@ CREATE TABLE usuario (
     { "id":9 ,"marca": "Pepo", "modelo": "prueba2", "precio": 150, "stock": 0, "imagen": "prueba2.jpg" }
   ]
   */
+
+  CREATE TABLE pedidos ( id INT AUTO_INCREMENT PRIMARY KEY, id_usuario INT, -- clave foránea de la tabla usuario id_bateria INT, -- clave foránea de la tabla baterias cantidad INT NOT NULL, total DECIMAL(10, 2), fecha_pedido DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario), FOREIGN KEY (id_bateria) REFERENCES baterias(id_bateria) );
