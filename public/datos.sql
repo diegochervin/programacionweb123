@@ -13,17 +13,17 @@ CREATE TABLE baterias (
 -- primer insert
 INSERT INTO baterias (marca, modelo, precio, stock, imagen)
 VALUES
-    ('Ferrobat', '12X65', 85000, 10, '12x65.jpg'),
-    ('Moura', 'M20GD', 145000, 10, 'm20gd.jpg'),
-    ('Willard', 'UB620', 155000, 10, 'ub620.jpg'),
-    ('Ferrobat', '12x70', 100000, 10, '12x70.jpg'),
-    ('Ferrobat', '12x80', 110000, 10, '12x80.jpg'),
-    ('Moura', 'M22GD', 165000, 10, 'm22gd.jpg'),
-    ('Ferrobat', 'prueba1', 150, 0, 'prueba1.jpg'),
-    ('Ferrobat', 'prueba2', 150, 0, 'prueba2.jpg'),
-     ('Ferrobat', '12X650', 123, 10, 'prueba1.jpg'),
-    ('Moura', 'M2000GD', 321, 10, 'prueba1.jpg'),
-    ('Pepo', 'pepito', 83000, 3, 'prueba1.jpg');
+    ('Ferrobat', '12X65', 85000, 10, 'https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/12x65.jpg?raw=true'),
+    ('Moura', 'M20GD', 145000, 10, 'https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/m20gd.jpg?raw=true'),
+    ('Willard', 'UB620', 155000, 10, 'https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/ub620.jpg?raw=true'),
+    ('Ferrobat', '12x70', 100000, 10, 'https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/12x70.jpg?raw=true'),
+    ('Ferrobat', '12x80', 110000, 10, 'https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/12x80.jpg?raw=true'),
+    ('Moura', 'M22GD', 165000, 10, 'https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/m22gd.jpg?raw=true'),
+    ('Ferrobat', 'prueba1', 150, 0, 'https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/prueba2.jpg?raw=true'),
+    ('Ferrobat', 'prueba2', 150, 0, 'https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/prueba2.jpg?raw=true'),
+     ('Ferrobat', '12X650', 123, 10, 'https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/prueba2.jpg?raw=true'),
+    ('Moura', 'M2000GD', 321, 10, 'https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/prueba2.jpg?raw=true'),
+    ('Pepo', 'pepito', 83000, 3, 'https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/prueba2.jpg?raw=true');
 
 
 -- crear tabla usuarios
