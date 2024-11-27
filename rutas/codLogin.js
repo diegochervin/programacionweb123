@@ -2,14 +2,18 @@ const express = require("express");
 const router = express.Router();
 const mysql = require("mysql");
 const bcrypt = require("bcrypt"); // Importar bcrypt
+const dotenv = require("dotenv");
+dotenv.config();
 
-// Conexión a la base de datos
-let conexion = mysql.createConnection({
-    host: "localhost",
-    database: "ferrobat",
-    user: "root",
-    password: ""
+const connection = mysql.createConnection({
+  host: process.env.HOST,
+  database: process.env.DATABASE,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  
 });
+
+const getConnection = ()=> connection;
 
 // Manejo del login
 router.post("/login", (req, res) => {
@@ -23,7 +27,7 @@ router.post("/login", (req, res) => {
     }
 
     const buscar = "SELECT * FROM usuario WHERE email = ?";
-    conexion.query(buscar, [email], (error, rows) => {
+    connection.query(buscar, [email], (error, rows) => {
         if (error) {
             console.error("Error en la consulta:", error);
             return res.status(500).send("Error en el servidor.");
@@ -74,7 +78,7 @@ router.post("/validar", (req, res) => {
     }
 
     const buscar = "SELECT * FROM usuario WHERE email = ?";
-    conexion.query(buscar, [email], (error, rows) => {
+    connection.query(buscar, [email], (error, rows) => {
         if (error) {
             console.error("Error al buscar el email:", error);
             res.status(500).send("Error en el servidor.");
@@ -89,7 +93,7 @@ router.post("/validar", (req, res) => {
                 }
 
                 const registrar = "INSERT INTO usuario (nombre, apellido, email, password) VALUES (?, ?, ?, ?)";
-                conexion.query(registrar, [nom, ape, email, hash], (error) => {
+                connection.query(registrar, [nom, ape, email, hash], (error) => {
                     if (error) {
                         console.error("Error al registrar el usuario:", error);
                         res.status(500).send("Error al registrar el usuario.");
