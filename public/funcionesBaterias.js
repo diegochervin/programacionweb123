@@ -363,79 +363,63 @@ function buscarData(array, valor) {
 }
 
 
+async function cargarBateria(array, array2) {
+  // Crear objeto de la nueva batería
+  const bateriaNueva = {
+      marca: marcaInput.value.toUpperCase(),
+      modelo: modeloInput.value,
+      precio: Number(precioInput.value),
+      stock: Number(stockInput.value),
+      imagen: "https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/prueba2.jpg?raw=true"
+  };
 
+  try {
+      // Realizar POST a la API para agregar la batería a la base de datos
+      const response = await fetch("/baterias", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify(bateriaNueva)
+      });
 
+      if (!response.ok) {
+          throw new Error("Error al guardar la batería en la base de datos.");
+      }
 
+      const nuevaBateriaDB = await response.json(); // Respuesta del servidor con la batería guardada
 
-// document.addEventListener("DOMContentLoaded", function() {
-//   let loginBtn = document.getElementById("loginBtn");
-//   let iniciarSesionLink = document.getElementById("iniciarSesion");
-//   // let modalLogin = new bootstrap.Modal(document.getElementById("modalLogin"));
-//   let modalAgregarBateria = new bootstrap.Modal(document.getElementById("modalAgregarBateria"));
+      // Agregar la batería al array local (opcional)
+      array.push(nuevaBateriaDB);
 
-//   iniciarSesionLink.addEventListener("click", function(event) {
-//     event.preventDefault();
-//     modalLogin.show();
-//   });
+      // Resetear los inputs
+      marcaInput.value = "";
+      precioInput.value = "";
+      modeloInput.value = "";
+      stockInput.value = "";
 
-//   function login() {
-//     let usuario = document.getElementById("usuarioInput").value;
-//     let clave = document.getElementById("passInput").value;
+      // Verificar si la marca ya está en el array de marcas existentes
+      if (!array2.includes(bateriaNueva.marca)) {
+          array2.push(bateriaNueva.marca); // Agregar la marca si no está
+          localStorage.setItem("marcasExistentes", JSON.stringify(array2)); // Guardar en localStorage
+      }
 
-//     if (usuario === "admin" && clave === "admin") {
-//       modalLogin.hide();
-//       document.getElementById("agregarBateria").style.display = "inline-block";
-      
-//     } else {
-      
-//       Swal.fire({
-//         title: "Usuario o clave incorrectos.",
-//         timer: 3500,
-//         icon: "error"
-//       });
-      
-//       // alert("Usuario o clave incorrectos.");
-//     }
-//   }
+      // Actualizar el DOM
+      renderBaterias(array);
+      generarFiltrosDeMarca();
 
-//   loginBtn.addEventListener("click", login);
-// });
+      console.log("Batería guardada:", nuevaBateriaDB);
+      console.log("Marcas actualizadas:", array2);
 
-
-function cargarBateria(array, array2){
-  //capturo cada input
-  //validación 
-  // if(Number(precioInput.value) < 1 ){
-
-  // }
-  let bateriaNueva = new Bateria(array.length+1, marcaInput.value, modeloInput.value, Number(precioInput.value), Number(stockInput.value), "prueba1.jpg")
-  console.log(bateriaNueva)
-  //resetear input por input
-  marcaInput.value = ""
-  precioInput.value = ""
-  modeloInput.value = ""
-  stockInput.value = ""
-
-   // Verificar si la marca ya está en el array de marcas existentes
-   if (!array2.includes(bateriaNueva.marca)) {
-    array2.push(bateriaNueva.marca); // Agregar la marca si no está
-    localStorage.setItem("marcasExistentes", JSON.stringify(array2)); // Guardar el array de marcas en el localStorage
+  } catch (error) {
+      console.error("Error al cargar la batería:", error);
+      alert("Hubo un problema al agregar la batería. Por favor, inténtalo nuevamente.");
+  }
 }
 
 
-  // //sumar al array
-  array.push(bateriaNueva)
-  //actualizamos biblio en storage
-  localStorage.setItem("estanteria", JSON.stringify(array))
-  //actualizar DOM
-  renderBaterias(array)
-  generarFiltrosDeMarca()
-  console.log("Marcas actualizadas:", array2);
-}
 
-// guardarBateriaBtn.addEventListener("click", ()=>{
-//   cargarBateria(estanteria, marcasExistentes)
-// })
+
 
 
   
@@ -549,6 +533,16 @@ let marcaInput = document.getElementById("marcaInput")
 let autorInput = document.getElementById("modeloInput")
 let precioInput = document.getElementById("precioInput")
 let stockInput = document.getElementById("stockInput")
+let guardarBateriaBtn = document.getElementById("guardarBateriaBtn");
+
+if (guardarBateriaBtn) {
+  guardarBateriaBtn.addEventListener("click", () => {
+      cargarBateria(estanteria, marcasExistentes);
+  });
+} else {
+  console.error("El botón guardarBateriaBtn no está definido.");
+}
+
 
 }
 })

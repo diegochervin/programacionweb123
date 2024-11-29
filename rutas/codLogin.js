@@ -19,6 +19,7 @@ const getConnection = ()=> connection;
 router.post("/login", (req, res) => {
     const { email, pass } = req.body;
 
+    // Validar campos vacíos
     if (!email || !pass) {
         return res.render("login", {
             mensaje: "Todos los campos son obligatorios.",
@@ -33,6 +34,7 @@ router.post("/login", (req, res) => {
             return res.status(500).send("Error en el servidor.");
         }
 
+        // Validar si el correo no está registrado
         if (rows.length === 0) {
             return res.render("login", {
                 mensaje: "El correo no está registrado. ¿Deseas registrarte?",
@@ -50,14 +52,22 @@ router.post("/login", (req, res) => {
             }
 
             if (isMatch) {
-                // Verificar el valor de la columna "perfil"
-                if (user.perfil === null) {
-                    console.log("Usuario sin privilegios de admin.");
-                } else if (user.perfil === "admin") {
+                // Guardar el usuario en la sesión con información del perfil
+                req.session.usuario = {
+                    id: user.id,
+                    email: user.email,
+                    nombre: user.nombre,
+                    apellido: user.apellido,
+                    perfil: user.perfil, // Puede ser "admin" o null
+                };
+
+                // Redirigir según el perfil
+                if (user.perfil === "admin") {
                     console.log("Usuario con privilegios de admin.");
+                } else {
+                    console.log("Usuario sin privilegios de admin.");
                 }
 
-                req.session.usuario = user;
                 res.redirect("/"); // Redirige al home o página principal
             } else {
                 res.render("login", {
