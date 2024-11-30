@@ -547,7 +547,5 @@ if (guardarBateriaBtn) {
 }
 })
 
-// Captura de los inputs del formulario
-
 
 

@@ -19,7 +19,7 @@
         <a href="#marcas">Marcas</a>
 
         <% if (usuario) { %>
-            <span>Bienvenido, <%= usuario.nombre %> <%= usuario.apellido %>!</span>
+            <span>Bienvenido, <%= usuario.nombre.toUpperCase() %> <%= usuario.apellido.toUpperCase() %>!</span>
             <a href="/logout">Cerrar Sesión</a>
         <% } else { %>
             <a href="http://localhost:3000/registro">Registro</a>

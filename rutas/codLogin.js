@@ -5,21 +5,18 @@ const bcrypt = require("bcrypt"); // Importar bcrypt
 const dotenv = require("dotenv");
 dotenv.config();
 
+// Configuración de la conexión a la base de datos
 const connection = mysql.createConnection({
   host: process.env.HOST,
   database: process.env.DATABASE,
   user: process.env.USER,
   password: process.env.PASSWORD,
-  
 });
-
-const getConnection = ()=> connection;
 
 // Manejo del login
 router.post("/login", (req, res) => {
     const { email, pass } = req.body;
 
-    // Validar campos vacíos
     if (!email || !pass) {
         return res.render("login", {
             mensaje: "Todos los campos son obligatorios.",
@@ -34,7 +31,6 @@ router.post("/login", (req, res) => {
             return res.status(500).send("Error en el servidor.");
         }
 
-        // Validar si el correo no está registrado
         if (rows.length === 0) {
             return res.render("login", {
                 mensaje: "El correo no está registrado. ¿Deseas registrarte?",
@@ -43,8 +39,6 @@ router.post("/login", (req, res) => {
         }
 
         const user = rows[0];
-
-        // Comparar la contraseña con el hash almacenado
         bcrypt.compare(pass, user.password, (err, isMatch) => {
             if (err) {
                 console.error("Error al comparar contraseñas:", err);
@@ -52,23 +46,15 @@ router.post("/login", (req, res) => {
             }
 
             if (isMatch) {
-                // Guardar el usuario en la sesión con información del perfil
                 req.session.usuario = {
                     id: user.id,
                     email: user.email,
                     nombre: user.nombre,
                     apellido: user.apellido,
-                    perfil: user.perfil, // Puede ser "admin" o null
+                    perfil: user.perfil,
                 };
 
-                // Redirigir según el perfil
-                if (user.perfil === "admin") {
-                    console.log("Usuario con privilegios de admin.");
-                } else {
-                    console.log("Usuario sin privilegios de admin.");
-                }
-
-                res.redirect("/"); // Redirige al home o página principal
+                res.redirect("/");
             } else {
                 res.render("login", {
                     mensaje: "Contraseña incorrecta.",
@@ -91,28 +77,41 @@ router.post("/validar", (req, res) => {
     connection.query(buscar, [email], (error, rows) => {
         if (error) {
             console.error("Error al buscar el email:", error);
-            res.status(500).send("Error en el servidor.");
-        } else if (rows.length > 0) {
-            res.render("registro", { mensaje: "El email ya está registrado." });
-        } else {
-            // Encriptar la contraseña antes de guardarla
-            bcrypt.hash(pass, 10, (err, hash) => {
-                if (err) {
-                    console.error("Error al encriptar la contraseña:", err);
-                    return res.status(500).send("Error en el servidor.");
+            return res.status(500).send("Error en el servidor.");
+        }
+
+        if (rows.length > 0) {
+            return res.render("registro", { mensaje: "El email ya está registrado." });
+        }
+
+        bcrypt.hash(pass, 10, (err, hash) => {
+            if (err) {
+                console.error("Error al encriptar la contraseña:", err);
+                return res.status(500).send("Error en el servidor.");
+            }
+
+            const registrar = "INSERT INTO usuario (nombre, apellido, email, password) VALUES (?, ?, ?, ?)";
+            connection.query(registrar, [nom, ape, email, hash], (error, results) => {
+                if (error) {
+                    console.error("Error al registrar el usuario:", error);
+                    return res.status(500).send("Error al registrar el usuario.");
                 }
 
-                const registrar = "INSERT INTO usuario (nombre, apellido, email, password) VALUES (?, ?, ?, ?)";
-                connection.query(registrar, [nom, ape, email, hash], (error) => {
-                    if (error) {
-                        console.error("Error al registrar el usuario:", error);
-                        res.status(500).send("Error al registrar el usuario.");
-                    } else {
-                        res.render("registro", { mensaje: "Usuario registrado con éxito." });
-                    }
-                });
+                // Guardar el usuario registrado en la sesión
+                req.session.usuario = {
+                    id: results.insertId,
+                    email: email,
+                    nombre: nom,
+                    apellido: ape,
+                    perfil: null,
+                };
+
+                // Mensaje de bienvenida
+                req.session.mensaje = `¡Registro exitoso! Bienvenido, ${nom} ${ape}.`;
+
+                res.redirect("/");
             });
-        }
+        });
     });
 });
 
