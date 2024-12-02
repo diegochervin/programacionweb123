@@ -13,11 +13,10 @@
     </header>
 
 <body>
-    <h1> registro</h1>
+    <h1>Registro</h1>
     <% if(typeof mensaje !== "undefined") { %>
-        <p> <%= mensaje %> </p>
+        <p><%= mensaje %></p>
     <% } %>
-
 
     <form action="/validar" method="post">
         Nombre:
@@ -33,8 +32,11 @@
         <input type="password" name="pass" id="password" required>  <br><br>
 
         <input type="submit" value="Registrar">
-
     </form>
+
+    
+    <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></p>
+
 </body>
 
 </main>
