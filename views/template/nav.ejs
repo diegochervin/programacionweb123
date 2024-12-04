@@ -14,6 +14,11 @@
     <% if (usuario && usuario.perfil === "admin") { %>
         <button id="agregarBateria" data-bs-toggle="modal" data-bs-target="#modalAgregarBateria" class="btn btn-success">Agregar Batería</button>
         <button id="btn-actualizar-datos" class="btn btn-success">Actualizar</button>
+        <script>
+            document.getElementById('btn-actualizar-datos').addEventListener('click', () => {
+                window.location.href = '/actualizar-stock';
+            });
+        </script>
     <% } %>
 
     <div class="header-right">

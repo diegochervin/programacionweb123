@@ -127,3 +127,41 @@ app.post("/baterias", async (req, res) => {
         if (connection) connection.release(); // Libera la conexión
     }
 });
+
+
+function verificarAdmin(req, res, next) {
+    if (req.session.usuario && req.session.usuario.perfil === "admin") {
+        next(); // Permite continuar
+    } else {
+        res.status(403).send("Acceso denegado: Solo los administradores pueden acceder a esta página.");
+    }
+}
+
+
+app.get("/actualizar-stock", verificarAdmin, (req, res) => {
+    res.render("actualizar-stock");
+});
+
+
+
+app.post("/actualizar-stock", verificarAdmin, async (req, res) => {
+    const { id, nuevoStock } = req.body;
+
+    if (!id || !nuevoStock) {
+        return res.status(400).send("ID y nuevo stock son obligatorios.");
+    }
+
+    let connection;
+    try {
+        connection = await database.getConnection();
+        const query = "UPDATE baterias SET stock = ? WHERE id = ?";
+        await connection.query(query, [nuevoStock, id]);
+
+        res.send("Stock actualizado exitosamente.");
+    } catch (error) {
+        console.error("Error al actualizar el stock:", error);
+        res.status(500).send("Error al actualizar el stock.");
+    } finally {
+        if (connection) connection.release();
+    }
+});
