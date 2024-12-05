@@ -17,17 +17,22 @@ function renderBaterias(estanteria, carrito) {
               <input type="text" id="nuevo-modelo-${bateria.id}" class="form-control" placeholder="Ingrese nuevo modelo">
             </div>
   
+           
             <div class="form-group mb-3">
+             <p>Marca: ${bateria.marca}</p>
               <label for="nueva-marca-${bateria.id}" class="form-label">Nueva Marca</label>
               <input type="text" id="nueva-marca-${bateria.id}" class="form-control" placeholder="Ingrese nueva marca">
             </div>
-  
+
+           
             <div class="form-group mb-3">
+            <p class="precio">Precio: ${bateria.precio}</p>
               <label for="nuevo-precio-${bateria.id}" class="form-label">Nuevo Precio</label>
               <input type="number" id="nuevo-precio-${bateria.id}" class="form-control" placeholder="Ingrese nuevo precio">
             </div>
   
             <div class="form-group mb-3">
+             <p id="stock-${bateria.stock}"class="">Stock: ${bateria.stock}</p>
               <label for="nuevo-stock-${bateria.id}" class="form-label">Nuevo Stock</label>
               <input type="number" id="nuevo-stock-${bateria.id}" class="form-control" placeholder="Ingrese nuevo stock">
             </div>
