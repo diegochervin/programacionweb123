@@ -36,19 +36,17 @@ function renderBaterias(estanteria, carrito) {
               <label for="nuevo-stock-${bateria.id}" class="form-label">Nuevo Stock</label>
               <input type="number" id="nuevo-stock-${bateria.id}" class="form-control" placeholder="Ingrese nuevo stock">
             </div>
+
+             <div class="form-group mb-3">
+              <label for="nueva-foto-${bateria.id}" class="form-label">Nueva Foto</label>
+              <input type="text" id="nueva-imagen-${bateria.id}" class="form-control" placeholder="Ingrese link nueva foto">
+            </div>
+
             
             <button id="boton-actualizar-${bateria.id}" class="btn btn-primary btn-block mb-3">
               Actualizar
             </button>
-  
-            <div class="form-group mb-3">
-              <label for="cantidad-${bateria.id}" class="form-label">Cantidad</label>
-              <input type="number" id="cantidad-${bateria.id}" class="form-control" name="cantidad" value="1">
-            </div>
             
-            <button id="agregar-carrito-${bateria.id}" class="btn btn-outline-success btn-block">
-              Agregar al carrito
-            </button>
           </div>
         </div>`;
       
@@ -59,6 +57,7 @@ function renderBaterias(estanteria, carrito) {
       let nuevaMarca = document.getElementById(`nueva-marca-${bateria.id}`);
       let nuevoModelo = document.getElementById(`nuevo-modelo-${bateria.id}`);
       let nuevoStock = document.getElementById(`nuevo-stock-${bateria.id}`);
+      let nuevaImagen = document.getElementById(`nueva-imagen-${bateria.id}`);
       let botonActualizar = document.getElementById(`boton-actualizar-${bateria.id}`);
   
       // Agregar funcionalidad al botón "Actualizar"
@@ -68,248 +67,13 @@ function renderBaterias(estanteria, carrito) {
           nuevoModelo.value,
           nuevaMarca.value,
           nuevoPrecio.value,
-          nuevoStock.value
+          nuevoStock.value,
+          nuevaImagen.value
         );
       });
-  
-      // Agregar funcionalidad al botón "Agregar al carrito"
-      let botonAgregar = document.getElementById(`agregar-carrito-${bateria.id}`);
-      botonAgregar.addEventListener("click", () => {
-        agregarAlCarrito(bateria.id, estanteria, carrito);
-      });
     }
   }
   
-  
-  // Función para agregar productos al carrito
-  function agregarAlCarrito(bateriaId, arrayStock, carrito) {
-    // Buscar en el array stock la batería elegida
-    let bateriaComprado = arrayStock.find(bateria => bateria.id == bateriaId);
-    if (bateriaComprado) {
-      // Obtener la cantidad ingresada
-      let cantidadIngresada = Number(document.getElementById(`cantidad-${bateriaId}`).value);
-  
-      // Verificar que la cantidad ingresada sea mayor que 0
-      if (cantidadIngresada <= 0) {
-  
-        Swal.fire({
-          title: `No es posible agregar ${cantidadIngresada} unidades.`,
-          timer: 3500,
-          icon: "error"
-        });
-        // alert(`No es posible agregar ${cantidadIngresada} unidades.`);
-        return; // Detener la ejecución si la cantidad no es válida
-      }
-  
-      // Verificar que la cantidad ingresada no exceda el stock disponible
-      if (cantidadIngresada > bateriaComprado.stock) {
-        
-        Swal.fire({
-          title: `No es posible agregar ${cantidadIngresada} unidades. Solo tenemos ${bateriaComprado.stock} en stock.`,
-          timer: 3500,
-          icon: "error"
-        });
-        // alert(`No es posible agregar ${cantidadIngresada} unidades. Solo tenemos ${bateriaComprado.stock} en stock.`);
-        return; // Detener la ejecución si no hay suficiente stock
-      }
-  
-      // Buscar si la batería ya está en el carrito
-      let bateriaEnCarrito = carrito.find(bat => bat.id == bateriaComprado.id);
-      if (!bateriaEnCarrito) {
-        // Si no está en el carrito, agregar la batería con la cantidad ingresada
-        let bateriaClon = { ...bateriaComprado, cantidad: cantidadIngresada }; // Clonar objeto
-        carrito.push(bateriaClon);
-        
-        Toastify({
-          text: `Se han agregado ${cantidadIngresada} unidades de la batería ${bateriaComprado.modelo}.`,
-          duration: 3000,
-          newWindow: true,
-          close: true,
-          gravity: "bottom", // `top` or `bottom`
-          position: "right", // `left`, `center` or `right`
-          stopOnFocus: true, // Prevents dismissing of toast on hover
-          style: {
-            background: "linear-gradient(to right, #00b09b, #96c93d)",
-          },
-          onClick: function(){} // Callback after click
-        }).showToast();  
-        
-        // alert(`Se han agregado ${cantidadIngresada} unidades de la batería ${bateriaComprado.modelo}.`);
-      
-      
-      } else {
-        // Si ya está en el carrito, verificar si la cantidad sumada supera el stock disponible
-        if ((cantidadIngresada + bateriaEnCarrito.cantidad) > bateriaComprado.stock) {
-          // alert(`No es posible agregar ${cantidadIngresada} unidades. Ya tienes ${bateriaEnCarrito.cantidad} en el carrito y solo tenemos ${bateriaComprado.stock} en stock.`);
-          Swal.fire({
-            title: `No es posible agregar ${cantidadIngresada} unidades. Ya tienes ${bateriaEnCarrito.cantidad} en el carrito y solo tenemos ${bateriaComprado.stock} en stock.`,
-            timer: 3500,
-            icon: "error"
-          });
-  
-          return; // Detener la ejecución si se supera el stock disponible
-        } else {
-          // Si no supera el stock, agregar la cantidad al carrito
-          bateriaEnCarrito.cantidad += cantidadIngresada;
-         
-         
-         
-          Toastify({
-            text: `Se han agregado ${cantidadIngresada} unidades adicionales de la batería ${bateriaComprado.modelo}. Ahora tienes ${bateriaEnCarrito.cantidad} en total.`,
-            duration: 3000,
-            newWindow: true,
-            close: true,
-            gravity: "bottom", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-              background: "linear-gradient(to right, #00b09b, #96c93d)",
-            },
-            onClick: function(){} // Callback after click
-          }).showToast();   
-          
-        
-        
-        
-        }
-      }
-  
-      // Actualizar el carrito en localStorage
-      localStorage.setItem("carrito", JSON.stringify(carrito));
-    }
-  }
-  
-  function totalSumado(){
-    let totalSumado = 0;    
-    carrito.forEach(bat => totalSumado += (bat.precio * bat.cantidad));
-    precioTotal.innerText = `El total de su compra es de $ ${totalSumado}`;
-    if (carrito.length == 0) {
-      modalBodyCarrito.innerHTML = `<h4>No hay nada en el carrito</h4>`;
-      precioTotal.innerText = ``
-     }
-     envioGratis.innerText = ``;
-     if (totalSumado >= 500000) {
-       let envioGratisContainer = document.createElement("span");
-       envioGratisContainer.classList.add("envio-gratis");
-     
-       let textoEnvioGratis = document.createElement("span");
-       textoEnvioGratis.innerText = "¡Felicidades, tienes envío gratis!";
-     
-       let imagenEnvioGratis = document.createElement("img");
-       imagenEnvioGratis.src = "./static/img/shipping_free.png"; 
-       imagenEnvioGratis.alt = "Icono de envío gratis";
-     
-       envioGratisContainer.appendChild(textoEnvioGratis);
-       envioGratisContainer.appendChild(imagenEnvioGratis);
-       envioGratis.appendChild(envioGratisContainer);
-     }
-     return totalSumado
-  }
-  
-  let botonCarrito = document.getElementById("botonCarrito")
-  
-  botonCarrito.addEventListener("click", ()=>{
-    imprimirCarrito(carrito)
-  })
-  
-  
-  //imprimirCarrito
-  function imprimirCarrito(carrito) {
-    
-    modalBodyCarrito.innerHTML = "";
-    
-    carrito.forEach((productoCarrito) => {
-      // Usar nodo donde vamos a imprimir modalBodyCarrito
-      modalBodyCarrito.innerHTML += `
-        <div class="card border-primary mb-3" id ="productoCarrito${productoCarrito.id}" style="max-width: 540px;">
-          <div class="card-body">
-            <h4 class="card-title">${productoCarrito.modelo}</h4>
-            <p class="card-text">Precio unitario $${productoCarrito.precio}</p>
-            <p class="card-text" id="totalUnidadesCard${productoCarrito.id}">Total de unidades ${productoCarrito.cantidad}</p>
-            <p class="card-text" id="subtotalCard${productoCarrito.id}">SubTotal $${productoCarrito.cantidad * productoCarrito.precio}</p>
-            <input class="form-control pl-2 cantidad_comprar" type="number" id="cantidadCarrit-${productoCarrito.id}" name="cantidad" value="${productoCarrito.cantidad}">
-            <button class="btn btn-danger" id="botonEliminar${productoCarrito.id}"><i class="fas fa-trash-alt"></i></button>
-          </div>
-        </div>`;
-    });
-  
-  
-  totalSumado(carrito)
-  
-  
-    
-    // Otro ciclo para recorrer el array y pasarle eventos a los inputs y botones
-    carrito.forEach((productoCarrito) => {
-      let inputCantidad = document.getElementById(`cantidadCarrit-${productoCarrito.id}`);
-  
-      inputCantidad.addEventListener("change", () => {
-        let nuevaCantidad = parseInt(inputCantidad.value) || 0; // Asegurarse de que sea un número
-  
-        // Buscar la batería en carrito 
-        let productoStock = carrito.find(producto => producto.id == productoCarrito.id);
-  
-        // Validar que la cantidad no sea menor o igual a cero
-        if (nuevaCantidad <= 0) {
-  
-          
-          alert(`No es posible ingresar ${nuevaCantidad} unidades.`);
-          inputCantidad.value = productoCarrito.cantidad; // Restaurar valor anterior
-          return;
-        }
-  
-        // Validar que la cantidad no exceda el stock disponible
-        if (nuevaCantidad > productoStock.stock) {
-  
-          Swal.fire({
-            title: `No es posible ingresar ${nuevaCantidad} unidades. Solo hay ${productoStock.stock} unidades disponibles.`,
-            timer: 3500,
-            icon: "error"
-          });
-          // alert(`No es posible ingresar ${nuevaCantidad} unidades. Solo hay ${productoStock.stock} unidades disponibles.`);
-          inputCantidad.value = productoCarrito.cantidad; // Restaurar valor anterior
-          return;
-        }
-  
-        // Actualizar la cantidad en el carrito
-        productoCarrito.cantidad = nuevaCantidad;
-        totalSumado(productoCarrito)
-  
-  
-  
-        // Actualizar el localStorage
-        localStorage.setItem("carrito", JSON.stringify(carrito));
-  
-        // Actualizar la visualización en el DOM
-        document.getElementById(`totalUnidadesCard${productoCarrito.id}`).innerText = `Total de unidades ${productoCarrito.cantidad}`;
-        document.getElementById(`subtotalCard${productoCarrito.id}`).innerText = `SubTotal $${productoCarrito.cantidad * productoCarrito.precio}`;
-  
-        // Opción para actualizar todo el carrito o solo por partes
-        // imprimirCarrito(arrayCarrito) // Si deseas actualizar todo el carrito
-      });
-  
-      // Evento para eliminar el producto del carrito
-      document.getElementById(`botonEliminar${productoCarrito.id}`).onclick = () => {
-        // Sacarlo del array carrito
-        let indiceEliminar = carrito.indexOf(productoCarrito);
-        carrito.splice(indiceEliminar, 1);
-  
-        // Actualizar el localStorage
-        localStorage.setItem("carrito", JSON.stringify(carrito));
-  
-        // Eliminar del DOM
-        let cardCarrito = document.getElementById(`productoCarrito${productoCarrito.id}`);
-        cardCarrito.remove();
-        totalSumado(carrito)
-  
-        // Mostrar mensaje si el carrito está vacío
-        if (carrito.length == 0) {
-          modalBodyCarrito.innerHTML = `<h4>No hay nada en el carrito</h4>`;
-          precioTotal.innerText = ``
-          
-        }
-      };
-    });
-  }
   
   // Función para generar los filtros de marca
   function generarFiltrosDeMarca() {
@@ -377,7 +141,7 @@ function renderBaterias(estanteria, carrito) {
     }
    
     // Renderizar los productos filtrados y ordenados
-    renderBaterias(bateriaBuscada, estanteria, carrito);
+    renderBaterias(bateriaBuscada, estanteria);
     
   }
   
@@ -410,6 +174,7 @@ function renderBaterias(estanteria, carrito) {
     const nuevoModelo = document.getElementById(`nuevo-modelo-${id}`)?.value.trim();
     const nuevoPrecio = document.getElementById(`nuevo-precio-${id}`)?.value;
     const nuevoStock = document.getElementById(`nuevo-stock-${id}`)?.value;
+    const nuevaImagen = document.getElementById(`nueva-imagen-${id}`)?.value;
 
     // Crea un objeto con los datos actualizados
     const bateriaActualizada = {};
@@ -418,6 +183,7 @@ function renderBaterias(estanteria, carrito) {
     if (nuevoModelo) bateriaActualizada.modelo = nuevoModelo;
     if (nuevoPrecio) bateriaActualizada.precio = Number(nuevoPrecio);
     if (nuevoStock) bateriaActualizada.stock = Number(nuevoStock);
+    if (nuevaImagen) bateriaActualizada.imagen = nuevaImagen;
 
     // Si tienes los datos predefinidos, puedes enviarlos como argumento adicional
     const datosExtras = arguments[1];
@@ -449,165 +215,12 @@ function renderBaterias(estanteria, carrito) {
     }
 }
 
-
-  
-
-  
-  async function cargarBateria(array, array2) {
-    // Crear objeto de la nueva batería
-    const bateriaNueva = {
-        marca: marcaInput.value.toUpperCase(),
-        modelo: modeloInput.value,
-        precio: Number(precioInput.value),
-        stock: Number(stockInput.value),
-        imagen: "https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/prueba2.jpg?raw=true"
-    };
-  
-    try {
-        // Realizar POST a la API para agregar la batería a la base de datos
-        const response = await fetch("/baterias", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(bateriaNueva)
-        });
-  
-        if (!response.ok) {
-            throw new Error("Error al guardar la batería en la base de datos.");
-        }
-  
-        const nuevaBateriaDB = await response.json(); // Respuesta del servidor con la batería guardada
-  
-        // Agregar la batería al array local (opcional)
-        array.push(nuevaBateriaDB);
-  
-        // Resetear los inputs
-        marcaInput.value = "";
-        precioInput.value = "";
-        modeloInput.value = "";
-        stockInput.value = "";
-  
-        // Verificar si la marca ya está en el array de marcas existentes
-        if (!array2.includes(bateriaNueva.marca)) {
-            array2.push(bateriaNueva.marca); // Agregar la marca si no está
-            localStorage.setItem("marcasExistentes", JSON.stringify(array2)); // Guardar en localStorage
-        }
-  
-        // Actualizar el DOM
-        renderBaterias(array);
-        generarFiltrosDeMarca();
-  
-        console.log("Batería guardada:", nuevaBateriaDB);
-        console.log("Marcas actualizadas:", array2);
-  
-    } catch (error) {
-        console.error("Error al cargar la batería:", error);
-        alert("Hubo un problema al agregar la batería. Por favor, inténtalo nuevamente.");
-    }
-  }
-  
-  
-  
-  
-  
-  
-    
-    document.addEventListener("DOMContentLoaded", () => {
-      const modalAgregarCarrito = new bootstrap.Modal(document.getElementById('modalAgregarCarrito'));
-      const modalFinalCompra = new bootstrap.Modal(document.getElementById('modalFinalCompra'));
-    
-      let botonFinalizarCompra = document.getElementById("botonFinalizarCompra");
-    
-      function finalizarCompra(arrayCarrito) {
-        if (arrayCarrito.length > 0) {
-          let totalComprado = totalSumado(arrayCarrito);
-      
-          modalAgregarCarrito.hide(); // Cierra el modal del carrito
-          modalFinalCompra.show(); // Muestra el modal para completar datos
-        } else {
-          console.log("No hay nada en el carrito; no puedes finalizar la compra.");
-        }
-        return carrito;
-      }
-      
-      botonFinalizarCompra.addEventListener("click", () => {
-        carrito = finalizarCompra(carrito);
-      });
-      
-      document.getElementById("confirmarCompraBtn").addEventListener("click", async (event) => {
-        const form = document.getElementById("formFinalCompra");
-    
-        if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    
-        form.classList.add("was-validated");
-    
-        if (form.checkValidity()) {
-            const nombre = document.getElementById("nombre").value;
-            const apellido = document.getElementById("apellido").value;
-            const email = document.getElementById("email").value;
-            const telefono = document.getElementById("telefono").value;
-    
-            // Para cada producto en el carrito, actualiza el stock en la base de datos
-            for (let item of carrito) {
-                let producto = estanteria.find((bateria) => bateria.id === item.id);
-                if (producto) {
-                    producto.stock -= item.cantidad; // Resta del stock local
-                    console.log(`Stock actualizado para ${producto.modelo}: ${producto.stock}`);
-    
-                    // Actualizar stock en la base de datos con fetch
-                    try {
-                        const response = await fetch('/actualizar-stock', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                id: producto.id,
-                                nuevoStock: producto.stock
-                            })
-                        });
-    
-                        const data = await response.json();
-                        if (data.success) {
-                            console.log(`Stock de ${producto.modelo} actualizado correctamente en la base de datos.`);
-                        } else {
-                            console.error(`Error al actualizar el stock de ${producto.modelo}`);
-                        }
-                    } catch (error) {
-                        console.error("Error al actualizar el stock:", error);
-                    }
-                }
-            }
-    
-            // Mostrar mensaje de éxito al usuario
-            Swal.fire({
-                title: "Muchas gracias por tu compra!",
-                text: `Compra confirmada para ${nombre.toUpperCase()} ${apellido.toUpperCase()}. Tiene 24 hs para completar el pago. Le llegará un mail con el instructivo.`,
-                icon: "success",
-                timer: 5000,
-            });
-    
-            modalFinalCompra.hide(); // Cerrar el modal de finalización de compra
-            modalAgregarCarrito.hide(); // Cerrar el modal del carrito
-    
-            carrito = [];
-            localStorage.removeItem("carrito");
-    
-            renderBaterias(estanteria, carrito);
-            localStorage.setItem("estanteria", JSON.stringify(estanteria));
-        }
-    });
-    
   
   
   
   
   // Llamar a la función para cargar las baterías
-  setTimeout (()=> { renderBaterias(estanteria, carrito)}, 2000)
+  setTimeout (()=> { renderBaterias(estanteria)}, 2000)
   
   setTimeout(()=>{ getID()},3500 )
   function getID(){
@@ -615,7 +228,6 @@ function renderBaterias(estanteria, carrito) {
     let coincidencias = document.getElementById('coincidencias');
     let buscador = document.getElementById('buscar');
   //capturas input form Cargar Bateria
-  let modalAgregarCarrito = document.getElementById("modalAgregarCarrito");
   let usuarioInput = document.getElementById("usuarioInput");
   let passInput = document.getElementById("passInput");
   let precioTotal = document.getElementById("precioTotal")
@@ -635,7 +247,6 @@ function renderBaterias(estanteria, carrito) {
   
   
   }
-  })
   
   
   

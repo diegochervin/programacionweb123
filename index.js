@@ -145,7 +145,7 @@ app.get("/actualizar-stock", verificarAdmin, (req, res) => {
 
 app.patch("/baterias/:id", async (req, res) => {
     const { id } = req.params;
-    const { marca, modelo, precio, stock } = req.body;
+    const { marca, modelo, precio, stock, imagen } = req.body;
 
     console.log("ID recibido:", id);
     console.log("Datos recibidos:", req.body);
@@ -177,6 +177,10 @@ app.patch("/baterias/:id", async (req, res) => {
         if (stock) {
             campos.push("stock = ?");
             valores.push(stock);
+        }
+        if (imagen) {
+            campos.push("imagen = ?");
+            valores.push(imagen);
         }
 
         if (campos.length === 0) {
