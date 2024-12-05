@@ -143,24 +143,54 @@ app.get("/actualizar-stock", verificarAdmin, (req, res) => {
 });
 
 
+app.patch("/baterias/:id", async (req, res) => {
+    const { id } = req.params;
+    const { marca, modelo, precio, stock } = req.body;
 
-app.post("/actualizar-stock", verificarAdmin, async (req, res) => {
-    const { id, nuevoStock } = req.body;
+    console.log("ID recibido:", id);
+    console.log("Datos recibidos:", req.body);
 
-    if (!id || !nuevoStock) {
-        return res.status(400).send("ID y nuevo stock son obligatorios.");
+    if (!id) {
+        return res.status(400).json({ error: "El ID de la batería es obligatorio." });
     }
 
     let connection;
     try {
         connection = await database.getConnection();
-        const query = "UPDATE baterias SET stock = ? WHERE id = ?";
-        await connection.query(query, [nuevoStock, id]);
 
-        res.send("Stock actualizado exitosamente.");
+        // Construir consulta dinámica para actualizar solo los campos enviados
+        const campos = [];
+        const valores = [];
+
+        if (marca) {
+            campos.push("marca = ?");
+            valores.push(marca);
+        }
+        if (modelo) {
+            campos.push("modelo = ?");
+            valores.push(modelo);
+        }
+        if (precio) {
+            campos.push("precio = ?");
+            valores.push(precio);
+        }
+        if (stock) {
+            campos.push("stock = ?");
+            valores.push(stock);
+        }
+
+        if (campos.length === 0) {
+            return res.status(400).json({ error: "No se enviaron campos para actualizar." });
+        }
+
+        valores.push(id); // El ID va al final de los valores
+        const query = `UPDATE baterias SET ${campos.join(", ")} WHERE id = ?`;
+        await connection.query(query, valores);
+
+        res.status(200).json({ message: "Batería actualizada con éxito." });
     } catch (error) {
-        console.error("Error al actualizar el stock:", error);
-        res.status(500).send("Error al actualizar el stock.");
+        console.error("Error al actualizar la batería:", error);
+        res.status(500).json({ error: "Error al actualizar la batería." });
     } finally {
         if (connection) connection.release();
     }
