@@ -15,8 +15,8 @@ function renderBaterias(estanteria, carrito) {
       <div id="${bateria.id}" class="card product-card" data-marca="${bateria.marca}" style="width: 18rem;">
         <img class="card-img-top img-fluid" style="height: 200px;" src="${bateria.imagen}" alt="${bateria.modelo}">
         <div class="card-body">
-          <h4 class="card-title">${bateria.modelo}</h4>
-          <p>Marca: ${bateria.marca}</p>
+          <h4 class="card-title">${bateria.modelo.toUpperCase()}</h4>
+          <p>Marca: ${bateria.marca.toUpperCase()}</p>
           <p class="precio">Precio: ${bateria.precio}</p>
           <p id="stock-${bateria.stock}"class="">Stock: ${bateria.stock}</p>
           <div class="col-md-3 pull-left mt-2 pl-0 mb-3 cantidad_div">

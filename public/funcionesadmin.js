@@ -10,7 +10,7 @@ function renderBaterias(estanteria, carrito) {
         <div id="${bateria.id}" class="card product-card" data-marca="${bateria.marca}">
           <img class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" src="${bateria.imagen}" alt="${bateria.modelo}">
           <div class="card-body">
-            <h5 class="card-title">${bateria.modelo}</h5>
+            <h5 class="card-title">${bateria.modelo.toUpperCase()}</h5>
             
             <div class="form-group mb-3">
               <label for="nuevo-modelo-${bateria.id}" class="form-label">Nuevo Modelo</label>
@@ -19,7 +19,7 @@ function renderBaterias(estanteria, carrito) {
   
            
             <div class="form-group mb-3">
-             <p>Marca: ${bateria.marca}</p>
+             <p>Marca: ${bateria.marca.toUpperCase()}</p>
               <label for="nueva-marca-${bateria.id}" class="form-label">Nueva Marca</label>
               <input type="text" id="nueva-marca-${bateria.id}" class="form-control" placeholder="Ingrese nueva marca">
             </div>
@@ -167,6 +167,61 @@ function renderBaterias(estanteria, carrito) {
   
     return busqueda; // Devuelve el array de baterías encontradas
   }
+
+  async function cargarBateria(array, array2) {
+    // Crear objeto de la nueva batería
+    const bateriaNueva = {
+        marca: marcaInput.value.toUpperCase(),
+        modelo: modeloInput.value,
+        precio: Number(precioInput.value),
+        stock: Number(stockInput.value),
+        imagen: "https://github.com/diegochervin/programacionweb123/blob/main/public/static/img/prueba2.jpg?raw=true"
+    };
+  
+    try {
+        // Realizar POST a la API para agregar la batería a la base de datos
+        const response = await fetch("/baterias", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(bateriaNueva)
+        });
+  
+        if (!response.ok) {
+            throw new Error("Error al guardar la batería en la base de datos.");
+        }
+  
+        const nuevaBateriaDB = await response.json(); // Respuesta del servidor con la batería guardada
+  
+        // Agregar la batería al array local (opcional)
+        array.push(nuevaBateriaDB);
+  
+        // Resetear los inputs
+        marcaInput.value = "";
+        precioInput.value = "";
+        modeloInput.value = "";
+        stockInput.value = "";
+  
+        // Verificar si la marca ya está en el array de marcas existentes
+        if (!array2.includes(bateriaNueva.marca)) {
+            array2.push(bateriaNueva.marca); // Agregar la marca si no está
+            localStorage.setItem("marcasExistentes", JSON.stringify(array2)); // Guardar en localStorage
+        }
+  
+        // Actualizar el DOM
+        renderBaterias(array);
+        generarFiltrosDeMarca();
+  
+        console.log("Batería guardada:", nuevaBateriaDB);
+        console.log("Marcas actualizadas:", array2);
+  
+    } catch (error) {
+        console.error("Error al cargar la batería:", error);
+        alert("Hubo un problema al agregar la batería. Por favor, inténtalo nuevamente.");
+    }
+  }
+
   
   async function actualizarBateria(id) {
     // Obtén los valores actuales de los inputs (si se está editando directamente en el DOM)
