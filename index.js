@@ -1,5 +1,3 @@
-//creado por diego chervin
-
 const express = require("express");
 const session = require("express-session");
 const mysql = require("mysql");
@@ -8,7 +6,6 @@ const app = express();
 const database = require("./views/database");
 const cors = require("cors");
 const { actualizarStock } = require('./public/funcionesdb');
-
 
 // Configuraciones generales
 app.set("view engine", "ejs");
@@ -28,16 +25,6 @@ app.use(
         saveUninitialized: false,
     })
 );
-
-
-database.getConnection()
-  .then(connection => {
-    console.log("Conexión a la base de datos exitosa!");
-    connection.release();
-  })
-  .catch(err => {
-    console.error("Error al conectar con la base de datos:", err);
-  });
 
 // Middleware global para pasar el usuario a las vistas
 app.use((req, res, next) => {
