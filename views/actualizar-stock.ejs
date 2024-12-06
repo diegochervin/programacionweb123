@@ -31,7 +31,7 @@
             <a href="#marcas">Marcas</a>
     
             <% if (usuario) { %>
-                <span>Bienvenido, <%= usuario.nombre.toUpperCase() %> <%= usuario.apellido.toUpperCase() %>!</span>
+                <span id="nombrenav">Bienvenido, <%= usuario.nombre.toUpperCase() %> <%= usuario.apellido.toUpperCase() %>!</span>
                 <a href="/logout">Cerrar Sesión</a>
             <% } else { %>
                 <a href="http://localhost:3000/registro">Registro</a>
@@ -174,34 +174,7 @@
     <div>
 
 
-<!-- Modal Login -->
-<div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalLoginLabel">Login</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!--Formulario-->
-        <form id="formLogin" class="my-4" method="post">
-          <div class="mb-3">
-            <label for="usuario" class="form-label">Usuario</label>
-            <input type="text" class="form-control" id="usuarioInput" aria-describedby="Usuario">
-          </div>
-          <div class="mb-3">
-            <label for="clave" class="form-label">Clave</label>
-            <input type="password" class="form-control" id="passInput" aria-describedby="pass">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" id="loginBtn" class="btn btn-success">Login</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <!-- Modal Agregar Batería -->
 <div class="modal fade" id="modalAgregarBateria" tabindex="-1" aria-labelledby="modalAgregarBateriaLabel" aria-hidden="true">
@@ -241,74 +214,6 @@
 </div>
 
 
-   <!--Modal Carrito-->
-   <div class="modal fade" id="modalAgregarCarrito" tabindex="-1" aria-labelledby="modalAgregarCarrito" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Carrito de Compras</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" id="modalBodyCarrito">
-          
-        </div>
-        <div class="row ml-ato">
-          <p id="precioTotal">Total</p>
-          <p id="envioGratis">Envio Gratis</p>
-        
-        </div>
-        <div class="modal-footer">
-          
-          
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" data-bs-dismiss="modal" class="btn btn-success" id="botonFinalizarCompra">Finalizar Compra</button>
-        </div>
-        
-      </div>
-    </div>
-  </div>
-  
-
-  <!-- Modal Finalización de Compra -->
-  <div class="modal fade" id="modalFinalCompra" tabindex="-1" aria-labelledby="modalFinalCompraLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalFinalCompraLabel">Finalizar Compra</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="formFinalCompra" class="needs-validation" novalidate>
-            <div class="mb-3">
-              <label for="nombre" class="form-label">Nombre</label>
-              <input type="text" class="form-control" id="nombre" required>
-              <div class="invalid-feedback">Por favor ingrese su nombre.</div>
-            </div>
-            <div class="mb-3">
-              <label for="apellido" class="form-label">Apellido</label>
-              <input type="text" class="form-control" id="apellido" required>
-              <div class="invalid-feedback">Por favor ingrese su apellido.</div>
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Correo</label>
-              <input type="email" class="form-control" id="email" required>
-              <div class="invalid-feedback">Por favor ingrese un correo válido.</div>
-            </div>
-            <div class="mb-3">
-              <label for="telefono" class="form-label">Teléfono</label>
-              <input type="tel" class="form-control" id="telefono" required>
-              <div class="invalid-feedback">Por favor ingrese su teléfono.</div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary" id="confirmarCompraBtn">Confirmar Compra</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
 
 
 

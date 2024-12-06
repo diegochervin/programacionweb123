@@ -9,16 +9,30 @@
 
     <%- include("./template/nav.ejs");%>
 
-  <form action="/login" method="POST">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-    <label for="password">Contraseña:</label>
-    <input type="password" id="password" name="pass" required>
-    <button type="submit">Iniciar Sesión</button>
-</form>
-
- 
- <p>¿No tienes una cuenta? <a href="/registro">Regístrate aquí</a></p>
+    <body>
+        <div id="login-container">
+            <h1 id="login-titulo">Iniciar Sesión</h1>
+    
+            <% if (typeof mensaje !== 'undefined') { %>
+                <p id="login-mensaje"><%= mensaje %></p>
+                <% if (redirigirRegistro) { %>
+                    <a id="login-registrarse" href="/registro">Registrarse</a>
+                <% } %>
+            <% } %>
+    
+            <form id="login-form" action="/login" method="POST">
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" name="email" required>
+    
+                <label for="login-password">Contraseña:</label>
+                <input type="password" id="login-password" name="pass" required>
+    
+                <button id="login-submit" type="submit">Iniciar Sesión</button>
+            </form>
+    
+            <p id="login-link">¿No tienes una cuenta? <a href="/registro">Regístrate aquí</a></p>
+        </div>
+    
 
 
     <% if (typeof mensaje !== 'undefined') { %>

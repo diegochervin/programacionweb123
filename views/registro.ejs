@@ -12,32 +12,35 @@
         <%- include("./template/nav.ejs");%>
     </header>
 
-<body>
-    <h1>Registro</h1>
-    <% if(typeof mensaje !== "undefined") { %>
-        <p><%= mensaje %></p>
-    <% } %>
-
-    <form action="/validar" method="post">
-        Nombre:
-        <input type="text" name="nom" id="nombre" required>  <br><br>
-
-        Apellido:
-        <input type="text" name="ape" id="apellido" required>  <br><br>
-
-        Email:
-        <input type="email" name="email" id="email" required>  <br><br>
-
-        Contraseña:
-        <input type="password" name="pass" id="password" required>  <br><br>
-
-        <input type="submit" value="Registrar">
-    </form>
-
+    <body>
+        <div id="registro-container">
+            <h1 id="registro-titulo">Registro</h1>
+            <% if (typeof mensaje !== "undefined") { %>
+                <p id="registro-mensaje"><%= mensaje %></p>
+            <% } %>
     
-    <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></p>
-
-</body>
+            <form id="registro-form" action="/validar" method="post">
+                <label for="registro-nombre">Nombre:</label>
+                <input type="text" name="nom" id="registro-nombre" required> <br>
+    
+                <label for="registro-apellido">Apellido:</label>
+                <input type="text" name="ape" id="registro-apellido" required> <br>
+    
+                <label for="registro-email">Email:</label>
+                <input type="email" name="email" id="registro-email" required> <br>
+    
+                <label for="registro-password">Contraseña:</label>
+                <input type="password" name="pass" id="registro-password" required> <br>
+    
+                <input type="submit" id="registro-submit" value="Registrar">
+            </form>
+    
+            <p id="registro-link">
+                ¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a>
+            </p>
+        </div>
+    </body>
+    
 
 </main>
 </html>

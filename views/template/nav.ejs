@@ -25,7 +25,7 @@
         <a href="#marcas">Marcas</a>
 
         <% if (usuario) { %>
-            <span>Bienvenido, <%= usuario.nombre.toUpperCase() %> <%= usuario.apellido.toUpperCase() %>!</span>
+            <span id="nombrenav">Bienvenido, <%= usuario.nombre.toUpperCase() %> <%= usuario.apellido.toUpperCase() %>!</span>
             <a href="/logout">Cerrar Sesión</a>
         <% } else { %>
             <a href="http://localhost:3000/registro">Registro</a>
