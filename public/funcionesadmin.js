@@ -5,10 +5,10 @@ function renderBaterias(estanteria, carrito) {
     // Recorre cada batería y genera la tarjeta
     for (let bateria of estanteria) {
       let bateriaNuevoDiv = document.createElement("div");
-      bateriaNuevoDiv.className = "col-12 col-md-6 col-lg-4 mb-4";
+      bateriaNuevoDiv.className = "col-12 col-md-6 col-lg-4";
       bateriaNuevoDiv.innerHTML = `
-        <div id="${bateria.id}" class="card product-card" data-marca="${bateria.marca}">
-          <img class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" src="${bateria.imagen}" alt="${bateria.modelo}">
+        <div id="${bateria.id}" class="card product-card" data-marca="${bateria.marca}" style="width: 18rem;">
+          <img class="card-img-top img-fluid" style="height: 200px;" src="${bateria.imagen}" alt="${bateria.modelo}">
           <div class="card-body">
             <h5 class="card-title">${bateria.modelo.toUpperCase()}</h5>
             

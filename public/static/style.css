@@ -182,23 +182,7 @@
     align-items: center; /* Centra horizontalmente el texto */
     text-align: left;
   }
- 
-/*.barra {
-justify-content: space-around;
 
-}
-
-.filtro {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  background-image: linear-gradient(to bottom, #1558f3, #1558f3); /* Fondo azul para la barra 
-}
-
-#filtro {
-  width: 300px;
-  border-radius: 10px;
-}*/
 
 .barra {
   display: flex;
@@ -572,4 +556,70 @@ select, .btn {
 
 #login-registrarse:hover {
   text-decoration: underline;
+}
+
+footer {
+  background-color: var(--color-1); /* Fondo oscuro */
+  color: #ecf0f1; /* Texto claro */
+  padding: 20px 0; /* Espaciado interno */
+}
+
+footer .container-fluid {
+  max-width: 1200px; /* Centra el contenido */
+  margin: 0 auto;
+}
+
+footer .row {
+  margin: 0;
+}
+
+footer .col-sm-4 {
+  display: flex;
+  align-items: center; /* Centrar verticalmente */
+  justify-content: center; /* Centrar horizontalmente */
+  padding: 15px;
+  background-color: var(--color-1) !important;
+  
+}
+
+footer .col-sm-4:last-child {
+  border-bottom: none; /* Quita la línea de la última columna */
+}
+
+footer .col-sm-4 a {
+  color: #ecf0f1; /* Enlaces claros */
+  text-decoration: none; /* Sin subrayado */
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s ease; /* Animación de cambio de color */
+}
+
+
+
+footer i {
+  margin-right: 8px; /* Espaciado entre el ícono y el texto */
+}
+
+@media (max-width: 768px) {
+  footer .col-sm-4 {
+      border-bottom: none; /* Quita líneas en pantallas pequeñas */
+      border-right: 1px solid #34495e; /* Divide columnas verticalmente */
+      padding: 10px;
+  }
+
+  footer .col-sm-4:last-child {
+      border-right: none; /* Quita la última línea divisoria */
+  }
+
+  footer .row {
+      flex-direction: column; /* Las columnas se apilan */
+  }
+}
+
+
+#cotenedor-bata {
+  margin: 0 auto; /* Centrar el contenido */
+  max-width: 100%; /* Limitar a un 100% del ancho de la pantalla */
+  overflow-x: hidden; /* Evitar desbordamiento horizontal */
+
 }
