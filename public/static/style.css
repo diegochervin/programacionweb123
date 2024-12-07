@@ -1,7 +1,13 @@
+:root {
+  --color-1: #130981; /* Color primario */
+  --color-2: red;  /* Color secundario */
+  --color-3: #ecf0f1;   /* Color adicional (por ejemplo, para bordes o sombras) */
+}
+
 /* Style the header with a grey background and some padding */
 .header {
     overflow: hidden;
-    background-color: #1558f3;
+    background-color: var(--color-1) !important;
     padding: 20px 10px;
     
   }
@@ -9,26 +15,30 @@
   /* Style the header links */
   .header a {
     float: left;
-    color: rgb(9, 244, 228);
+    color: var(--color-2);
     text-align: center;
     padding: 12px;
     text-decoration: none;
     font-size: 18px;
     line-height: 25px;
     border-radius: 4px;
-  }
-  
-  /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
-  .header a.logo {
-    font-size: 25px;
     font-weight: bold;
   }
   
-  /* Change the background color on mouse-over */
-  .header a:hover {
-    background-color: #ddd;
-    color: black;
-  }
+  .header a.logo {
+    color: var(--color-2); /* Color del texto */
+    text-shadow: 
+        1px 1px 0px gray,   /* Borde gris hacia la derecha-abajo */
+        -1px 1px 0px gray,  /* Borde gris hacia la izquierda-abajo */
+        1px -1px 0px gray,  /* Borde gris hacia la derecha-arriba */
+        -1px -1px 0px gray; /* Borde gris hacia la izquierda-arriba */
+    font-weight: bold;
+    font-size: 28px;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+  
+
   
   /* Style the active/current link*/
   .header a.active {
@@ -40,6 +50,19 @@
   .header-right {
     float: right;
   }
+
+  #botonCarrito {
+    background-color: var(--color-1); /* Fondo negro */
+    border: 2px solid black; /* Borde amarillo */
+    transition: all 0.3s ease; /* Transición suave para hover */
+}
+
+
+
+#botonCarrito i {
+    color: var(--color-2); /* Ícono amarillo */
+}
+
   
   /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
   @media screen and (max-width: 500px) {
@@ -51,6 +74,10 @@
     .header-right {
       float: none;
     }
+      .sidebar-heading {
+          font-size: 16px; /* Tamaño de texto aún más pequeño en pantallas pequeñas */
+          padding: 6px; /* Menor espaciado */
+      }
   }
 
 
@@ -59,9 +86,7 @@
     margin-top: 20px;
   }
   
-  #marcas h3 {
-    margin-bottom: 20px; /* Espacio entre el h3 y las imágenes */
-  }
+  
   
 
   .img-row {
@@ -83,14 +108,59 @@
 
 
   #ubicacion {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9; /* Fondo suave */
+    border: 1px solid #ddd; /* Borde claro */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
 
-#ubicacion h3 {
-    margin-bottom: 20px; /* Espacio entre el h3 y las imágenes */
-  }
-  
+#ubicacion h3.sidebar-heading {
+    text-align: center;
+    color: #2c3e50; /* Azul oscuro */
+    font-size: 24px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #ecf0f1; /* Fondo claro */
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para el título */
+}
+
+#ubicacion .informacion {
+    font-family: 'Arial', sans-serif; /* Fuente legible */
+    font-size: 16px;
+    line-height: 1.8; /* Espaciado entre líneas */
+    color: #333; /* Gris oscuro */
+}
+
+#ubicacion .informacion a {
+    display: block; /* Cada enlace ocupa una línea */
+    color: #3498db; /* Azul vibrante */
+    font-weight: bold;
+    text-decoration: none; /* Sin subrayado */
+    margin-bottom: 10px; /* Espaciado entre enlaces */
+    transition: color 0.3s ease; /* Animación de color */
+}
+
+#ubicacion .informacion a:hover {
+    color: #e74c3c; /* Cambia a rojo al pasar el cursor */
+}
+
+#ubicacion .informacion p {
+    margin: 10px 0;
+    color: #555; /* Gris medio */
+}
+
+#ubicacion .contenido iframe {
+    width: 100%; /* Ajusta al ancho del contenedor */
+    height: 300px; /* Ajusta la altura */
+    border: none;
+    border-radius: 10px; /* Bordes redondeados */
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
 
   
   .contenido {
@@ -285,12 +355,10 @@ select, .btn {
 .carousel-container {
   width: 100%; /* El contenedor ocupa el 100% del ancho de la pantalla */
   text-align: center; /* Centra el título */
-  margin-bottom: 65px !important;
+  margin-bottom: 50px !important;
 }
 
-.carousel-container h3 {
-  text-align: center;
-}
+
 
 .carousel-item img {
   width: 100%; /* La imagen ocupa todo el ancho del carrusel */
@@ -298,10 +366,21 @@ select, .btn {
   object-fit: fill /* Ajusta la imagen para llenar el ancho y alto, recortando si es necesario */
 }
 
-.row h3 {
-  text-align: center;
-  margin-bottom: 20px;
+
+
+.sidebar-heading {
+  background-color: var(--color-3); /* Fondo gris */
+  padding: 10px; /* Espaciado interno */
+  text-align: center; /* Texto centrado */
+  font-size: 20px; /* Tamaño de texto más grande (opcional) */
+  color: #333; /* Color del texto */
+  border-radius: 5px; /* Bordes redondeados (opcional) */
+ 
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra (opcional) */
+  width: 100%;
 }
+
+
 
 .product-card {
   margin-bottom:  10px; /* Aplica el margen alrededor de cada tarjeta */
@@ -422,6 +501,7 @@ select, .btn {
   color: #d9534f; /* Mensaje en rojo */
   text-align: center;
   font-size: 14px;
+  font-weight: bold;
 }
 
 #login-form {

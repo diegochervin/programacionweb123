@@ -10,36 +10,29 @@
     <%- include("./template/nav.ejs");%>
 
     <body>
-        <div id="login-container">
-            <h1 id="login-titulo">Iniciar Sesión</h1>
-    
-            <% if (typeof mensaje !== 'undefined') { %>
-                <p id="login-mensaje"><%= mensaje %></p>
-                <% if (redirigirRegistro) { %>
-                    <a id="login-registrarse" href="/registro">Registrarse</a>
+        <body>
+            <div id="login-container">
+                <h1 id="login-titulo">Iniciar Sesión</h1>
+        
+                <% if (typeof mensaje !== 'undefined') { %>
+                    <p id="login-mensaje"><%= mensaje %></p>
+                    <% if (redirigirRegistro) { %>
+                        <a id="login-registrarse" href="/registro">Registrarse</a>
+                    <% } %>
                 <% } %>
-            <% } %>
-    
-            <form id="login-form" action="/login" method="POST">
-                <label for="login-email">Email:</label>
-                <input type="email" id="login-email" name="email" required>
-    
-                <label for="login-password">Contraseña:</label>
-                <input type="password" id="login-password" name="pass" required>
-    
-                <button id="login-submit" type="submit">Iniciar Sesión</button>
-            </form>
-    
-            <p id="login-link">¿No tienes una cuenta? <a href="/registro">Regístrate aquí</a></p>
-        </div>
-    
-
-
-    <% if (typeof mensaje !== 'undefined') { %>
-        <p><%= mensaje %></p>
-        <% if (redirigirRegistro) { %>
-            <a href="/registro">Registrarse</a>
-        <% } %>
-    <% } %>
-</body>
+        
+                <form id="login-form" action="/login" method="POST">
+                    <label for="login-email">Email:</label>
+                    <input type="email" id="login-email" name="email" required>
+        
+                    <label for="login-password">Contraseña:</label>
+                    <input type="password" id="login-password" name="pass" required>
+        
+                    <button id="login-submit" type="submit">Iniciar Sesión</button>
+                </form>
+        
+                <p id="login-link">¿No tienes una cuenta? <a href="/registro">Regístrate aquí</a></p>
+            </div>
+        </body>
+        
 </html>
