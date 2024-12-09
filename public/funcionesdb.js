@@ -1,11 +1,13 @@
 const mysql = require("mysql");
+const dotenv = require("dotenv");
+dotenv.config();
 
-// Conexión a la base de datos
-let conexion = mysql.createConnection({
-    host: "localhost",
-    database: "ferrobat",
-    user: "root",
-    password: ""
+// Configuración de la conexión a la base de datos
+const conexion = mysql.createConnection({
+  host: process.env.HOST,
+  database: process.env.DATABASE,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
 });
 
 conexion.connect((error) => {

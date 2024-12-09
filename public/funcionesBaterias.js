@@ -2,41 +2,46 @@
 
 
 // Función que renderiza las baterías
+// Función que renderiza las baterías y devuelve una promesa
 function renderBaterias(estanteria, carrito) {
-  // Limpia el container antes de volver a agregar productos
-  containerBaterias.innerHTML = '';
+  return new Promise((resolve) => {
+    // Limpia el container antes de volver a agregar productos
+    containerBaterias.innerHTML = '';
 
-  // Recorre cada batería y genera la tarjeta
-  for (let bateria of estanteria) {
-   
-    let bateriaNuevoDiv = document.createElement("div");
-    bateriaNuevoDiv.className = "col-12 col-md-6 col-lg-4";
-    bateriaNuevoDiv.innerHTML = `
-      <div id="${bateria.id}" class="card product-card" data-marca="${bateria.marca}" style="width: 18rem;">
-        <img class="card-img-top img-fluid" style="height: 200px;" src="${bateria.imagen}" alt="${bateria.modelo}">
-        <div class="card-body">
-          <h4 class="card-title">${bateria.modelo.toUpperCase()}</h4>
-          <p>Marca: ${bateria.marca.toUpperCase()}</p>
-          <p class="precio">Precio: ${bateria.precio}</p>
-          <p id="stock-${bateria.stock}"class="">Stock: ${bateria.stock}</p>
-          <div class="col-md-3 pull-left mt-2 pl-0 mb-3 cantidad_div">
-            <label class="control-label cantidad mt-0">Cantidad</label>
-            <span class="bmd-form-group is-filled">
-              <input class="form-control pl-2 cantidad_comprar" type="number" id="cantidad-${bateria.id}" name="cantidad" value="1">
-            </span>
+    // Recorre cada batería y genera la tarjeta
+    for (let bateria of estanteria) {
+      let bateriaNuevoDiv = document.createElement("div");
+      bateriaNuevoDiv.className = "col-12 col-md-6 col-lg-4";
+      bateriaNuevoDiv.innerHTML = `
+        <div id="${bateria.id}" class="card product-card" data-marca="${bateria.marca}" style="width: 18rem;">
+          <img class="card-img-top img-fluid" style="height: 200px;" src="${bateria.imagen}" alt="${bateria.modelo}">
+          <div class="card-body">
+            <h4 class="card-title">${bateria.modelo.toUpperCase()}</h4>
+            <p>Marca: ${bateria.marca.toUpperCase()}</p>
+            <p class="precio">Precio: ${bateria.precio}</p>
+            <p id="stock-${bateria.stock}"class="">Stock: ${bateria.stock}</p>
+            <div class="col-md-3 pull-left mt-2 pl-0 mb-3 cantidad_div">
+              <label class="control-label cantidad mt-0">Cantidad</label>
+              <span class="bmd-form-group is-filled">
+                <input class="form-control pl-2 cantidad_comprar" type="number" id="cantidad-${bateria.id}" name="cantidad" value="1">
+              </span>
+            </div>
+            <button id="agregar-carrito-${bateria.id}" class="btn btn-outline-success">Agregar al carrito</button>
           </div>
-          <button id="agregar-carrito-${bateria.id}" class="btn btn-outline-success">Agregar al carrito</button>
-        </div>
-      </div>`;
-    
-    containerBaterias.append(bateriaNuevoDiv);
+        </div>`;
 
-    // Agregamos el event listener al botón dentro del ciclo for
-    let botonAgregar = document.getElementById(`agregar-carrito-${bateria.id}`);
-    botonAgregar.addEventListener('click', () => {
-      agregarAlCarrito(bateria.id, estanteria, carrito);
-    });
-  }
+      containerBaterias.append(bateriaNuevoDiv);
+
+      // Agregamos el event listener al botón dentro del ciclo for
+      let botonAgregar = document.getElementById(`agregar-carrito-${bateria.id}`);
+      botonAgregar.addEventListener('click', () => {
+        agregarAlCarrito(bateria.id, estanteria, carrito);
+      });
+    }
+
+    // Cuando termine de renderizar, resuelve la promesa
+    resolve();
+  });
 }
 
 // Función para agregar productos al carrito
@@ -517,9 +522,15 @@ async function cargarBateria(array, array2) {
 
 
 // Llamar a la función para cargar las baterías
-setTimeout (()=> { renderBaterias(estanteria, carrito)}, 2000)
 
-setTimeout(()=>{ getID()},3500 )
+
+//setTimeout (()=> { renderBaterias(estanteria, carrito)}, 2000)
+renderBaterias(estanteria, carrito)
+
+})
+
+
+
 function getID(){
   let containerBaterias = document.getElementById("containerBaterias");
   let coincidencias = document.getElementById('coincidencias');
@@ -545,7 +556,5 @@ if (guardarBateriaBtn) {
 
 
 }
-})
-
 
 
