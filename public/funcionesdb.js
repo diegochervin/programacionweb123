@@ -69,5 +69,5 @@ module.exports = {
     consulta,
     insertarBateria,
     actualizarStock,
-    getBuenosAiresTime,
+    
 };

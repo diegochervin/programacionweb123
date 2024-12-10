@@ -1,4 +1,8 @@
 
+
+
+
+
 // Función que renderiza las baterías
 function renderBaterias(estanteria, carrito) {
   // Limpia el container antes de volver a agregar productos
@@ -458,7 +462,10 @@ async function cargarBateria(array, array2) {
           const apellido = document.getElementById("apellido").value;
           const email = document.getElementById("email").value;
           const telefono = document.getElementById("telefono").value;
-          const fechaActual = new Date().toISOString();
+          // Usamos luxon globalmente sin `require`
+const fechaActual = luxon.DateTime.now().setZone('America/Argentina/Buenos_Aires').toISO();
+console.log(fechaActual);
+
           console.log(fechaActual);
           const suma = totalSumado(carrito);
           
