@@ -70,7 +70,7 @@ app.use(loginRoutes); // Esto toma todas las rutas definidas en `codLogin.js`
 app.post("/actualizar-stock", async (req, res) => {
     const { id, nuevoStock } = req.body;
     try {
-        // Aquí llamas a la función para actualizar el stock en la base de datos
+        //actualizar el stock en la base de datos
         await actualizarStock(id, nuevoStock);
         res.json({ success: true, message: "Stock actualizado" });
     } catch (error) {
@@ -96,7 +96,7 @@ app.get("/logout", (req, res) => {
     });
 });
 
-// Ruta para agregar una nueva batería a la base de datos
+// Agregar una nueva batería a la base de datos
 app.post("/baterias", async (req, res) => {
     const { marca, modelo, precio, stock, imagen } = req.body;
 
@@ -145,7 +145,7 @@ app.get("/actualizar-stock", verificarAdmin, (req, res) => {
     res.render("actualizar-stock");
 });
 
-
+//se usa patch para actualizar 1 o mas cosas
 app.patch("/baterias/:id", async (req, res) => {
     const { id } = req.params;
     const { marca, modelo, precio, stock, imagen } = req.body;

@@ -388,7 +388,7 @@ async function cargarBateria(array, array2) {
       if (!response.ok) {
           throw new Error("Error al guardar la batería en la base de datos.");
       }
-
+      alert("bateria cargada correctamente")
       const nuevaBateriaDB = await response.json(); // Respuesta del servidor con la batería guardada
 
       // Agregar la batería al array local (opcional)
