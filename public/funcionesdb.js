@@ -1,5 +1,8 @@
 const mysql = require("mysql");
 
+
+// Obtener la fecha y hora actual en la zona horaria de Buenos Aires
+
 // Conexión a la base de datos
 let conexion = mysql.createConnection({
     host: "localhost",
@@ -58,8 +61,13 @@ function actualizarStock(id, nuevoStock) {
     });
 }
 
+
+
+
+
 module.exports = {
     consulta,
     insertarBateria,
     actualizarStock,
+    getBuenosAiresTime,
 };

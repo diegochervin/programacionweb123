@@ -7,6 +7,7 @@ const database = require("./views/database");
 const cors = require("cors");
 const { actualizarStock } = require('./public/funcionesdb');
 
+
 // Configuraciones generales
 app.set("view engine", "ejs");
 app.set("port", 3000);
@@ -16,6 +17,8 @@ app.use(express.static("public"));
 app.use(cors({
     origin: ["http://127.0.0.1:5501", "http://127.0.0.1:5500"]
 }));
+
+
 
 // Manejo de sesiones
 app.use(
@@ -199,3 +202,35 @@ app.patch("/baterias/:id", async (req, res) => {
         if (connection) connection.release();
     }
 });
+
+
+app.post('/crear-pedido', async (req, res) => {
+    const { fecha, monto } = req.body;
+
+    // Validación de los datos recibidos
+    if (!fecha || !monto || isNaN(monto)) {
+        return res.status(400).json({ success: false, message: "Datos inválidos: fecha o monto faltan o son incorrectos." });
+    }
+
+    let connection;
+    try {
+        connection = await database.getConnection(); // Conexión al pool
+        const query = 'INSERT INTO factura (fecha, monto) VALUES (?, ?)';
+        
+        const result = await connection.query(query, [fecha, monto]);
+
+        if (result.affectedRows === 0) {
+            return res.status(500).json({ success: false, message: "No se pudo crear el pedido en la base de datos." });
+        }
+        console.log(`Pedido creado correctamente. Fecha: ${fecha}, Monto: ${monto}`);
+
+        res.json({ success: true, message: "Pedido creado correctamente." });
+    } catch (error) {
+        console.error("Error al crear pedido en la base de datos:", error.message);
+        res.status(500).json({ success: false, message: "Error al crear el pedido." });
+    } finally {
+        if (connection) connection.release();
+    }
+});
+
+

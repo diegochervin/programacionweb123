@@ -36,3 +36,9 @@ CREATE TABLE usuario (
     perfil VARCHAR(30)
   );
 
+-- crear tabla factura
+CREATE TABLE factura (
+    idfactura INT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATETIME NOT NULL,
+    monto int(11) NOT NULL
+  );

@@ -1,6 +1,4 @@
 
-
-
 // Función que renderiza las baterías
 function renderBaterias(estanteria, carrito) {
   // Limpia el container antes de volver a agregar productos
@@ -431,21 +429,21 @@ async function cargarBateria(array, array2) {
   
     function finalizarCompra(arrayCarrito) {
       if (arrayCarrito.length > 0) {
-        let totalComprado = totalSumado(arrayCarrito);
-    
-        modalAgregarCarrito.hide(); // Cierra el modal del carrito
-        modalFinalCompra.show(); // Muestra el modal para completar datos
+          let totalComprado = totalSumado(arrayCarrito);
+  
+          modalAgregarCarrito.hide(); // Cierra el modal del carrito
+          modalFinalCompra.show(); // Muestra el modal para completar datos
       } else {
-        console.log("No hay nada en el carrito; no puedes finalizar la compra.");
+          console.log("No hay nada en el carrito; no puedes finalizar la compra.");
       }
       return carrito;
-    }
-    
-    botonFinalizarCompra.addEventListener("click", () => {
+  }
+  
+  botonFinalizarCompra.addEventListener("click", () => {
       carrito = finalizarCompra(carrito);
-    });
-    
-    document.getElementById("confirmarCompraBtn").addEventListener("click", async (event) => {
+  });
+  
+  document.getElementById("confirmarCompraBtn").addEventListener("click", async (event) => {
       const form = document.getElementById("formFinalCompra");
   
       if (!form.checkValidity()) {
@@ -460,55 +458,84 @@ async function cargarBateria(array, array2) {
           const apellido = document.getElementById("apellido").value;
           const email = document.getElementById("email").value;
           const telefono = document.getElementById("telefono").value;
+          const fechaActual = new Date().toISOString();
+          console.log(fechaActual);
+          const suma = totalSumado(carrito);
+          
   
-          // Para cada producto en el carrito, actualiza el stock en la base de datos
-          for (let item of carrito) {
-              let producto = estanteria.find((bateria) => bateria.id === item.id);
-              if (producto) {
-                  producto.stock -= item.cantidad; // Resta del stock local
-                  console.log(`Stock actualizado para ${producto.modelo}: ${producto.stock}`);
+          if (suma > 0) {
+              try {
+                  // Crear pedido en la base de datos
+                  const responsePedido = await fetch('/crear-pedido', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                          fecha: fechaActual,
+                          monto: suma
+                      })
+                  });
   
-                  // Actualizar stock en la base de datos con fetch
-                  try {
-                      const response = await fetch('/actualizar-stock', {
-                          method: 'POST',
-                          headers: {
-                              'Content-Type': 'application/json'
-                          },
-                          body: JSON.stringify({
-                              id: producto.id,
-                              nuevoStock: producto.stock
-                          })
+                  const dataPedido = await responsePedido.json();
+                  if (dataPedido.success) {
+                      console.log("Pedido creado exitosamente en la base de datos.");
+  
+                      // Actualizar stock en la base de datos
+                      for (let item of carrito) {
+                          let producto = estanteria.find((bateria) => bateria.id === item.id);
+  
+                          if (producto) {
+                              producto.stock -= item.cantidad; // Actualiza stock localmente
+  
+                              try {
+                                  const responseStock = await fetch('/actualizar-stock', {
+                                      method: 'POST',
+                                      headers: {
+                                          'Content-Type': 'application/json'
+                                      },
+                                      body: JSON.stringify({
+                                          id: producto.id,
+                                          nuevoStock: producto.stock
+                                      })
+                                  });
+  
+                                  const dataStock = await responseStock.json();
+                                  if (dataStock.success) {
+                                      console.log(`Stock de ${producto.modelo} actualizado correctamente en la base de datos.`);
+                                  } else {
+                                      console.error(`Error al actualizar el stock de ${producto.modelo}`);
+                                  }
+                              } catch (error) {
+                                  console.error("Error al actualizar el stock:", error);
+                              }
+                          }
+                      }
+  
+                      // Mostrar mensaje de éxito al usuario
+                      Swal.fire({
+                          title: "Muchas gracias por tu compra!",
+                          text: `Compra confirmada para ${nombre.toUpperCase()} ${apellido.toUpperCase()}. Tiene 24 hs para completar el pago. Le llegará un mail con el instructivo.`,
+                          icon: "success",
+                          timer: 5000,
                       });
   
-                      const data = await response.json();
-                      if (data.success) {
-                          console.log(`Stock de ${producto.modelo} actualizado correctamente en la base de datos.`);
-                      } else {
-                          console.error(`Error al actualizar el stock de ${producto.modelo}`);
-                      }
-                  } catch (error) {
-                      console.error("Error al actualizar el stock:", error);
+                      modalFinalCompra.hide(); // Cierra el modal de finalización de compra
+                      modalAgregarCarrito.hide(); // Cierra el modal del carrito
+  
+                      carrito = [];
+                      localStorage.removeItem("carrito");
+                      renderBaterias(estanteria, carrito);
+                      localStorage.setItem("estanteria", JSON.stringify(estanteria));
+                  } else {
+                      console.error("Error al crear el pedido.");
                   }
+              } catch (error) {
+                  console.error("Error al procesar la compra:", error);
               }
+          } else {
+              console.log("El total del carrito debe ser mayor a 0 para finalizar la compra.");
           }
-  
-          // Mostrar mensaje de éxito al usuario
-          Swal.fire({
-              title: "Muchas gracias por tu compra!",
-              text: `Compra confirmada para ${nombre.toUpperCase()} ${apellido.toUpperCase()}. Tiene 24 hs para completar el pago. Le llegará un mail con el instructivo.`,
-              icon: "success",
-              timer: 5000,
-          });
-  
-          modalFinalCompra.hide(); // Cerrar el modal de finalización de compra
-          modalAgregarCarrito.hide(); // Cerrar el modal del carrito
-  
-          carrito = [];
-          localStorage.removeItem("carrito");
-  
-          renderBaterias(estanteria, carrito);
-          localStorage.setItem("estanteria", JSON.stringify(estanteria));
       }
   });
   
